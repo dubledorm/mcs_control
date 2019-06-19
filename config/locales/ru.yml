@@ -1,0 +1,11 @@
+ru:
+  activerecord:
+    models:
+      instance: Инстанс
+    attributes:
+      instance:
+        name: Название
+        owner_name: Владелец
+        description: Описание
+        created_at: Создан
+        updated_at: Изменён
