@@ -9,3 +9,11 @@ ru:
         description: Описание
         created_at: Создан
         updated_at: Изменён
+    errors:
+      models:
+        instance:
+          attributes:
+            name:
+              taken: уже используется
+              blank: должно быть заполнено
+              invalid: может содержать буквы латинского алфавита, цифры, знак '_'
