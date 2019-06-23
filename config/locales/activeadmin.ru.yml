@@ -6,6 +6,7 @@ ru:
       call_to_action: "Чтобы добавить сюда что-нибудь загляните в 'app/admin/dashboard.rb'"
     view: "Открыть"
     edit: "Изменить"
+    create: "Создать"
     delete: "Удалить"
     delete_confirmation: "Вы уверены, что хотите удалить это?"
     new_model: "Создать %{model}"

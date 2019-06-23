@@ -19,6 +19,7 @@ describe Instance do
     it { expect(FactoryGirl.build(:instance, name: "the_name1234")).to be_valid}
     it { expect(FactoryGirl.build(:instance, name: "the-name1234")).to be_invalid}
 
-
+    # Relationships
+    it {should have_many(:ports)}
   end
 end

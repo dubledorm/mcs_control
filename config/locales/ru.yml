@@ -2,6 +2,7 @@ ru:
   activerecord:
     models:
       instance: Инстанс
+      port: Порт
     attributes:
       instance:
         name: Название
@@ -9,6 +10,9 @@ ru:
         description: Описание
         created_at: Создан
         updated_at: Изменён
+      port:
+        number: Номер
+        instance: Инстанс
     errors:
       models:
         instance:
@@ -17,3 +21,13 @@ ru:
               taken: уже используется
               blank: должно быть заполнено
               invalid: может содержать буквы латинского алфавита, цифры, знак '_'
+        port:
+          attributes:
+            number:
+              taken: Этот номер порта уже используется. Выберите другой.
+              blank: не может быть пустым
+              required: должно быть заполнено
+            instance:
+              taken: уже используется
+              blank: не может быть пустым
+              required: должно быть заполнено

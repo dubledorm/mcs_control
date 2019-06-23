@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_19_195027) do
+ActiveRecord::Schema.define(version: 2019_06_23_105030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,4 +50,14 @@ ActiveRecord::Schema.define(version: 2019_06_19_195027) do
     t.index ["name"], name: "index_instances_on_name"
   end
 
+  create_table "ports", force: :cascade do |t|
+    t.integer "number", null: false
+    t.bigint "instance_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["instance_id"], name: "index_ports_on_instance_id"
+    t.index ["number"], name: "index_ports_on_number"
+  end
+
+  add_foreign_key "ports", "instances"
 end
