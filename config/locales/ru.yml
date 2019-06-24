@@ -31,3 +31,8 @@ ru:
               taken: уже используется
               blank: не может быть пустым
               required: должно быть заполнено
+      services:
+        find_free_service:
+          bad_argument: В конструктор сервиса передаётся один аргумент - port_type_arg, который может принимать значения :http, :tcp
+          bring_range_of_diapason: Исчерпан диапазон номеров портов
+
