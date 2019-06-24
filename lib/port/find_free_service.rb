@@ -5,11 +5,11 @@ class Port
     }.freeze
 
     def initialize( port_type_arg )
-      if ![:http, :tcp].include?(port_type_arg)
+      unless [:http, :tcp].include?(port_type_arg)
         raise ArgumentError.new(I18n.t('activerecord.errors.services.find_free_service.bad_argument'))
       end
 
-      @port_type = port_type_arg;
+      @port_type = port_type_arg
       @ports = Port.order(:number).pluck(:number)
     end
 
