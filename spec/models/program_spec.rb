@@ -14,6 +14,8 @@ describe Program do
     it { expect(FactoryGirl.build(:program, name: '')).to be_invalid}
     it { expect(FactoryGirl.build(:program, name: 'the-name1234')).to be_valid}
     it { expect(FactoryGirl.build(:program, name: 'the_name1234')).to be_invalid}
+    it { expect(FactoryGirl.build(:program, name: 'the-name1234', program_type: 'abrakadabra')).to be_invalid}
+
 
     # Relationships
     it {should belong_to(:instance)}
