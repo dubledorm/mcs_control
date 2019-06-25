@@ -82,5 +82,6 @@ test:
 #
 production:
   <<: *default
+  host: 10.168.1.10
   database: mcs_control_production
 
