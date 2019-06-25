@@ -3,6 +3,7 @@ ru:
     models:
       instance: Инстанс
       port: Порт
+      program: Программа
     attributes:
       instance:
         name: Название
@@ -13,6 +14,9 @@ ru:
       port:
         number: Номер
         instance: Инстанс
+      program:
+        name: Название
+        program_type: Тип
     errors:
       models:
         instance:
@@ -31,6 +35,15 @@ ru:
               taken: уже используется
               blank: не может быть пустым
               required: должно быть заполнено
+        program:
+          attributes:
+            name:
+              taken: уже используется
+              blank: должно быть заполнено
+              invalid: может содержать буквы латинского алфавита, цифры, знак '-'
+            program_type:
+              taken: уже используется
+              blank: должно быть заполнено
       services:
         find_free_service:
           bad_argument: В конструктор сервиса передаётся один аргумент - port_type_arg, который может принимать значения :http, :tcp

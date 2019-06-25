@@ -21,5 +21,6 @@ describe Instance do
 
     # Relationships
     it {should have_many(:ports)}
+    it {should have_many(:programs)}
   end
 end
