@@ -18,6 +18,8 @@ ru:
         name: Название
         program_type: Тип
     errors:
+      messages:
+        record_invalid: ошибка при создании записи, вероятнее всего переданы неверные значения полей
       models:
         instance:
           attributes:

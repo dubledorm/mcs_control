@@ -17,6 +17,7 @@ describe Program do
 
     # Relationships
     it {should belong_to(:instance)}
+    it {should have_many(:ports)}
 
   end
 end

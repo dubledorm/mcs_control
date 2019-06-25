@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_25_085237) do
+ActiveRecord::Schema.define(version: 2019_06_25_102031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,8 +55,11 @@ ActiveRecord::Schema.define(version: 2019_06_25_085237) do
     t.bigint "instance_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "program_id"
+    t.string "port_type"
     t.index ["instance_id"], name: "index_ports_on_instance_id"
     t.index ["number"], name: "index_ports_on_number"
+    t.index ["program_id"], name: "index_ports_on_program_id"
   end
 
   create_table "programs", force: :cascade do |t|
