@@ -28,10 +28,39 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
-group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+
+group :test do
+  gem "factory_girl_rails" , '~> 1.7.0'
+  gem "test-unit"
+  gem "mocha", :require => false
+  gem 'capybara', '~> 2.18'
+  gem "launchy"
+  gem "autotest"
+  gem "autotest-rails-pure"
+  gem "autotest-notification"
+  gem 'webmock'
+  gem 'ruby-prof'
+  # Easy installation and use of web drivers to run system tests with browsers
+  gem 'webdrivers'
 end
+
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.8'
+  gem 'pry'
+  gem 'pry-rails'
+  gem 'pry-byebug'
+# Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'shoulda', '~> 3.5.0'
+  gem 'shoulda-matchers'
+  gem 'shoulda-context'
+  gem 'selenium-webdriver'
+  gem 'rack_session_access'
+  gem 'timecop'
+  gem 'awesome_print'
+end
+
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
@@ -43,13 +72,16 @@ group :development do
   gem 'rubocop-rails'
 end
 
-group :test do
-  # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
-  # Easy installation and use of web drivers to run system tests with browsers
-  gem 'webdrivers'
-end
+
+
+gem 'activeadmin'
+
+# Plus integrations with:
+gem 'devise'
+gem 'cancancan'
+gem 'draper'
+gem 'pundit'
+
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

@@ -1,0 +1,68 @@
+AllCops:
+  TargetRubyVersion: 2.6.3
+  Exclude:
+    - *.js, *.js.map
+
+Rails:
+  Enabled: true
+Rails/DynamicFindBy:
+  Enabled: false
+
+# TODO: disable replace update_attributes => update, after change rails version, remove it
+Rails/ActiveRecordAliases:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 150
+
+Metrics/ClassLength:
+  Max: 250
+
+Metrics/MethodLength:
+  Max: 26
+
+Metrics/CyclomaticComplexity:
+  Max: 15
+
+Metrics/AbcSize:
+  Max: 20
+
+Layout:
+  Style/EmptyLines:
+    Enabled: false
+  Style/AlignParameters:
+    Enabled: false
+  Style/SpaceInsideStringInterpolation:
+    Enabled: false
+  Style/SpaceBeforeBlockBraces:
+    Enabled: false
+  Style/MultilineMethodCallIndentation:
+    EnforcedStyle: indented
+  Style/DotPosition:
+    EnforcedStyle: trailing
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/ModuleFunction:
+  Enabled: false
+
+Style/CommentAnnotation:
+  Enabled: false
+
+Rails/ActionFilter:
+  EnforcedStyle: filter
+
+# NOTE: Disable replace file mode like 0755 to 0o755
+Style/NumericLiteralPrefix:
+  Enabled: false
+
+# Temporary solution
+Lint/RescueException:
+  Enabled: false
