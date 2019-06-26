@@ -81,6 +81,7 @@ gem 'devise'
 gem 'cancancan'
 gem 'draper'
 gem 'pundit'
+gem "interactor", "~> 3.0"
 
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
