@@ -1,4 +1,5 @@
 class Port
+  # noinspection RailsI18nInspection
   class FindFreeService  # Найти и вернуть следующий свободный порт
     RANGE_OF_NUMBER = { http: { left_range: 30000, right_range: 31000 },
                         tcp: { left_range: 31001, right_range: 64000 }
