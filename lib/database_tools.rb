@@ -7,6 +7,10 @@ module DatabaseTools
   end
 
   def create_database( connection, database_name )
-    connection.execute("create database ${database_name}")
+    connection.execute("create database #{database_name}")
+  end
+
+  def drop_database( connection, database_name )
+    connection.execute("drop database #{database_name}")
   end
 end
