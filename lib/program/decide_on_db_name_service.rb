@@ -5,7 +5,7 @@ class Program
 
     def initialize( program_arg )
       @program = program_arg
-      @database_names = get_database_list
+      @database_names = get_database_list(ActiveRecord::Base.connection)
     end
 
     def call

@@ -1,8 +1,12 @@
 module DatabaseTools
 
-  def get_database_list # Вернуть список существующих баз данных
+  def get_database_list( connection ) # Вернуть список существующих баз данных
     # noinspection SpellCheckingInspection
-    database_names_hash = ActiveRecord::Base.connection.execute('select datname from pg_database;')
+    database_names_hash = connection.execute('select datname from pg_database;')
     database_names_hash.values
+  end
+
+  def create_database( connection, database_name )
+    connection.execute("create database ${database_name}")
   end
 end
