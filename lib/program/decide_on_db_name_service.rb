@@ -9,10 +9,11 @@ class Program
     end
 
     def call
-      result = "#{program.name}_#{program.program_type}"
+      base_name = program.identification_name.gsub('-', '_')
+      result = base_name
       number = 1
       while db_name_exists?(result)
-        result = "#{program.name}_#{program.program_type}_#{number}"
+        result = "#{base_name}_#{number}"
         number += 1
       end
       result

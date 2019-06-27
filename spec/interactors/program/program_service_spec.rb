@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Program do
 
   describe 'decide_on_db_name_service' do
-    let!(:program) { FactoryGirl.create :program, name: 'chicken', program_type: 'mc' }
+    let(:program) { FactoryGirl.build :program, identification_name: 'chicken-mc' }
 
     it 'should return name if the db does not exists' do
       expect(Program::DecideOnDbNameService.new(program).call).to eq('chicken_mc')
