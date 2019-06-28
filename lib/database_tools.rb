@@ -18,4 +18,8 @@ module DatabaseTools
     database_users_hash = connection.execute('select * from pg_shadow;')
     database_users_hash.values.flatten
   end
+
+  def create_user( connection, user_name, user_password = '')
+    connection.execute("create user #{user_name} with password '#{user_password}'")
+  end
 end

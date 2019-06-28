@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_26_204750) do
+ActiveRecord::Schema.define(version: 2019_06_28_204711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,7 +47,9 @@ ActiveRecord::Schema.define(version: 2019_06_26_204750) do
     t.string "owner_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_instances_on_name"
+    t.string "db_user_name", null: false
+    t.string "db_user_password"
+    t.index ["name"], name: "index_instances_on_name", unique: true
   end
 
   create_table "ports", force: :cascade do |t|

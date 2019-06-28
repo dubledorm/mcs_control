@@ -10,7 +10,6 @@ class Program
                               program_type: context.program_type)
 
         program.set_identification_name
-
         program.database_name = Program::DecideOnDbNameService.new(program).call
         program.save
 

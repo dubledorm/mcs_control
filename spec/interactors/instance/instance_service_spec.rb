@@ -4,23 +4,23 @@ describe Instance do
 
   shared_examples 'database user name eq' do
     context 'empty database' do
-      it { expect(Instance::CreateDatabaseUserService.new(instance).call).to eq(coming_database_user) }
+      it { expect(Instance::DecideOnDbUserService.new(instance).call).to eq(coming_database_user) }
     end
 
     context 'database has two databases' do
       it 'should increment name counter if same name already exists' do
-        allow_any_instance_of(Instance::CreateDatabaseUserService).to receive(:get_database_users_list).
+        allow_any_instance_of(Instance::DecideOnDbUserService).to receive(:get_database_users_list).
             and_return( [coming_database_user, "#{coming_database_user}_1"] )
-        expect(Instance::CreateDatabaseUserService.new(instance).call).to eq("#{coming_database_user}_2")
+        expect(Instance::DecideOnDbUserService.new(instance).call).to eq("#{coming_database_user}_2")
       end
     end
   end
 
   shared_examples 'argument error' do
-    it { expect{Instance::CreateDatabaseUserService.new(instance).call}.to raise_error ArgumentError}
+    it { expect{Instance::DecideOnDbUserService.new(instance).call}.to raise_error ArgumentError}
     it 'test print' do
       begin
-        Instance::CreateDatabaseUserService.new(instance).call
+        Instance::DecideOnDbUserService.new(instance).call
       rescue ArgumentError => e
         puts 'Отладочная печать:'
         puts e.message

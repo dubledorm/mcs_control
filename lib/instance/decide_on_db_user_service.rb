@@ -1,12 +1,12 @@
 require 'database_tools'
 class Instance
-  class CreateDatabaseUserService # Выбрать и создать пользователя БД для инстанса
+  class DecideOnDbUserService # Выбрать имя пользователя БД для инстанса
     include DatabaseTools
 
     def initialize(instance_arg)
       @instance = instance_arg
       @database_users = get_database_users_list(ActiveRecord::Base.connection)
-      raise ArgumentError, I18n.t('activerecord.errors.exceptions.instance.create_database_user_service.'+
+      raise ArgumentError, I18n.t('activerecord.errors.exceptions.instance.decide_on_db_user_service.'+
                                   'argument_error.need_name_arg') if instance.name.blank?
     end
 

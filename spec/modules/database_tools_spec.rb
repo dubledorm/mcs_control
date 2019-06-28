@@ -77,4 +77,18 @@ describe DatabaseTools do
       expect(get_database_users_list(ActiveRecord::Base.connection ).include?('chicken_user')).to be(true)
     end
   end
+
+
+  describe 'create_user' do
+    before :each do
+      # noinspection RubyEmptyRescueBlockInspection
+      begin
+        ActiveRecord::Base.connection.execute("drop user chicken_user")
+      rescue
+      end
+
+      it { expect{create_user(ActiveRecord::Base.connection, 'chicken_user' )}.not_to raise_error }
+      it { expect{create_user(ActiveRecord::Base.connection, 'chicken_user', 'password' )}.not_to raise_error }
+    end
+  end
 end
