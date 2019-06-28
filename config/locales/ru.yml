@@ -51,3 +51,12 @@ ru:
         find_free_service:
           bad_argument: В конструктор сервиса передаётся один аргумент - port_type_arg, который может принимать значения :http, :tcp
           bring_range_of_diapason: Исчерпан диапазон номеров портов
+      exceptions:
+        program:
+          decide_on_db_name_service:
+            argument_error:
+              type_and_instance: 'Объект класса Program должен иметь заполненные поля instance и program_type'
+            do_not_need_database: 'Для такого типа программы (program.program_type) не требуется база данных'
+          create_database_interactor:
+            stanadrd_error:
+              cause_of_error: "Ошибка при создании базы данных. Причина %{error_message}"
