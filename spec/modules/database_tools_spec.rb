@@ -4,6 +4,25 @@ require 'database_tools'
 describe DatabaseTools do
   include DatabaseTools
 
+  describe 'get_database_users_list' do
+    before :each do
+      # noinspection RubyEmptyRescueBlockInspection
+      begin
+        ActiveRecord::Base.connection.execute("create database chicken_test")
+      rescue
+      end
+    end
+
+    it 'should not generate exception' do
+      expect{get_database_list(ActiveRecord::Base.connection )}.not_to raise_error
+    end
+
+    it 'should find chicken_test' do
+      expect(get_database_list(ActiveRecord::Base.connection ).include?('chicken_test')).to be(true)
+    end
+  end
+
+
   describe 'create database' do
     before :each do
       # noinspection RubyEmptyRescueBlockInspection
@@ -38,6 +57,24 @@ describe DatabaseTools do
 
     it 'should generate exception if database does not exists' do
       expect{drop_database(ActiveRecord::Base.connection, 'chicken_mc_1' )}.to raise_error ActiveRecord::StatementInvalid
+    end
+  end
+
+  describe 'get_database_users_list' do
+    before :each do
+      # noinspection RubyEmptyRescueBlockInspection
+      begin
+        ActiveRecord::Base.connection.execute("create user chicken_user")
+      rescue
+      end
+    end
+
+    it 'should not generate exception' do
+      expect{get_database_users_list(ActiveRecord::Base.connection )}.not_to raise_error
+    end
+
+    it 'should find chicken_user' do
+      expect(get_database_users_list(ActiveRecord::Base.connection ).include?('chicken_user')).to be(true)
     end
   end
 end
