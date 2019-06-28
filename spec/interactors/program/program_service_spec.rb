@@ -18,6 +18,15 @@ describe Program do
 
   shared_examples 'database does not need' do
     it { expect{Program::DecideOnDbNameService.new(program).call}.to raise_error Program::DecideOnDbNameService::DoNotNeedDatabase}
+
+    it 'test print' do
+      begin
+        Program::DecideOnDbNameService.new(program).call
+      rescue Program::DecideOnDbNameService::DoNotNeedDatabase => e
+        puts 'Отладочная печать:'
+        puts e.message
+      end
+    end
   end
 
 

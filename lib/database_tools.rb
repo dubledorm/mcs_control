@@ -13,4 +13,9 @@ module DatabaseTools
   def drop_database( connection, database_name )
     connection.execute("drop database #{database_name}")
   end
+
+  def get_database_users_list( connection )
+    database_users_hash = connection.execute('select * from pg_shadow;')
+    database_users_hash.values.map { |line| line[0] }
+  end
 end

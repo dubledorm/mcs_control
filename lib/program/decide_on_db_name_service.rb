@@ -8,12 +8,10 @@ class Program
     def initialize( program_arg )
       @program = program_arg
       @database_names = get_database_list(ActiveRecord::Base.connection)
-      raise ArgumentError(message: I18n.t('activerecord.errors.exceptions.program.' +
-                                          'decide_on_db_name_service.argument_error.' +
-                                          'type_and_instance')) if program.instance.nil? || program.program_type.blank?
-      raise DoNotNeedDatabase.new(I18n.t('activerecord.errors.exceptions.program.' +
-                                         'decide_on_db_name_service.'+
-                                         'do_not_need_database.')) if program.program_type.to_s == 'dcs-dev'
+      raise ArgumentError, I18n.t('activerecord.errors.exceptions.program.decide_on_db_name_service.argument_error.' +
+                                  'type_and_instance') if program.instance.nil? || program.program_type.blank?
+      raise DoNotNeedDatabase, I18n.t('activerecord.errors.exceptions.program.decide_on_db_name_service.'+
+                                      'do_not_need_database.') if program.program_type.to_s == 'dcs-dev'
     end
 
     def call

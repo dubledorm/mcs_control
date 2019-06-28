@@ -60,3 +60,7 @@ ru:
           create_database_interactor:
             stanadrd_error:
               cause_of_error: "Ошибка при создании базы данных. Причина %{error_message}"
+        instance:
+          create_database_user_service:
+            argument_error:
+              need_name_arg: 'Для работы сервиса CreateDatabaseUserService необходимо, чтобы было заполнено поле Name'
