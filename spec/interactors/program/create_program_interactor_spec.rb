@@ -17,6 +17,5 @@ describe Program do
 
     # noinspection SpellCheckingInspection
     it { expect{Program::CreateProgramInteractor.call(instance: instance, program_type: :mc)}.to change(Program, :count).by(1) }
-
   end
 end

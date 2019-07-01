@@ -30,6 +30,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 
 group :test do
+  gem 'database_cleaner'
   gem "factory_girl_rails" , '~> 1.7.0'
   gem "test-unit"
   gem "mocha", :require => false

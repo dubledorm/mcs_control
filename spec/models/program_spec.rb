@@ -11,6 +11,7 @@ describe Program do
     it { should validate_presence_of(:database_name) }
     it { should validate_presence_of(:identification_name) }
     it { should validate_presence_of(:program_type) }
+    it { should validate_presence_of(:instance) }
     it { should validate_uniqueness_of(:database_name) }
     it { should validate_uniqueness_of(:identification_name) }
     it { expect(FactoryGirl.build(:program, additional_name: '')).to be_valid}

@@ -4,11 +4,11 @@ require 'database_tools'
 describe DatabaseTools do
   include DatabaseTools
 
-  describe 'get_database_users_list' do
+  describe 'get_database_list' do
     before :each do
       # noinspection RubyEmptyRescueBlockInspection
       begin
-        ActiveRecord::Base.connection.execute("create database chicken_test")
+        ActiveRecord::Base.connection.execute("create database test_milandr_chicken")
       rescue
       end
     end
@@ -18,45 +18,29 @@ describe DatabaseTools do
     end
 
     it 'should find chicken_test' do
-      expect(get_database_list(ActiveRecord::Base.connection ).include?('chicken_test')).to be(true)
+      expect(get_database_list(ActiveRecord::Base.connection ).include?('test_milandr_chicken')).to be(true)
     end
   end
 
 
   describe 'create database' do
-    before :each do
-      # noinspection RubyEmptyRescueBlockInspection
-      begin
-        ActiveRecord::Base.connection.execute("drop database chicken_mc_1")
-      rescue
-      end
-    end
-
-    it { expect{create_database(ActiveRecord::Base.connection, 'chicken_mc_1' )}.not_to raise_error }
+    it { expect{create_database(ActiveRecord::Base.connection, 'test_milandr_chicken' )}.not_to raise_error }
 
     it 'should generate exception if database already exists' do
-      create_database(ActiveRecord::Base.connection, 'chicken_mc_1' )
-      expect{create_database(ActiveRecord::Base.connection, 'chicken_mc_1' )}.to raise_error ActiveRecord::StatementInvalid
+      create_database(ActiveRecord::Base.connection, 'test_milandr_chicken' )
+      expect{create_database(ActiveRecord::Base.connection, 'test_milandr_chicken' )}.to raise_error ActiveRecord::StatementInvalid
     end
   end
 
 
   describe 'drop database' do
-    before :each do
-      # noinspection RubyEmptyRescueBlockInspection
-      begin
-        ActiveRecord::Base.connection.execute("drop database chicken_mc_1")
-      rescue
-      end
-    end
-
     it 'should not generate exception if database exists' do
-      create_database(ActiveRecord::Base.connection, 'chicken_mc_1' )
-      expect{drop_database(ActiveRecord::Base.connection, 'chicken_mc_1' )}.not_to raise_error
+      create_database(ActiveRecord::Base.connection, 'test_milandr_chicken_mc_1' )
+      expect{drop_database(ActiveRecord::Base.connection, 'test_milandr_chicken_mc_1' )}.not_to raise_error
     end
 
     it 'should generate exception if database does not exists' do
-      expect{drop_database(ActiveRecord::Base.connection, 'chicken_mc_1' )}.to raise_error ActiveRecord::StatementInvalid
+      expect{drop_database(ActiveRecord::Base.connection, 'test_milandr_chicken_mc_1' )}.to raise_error ActiveRecord::StatementInvalid
     end
   end
 
@@ -64,7 +48,7 @@ describe DatabaseTools do
     before :each do
       # noinspection RubyEmptyRescueBlockInspection
       begin
-        ActiveRecord::Base.connection.execute("create user chicken_user")
+        ActiveRecord::Base.connection.execute("create user test_milandr_chicken_user")
       rescue
       end
     end
@@ -74,21 +58,13 @@ describe DatabaseTools do
     end
 
     it 'should find chicken_user' do
-      expect(get_database_users_list(ActiveRecord::Base.connection ).include?('chicken_user')).to be(true)
+      expect(get_database_users_list(ActiveRecord::Base.connection ).include?('test_milandr_chicken_user')).to be(true)
     end
   end
 
 
   describe 'create_user' do
-    before :each do
-      # noinspection RubyEmptyRescueBlockInspection
-      begin
-        ActiveRecord::Base.connection.execute("drop user chicken_user")
-      rescue
-      end
-
-      it { expect{create_user(ActiveRecord::Base.connection, 'chicken_user' )}.not_to raise_error }
-      it { expect{create_user(ActiveRecord::Base.connection, 'chicken_user', 'password' )}.not_to raise_error }
-    end
+    it { expect{create_user(ActiveRecord::Base.connection, 'test_milandr_chicken_user' )}.not_to raise_error }
+    it { expect{create_user(ActiveRecord::Base.connection, 'test_milandr_chicken_user', 'password' )}.not_to raise_error }
   end
 end

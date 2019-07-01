@@ -60,6 +60,9 @@ ru:
           create_database_interactor:
             standard_error:
               cause_of_error: "Ошибка при создании базы данных. Причина %{error_message}"
+            argument_error:
+              database_name: 'Не заполнено имя базы данных'
+              database_user_name: 'Не заполнено имя пользователя базы данных (Instance.db_user_name)'
         instance:
           decide_on_db_user_service:
             argument_error:
