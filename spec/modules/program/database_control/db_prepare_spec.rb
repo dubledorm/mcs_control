@@ -1,7 +1,7 @@
 require 'rails_helper_without_transactions'
 require 'database_tools'
 
-describe DatabaseControl::ProgramControl do
+describe Program::DatabaseControl::DbPrepare do
   include DatabaseTools
 
   before :each do
@@ -11,40 +11,25 @@ describe DatabaseControl::ProgramControl do
   end
 
   describe 'standard call' do
+    let(:program) {FactoryGirl.build :program,
+                                      instance: @instance_control.instance,
+                                      program_type: 'mc'
+                   }
+
     it 'should not to raise error' do
       expect {
-        program_control = DatabaseControl::ProgramControl.new(@instance_control.instance, 'mc')
-        program_control.prepare
-        program_control.call
+        Program::DatabaseControl::DbPrepare.build(program)
       }.not_to raise_error
     end
 
-    it 'should create program' do
-      expect {
-        # noinspection SpellCheckingInspection
-        program_control = DatabaseControl::ProgramControl.new(@instance_control.instance, 'mc')
-        program_control.prepare
-        program_control.call
-      }.to change(Program, :count).by(1)
-    end
-
-
     it 'should create database' do
-      # noinspection SpellCheckingInspection
-      program_control = DatabaseControl::ProgramControl.new(@instance_control.instance, 'mc')
-      program_control.prepare
-      program_control.call
-      # noinspection SpellCheckingInspection
+      Program::DatabaseControl::DbPrepare.build(program)
       expect(get_database_list(ActiveRecord::Base.connection).include?('test_milandr_chicken_mc')).to be(true)
     end
 
     it 'should grant access to user' do
-      # noinspection SpellCheckingInspection
-      program_control = DatabaseControl::ProgramControl.new(@instance_control.instance, 'mc')
-      program_control.prepare
-      program_control.call
+      Program::DatabaseControl::DbPrepare.build(program)
 
-      program = program_control.program
       cmd = "psql -h #{Rails.configuration.database_configuration[Rails.env]["host"]}" +
             " -U #{program.instance.db_user_name} -w" +
             " -c \'create table milandr_test_1 (id integer);\' #{program.database_name}"
@@ -54,17 +39,18 @@ describe DatabaseControl::ProgramControl do
   end
 
   describe 'database already exists' do
+    let(:program) {FactoryGirl.build :program,
+                                     instance: @instance_control.instance,
+                                     program_type: 'mc'
+    }
+
     before :each do
       # noinspection SpellCheckingInspection,SpellCheckingInspection
       create_database(ActiveRecord::Base.connection, 'test_milandr_chicken_mc')
     end
 
     it 'should create database' do
-      # noinspection SpellCheckingInspection
-      program_control = DatabaseControl::ProgramControl.new(@instance_control.instance, 'mc')
-      program_control.prepare
-      program_control.call
-      # noinspection SpellCheckingInspection
+      Program::DatabaseControl::DbPrepare.build(program)
       expect(get_database_list(ActiveRecord::Base.connection).include?('test_milandr_chicken_mc_1')).to be(true)
     end
   end

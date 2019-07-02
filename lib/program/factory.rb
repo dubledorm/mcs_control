@@ -2,10 +2,15 @@ class Program
   class Factory
 
     def self.build(instance, program_type, additional_name = nil)
-      program_control = DatabaseControl::ProgramControl.new(instance, program_type, additional_name)
-      program_control.prepare
-      program_control.call
-      program = program_control.program
+      program = Program.new(instance: instance,
+                            program_type: program_type,
+                            additional_name: additional_name)
+      # program_control = DatabaseControl::ProgramControl.new(instance, program_type, additional_name)
+      # program_control.prepare
+      # program_control.call
+      # program = program_control.program
+      Program::DatabaseControl::DbPrepare.build(program)
+      program.save
 
       port_type = get_port_type(program.program_type.to_sym)
       return program if port_type.blank?
