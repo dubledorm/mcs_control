@@ -5,9 +5,11 @@ describe Program::Factory do
   include DatabaseTools
 
   before :each do
-    @instance_control = DatabaseControl::InstanceControl.new('test-milandr-chicken')
-    @instance_control.prepare
-    @instance_control.call
+    @instance = Instance.new(name: 'test-milandr-chicken')
+
+    Instance::DatabaseControl::DbPrepare.build(@instance)
+
+    @instance.save
   end
 
   shared_examples 'create program and database' do
@@ -90,56 +92,56 @@ describe Program::Factory do
   describe 'build' do
 
     it_should_behave_like 'program and http port' do
-      let(:instance) {@instance_control.instance}
+      let(:instance) {@instance}
       let(:program_type) {'mc'}
       let(:additional_name) {''}
     end
 
     it_should_behave_like 'program and http port' do
-      let(:instance) {@instance_control.instance}
+      let(:instance) {@instance}
       let(:program_type) {'op'}
       let(:additional_name) {''}
     end
 
     it_should_behave_like 'program no database and tcp port' do
-      let(:instance) {@instance_control.instance}
+      let(:instance) {@instance}
       let(:program_type) {'dcs-dev'}
       let(:additional_name) {''}
     end
 
     it_should_behave_like 'program and no port' do
-      let(:instance) {@instance_control.instance}
+      let(:instance) {@instance}
       let(:program_type) {'dcs-cli'}
       let(:additional_name) {''}
     end
 
     it_should_behave_like 'program and http port' do
-      let(:instance) {@instance_control.instance}
+      let(:instance) {@instance}
       let(:program_type) {'mc'}
       let(:additional_name) {'add'}
     end
 
     it_should_behave_like 'program and http port' do
-      let(:instance) {@instance_control.instance}
+      let(:instance) {@instance}
       let(:program_type) {'op'}
       let(:additional_name) {'add'}
     end
 
     it_should_behave_like 'program no database and tcp port' do
-      let(:instance) {@instance_control.instance}
+      let(:instance) {@instance}
       let(:program_type) {'dcs-dev'}
       let(:additional_name) {'add'}
     end
 
     it_should_behave_like 'program and no port' do
-      let(:instance) {@instance_control.instance}
+      let(:instance) {@instance}
       let(:program_type) {'dcs-cli'}
       let(:additional_name) {'add'}
     end
   end
 
   describe 'database already exists' do
-    let(:instance) {@instance_control.instance}
+    let(:instance) {@instance}
     let(:program_type) {'mc'}
     let(:additional_name) {''}
     

@@ -5,14 +5,16 @@ describe Program::DatabaseControl::DbPrepare do
   include DatabaseTools
 
   before :each do
-    @instance_control = DatabaseControl::InstanceControl.new('test-milandr-chicken')
-    @instance_control.prepare
-    @instance_control.call
+    @instance = Instance.new(name: 'test-milandr-chicken')
+
+    Instance::DatabaseControl::DbPrepare.build(@instance)
+
+    @instance.save
   end
 
   describe 'standard call' do
     let(:program) {FactoryGirl.build :program,
-                                      instance: @instance_control.instance,
+                                      instance: @instance,
                                       program_type: 'mc'
                    }
 
@@ -40,7 +42,7 @@ describe Program::DatabaseControl::DbPrepare do
 
   describe 'database already exists' do
     let(:program) {FactoryGirl.build :program,
-                                     instance: @instance_control.instance,
+                                     instance: @instance,
                                      program_type: 'mc'
     }
 
