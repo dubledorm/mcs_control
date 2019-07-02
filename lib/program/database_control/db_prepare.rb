@@ -6,7 +6,6 @@ class Program
       include DatabaseTools
 
       def self.build(program)
-        program.set_identification_name
         program.database_name = Program::DecideOnDbNameService.new(program).call if program.program_type != 'dcs-dev'
 
         create_database( ActiveRecord::Base.connection, program.database_name )

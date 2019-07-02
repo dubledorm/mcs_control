@@ -8,7 +8,6 @@ describe Program do
     it { expect(program).to be_valid }
 
     # Validations
-    it { should validate_presence_of(:database_name) }
     it { should validate_presence_of(:identification_name) }
     it { should validate_presence_of(:program_type) }
     it { should validate_presence_of(:instance) }
