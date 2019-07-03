@@ -26,7 +26,7 @@ ru:
             name:
               taken: уже используется
               blank: должно быть заполнено
-              invalid: может содержать буквы латинского алфавита, цифры, знак '_'
+              invalid: может содержать буквы латинского алфавита, цифры, знак '-'
         port:
           attributes:
             number:
@@ -51,3 +51,22 @@ ru:
         find_free_service:
           bad_argument: В конструктор сервиса передаётся один аргумент - port_type_arg, который может принимать значения :http, :tcp
           bring_range_of_diapason: Исчерпан диапазон номеров портов
+      exceptions:
+        program:
+          decide_on_db_name_service:
+            argument_error:
+              type_and_instance: 'Объект класса Program должен иметь заполненные поля instance и program_type'
+            do_not_need_database: 'Для такого типа программы (program.program_type) не требуется база данных'
+          create_database_interactor:
+            standard_error:
+              cause_of_error: "Ошибка при создании базы данных. Причина %{error_message}"
+            argument_error:
+              database_name: 'Не заполнено имя базы данных'
+              database_user_name: 'Не заполнено имя пользователя базы данных (Instance.db_user_name)'
+        instance:
+          decide_on_db_user_service:
+            argument_error:
+              need_name_arg: 'Для работы сервиса DecideOnDbUserService необходимо, чтобы было заполнено поле Name'
+          create_db_user_interactor:
+            standard_error:
+              cause_of_error: "Ошибка при создании пользователя базы данных. Причина %{error_message}"

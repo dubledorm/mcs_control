@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_25_102031) do
+ActiveRecord::Schema.define(version: 2019_07_02_154647) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,7 +47,9 @@ ActiveRecord::Schema.define(version: 2019_06_25_102031) do
     t.string "owner_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_instances_on_name"
+    t.string "db_user_name", null: false
+    t.string "db_user_password"
+    t.index ["name"], name: "index_instances_on_name", unique: true
   end
 
   create_table "ports", force: :cascade do |t|
@@ -64,12 +66,14 @@ ActiveRecord::Schema.define(version: 2019_06_25_102031) do
 
   create_table "programs", force: :cascade do |t|
     t.string "program_type", null: false
-    t.string "name", null: false
     t.bigint "instance_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "database_name"
+    t.string "additional_name"
+    t.string "identification_name"
+    t.index ["identification_name"], name: "index_programs_on_identification_name", unique: true
     t.index ["instance_id"], name: "index_programs_on_instance_id"
-    t.index ["name"], name: "index_programs_on_name"
     t.index ["program_type"], name: "index_programs_on_program_type"
   end
 

@@ -30,6 +30,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 
 group :test do
+  gem 'database_cleaner'
   gem "factory_girl_rails" , '~> 1.7.0'
   gem "test-unit"
   gem "mocha", :require => false
@@ -81,6 +82,7 @@ gem 'devise'
 gem 'cancancan'
 gem 'draper'
 gem 'pundit'
+gem "interactor", "~> 3.0"
 
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

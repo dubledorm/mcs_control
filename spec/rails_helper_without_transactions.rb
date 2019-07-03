@@ -1,5 +1,7 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+require 'database_cleaner'
+require 'database_tools'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
@@ -31,12 +33,14 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 RSpec.configure do |config|
+  include DatabaseTools
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
+  # noinspection RubyResolve
   config.use_transactional_fixtures = false
 
   # RSpec Rails can automatically mix in different behaviours to your tests
@@ -58,4 +62,32 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+  #
+  config.before(:suite) do
+ #   DatabaseCleaner.clean_with :truncation
+    DatabaseCleaner.strategy = :truncation
+  end
+  config.before(:each) do
+    DatabaseCleaner.clean
+    clear_users_and_databases
+  end
+  config.after(:each) do
+    DatabaseCleaner.clean
+    if Rails.env.test? || Rails.env.cucumber?
+      FileUtils.rm_rf(Dir["#{Rails.root}/spec/support/uploads"])
+    end
+    clear_users_and_databases
+  end
+
+  def clear_users_and_databases
+    get_database_list(ActiveRecord::Base.connection).find_all{ |database_name| database_name =~ /^test_milandr_\w+$/}.each do |database_name|
+      puts database_name
+      drop_database( ActiveRecord::Base.connection, database_name )
+    end
+
+    get_database_users_list(ActiveRecord::Base.connection).find_all{ |user_name| user_name =~ /^test_milandr_\w+$/}.each do |user_name|
+      puts user_name
+      drop_user( ActiveRecord::Base.connection, user_name )
+    end
+  end
 end
