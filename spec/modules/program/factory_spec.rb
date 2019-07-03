@@ -34,6 +34,11 @@ describe Program::Factory do
       puts cmd
       expect(`#{cmd}`).to eq("CREATE TABLE\n")
     end
+
+    it 'program.db_status should set to everywhere_exists' do
+      program = Program::Factory::build(instance, program_type, additional_name)
+      expect(program.db_status).to eq('everywhere_exists')
+    end
   end
 
   shared_examples 'create http port' do

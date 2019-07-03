@@ -7,4 +7,9 @@ module DualStorage
   included do
     validates :db_status, inclusion: { in: DB_STATUS_VALUES }, allow_nil: true
   end
+
+  def sym_db_status
+    return :undefined if db_status.blank?
+    db_status.parameterize.underscore.to_sym
+  end
 end

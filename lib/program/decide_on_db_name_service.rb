@@ -33,8 +33,8 @@ class Program
       end
 
       def create_db_name
-        ("#{ program.instance.name }_#{ translate_program_type }" +
-            "#{ program.additional_name.blank? ? '' : '_' + program.additional_name }").gsub('-', '_')
+        program.instance.database_prefix +
+          ("_#{ translate_program_type }#{ program.additional_name.blank? ? '' : '_' + program.additional_name }").gsub('-', '_')
       end
     
       def translate_program_type

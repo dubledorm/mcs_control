@@ -6,4 +6,8 @@ class Instance < ApplicationRecord
   
   validates :name, presence: true, uniqueness: true, format: { with: /\A[a-zA-Z\-\d]+\z/}
   validates :db_user_name, presence: true
+
+  def database_prefix
+    name.gsub('-', '_')
+  end
 end

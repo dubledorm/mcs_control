@@ -23,5 +23,10 @@ describe Instance::Factory do
       Instance::Factory::build('test-milandr-chicken')
       expect(get_database_list(ActiveRecord::Base.connection).include?('test_milandr_chicken_dcs4')).to be(true)
     end
+
+    it 'program.db_status should set to everywhere_exists' do
+      instance = Instance::Factory::build('test-milandr-chicken')
+      expect(instance.db_status).to eq('everywhere_exists')
+    end
   end
 end
