@@ -10,6 +10,7 @@ class Program
 
         create_database( ActiveRecord::Base.connection, program.database_name )
         grant_all_privileges( ActiveRecord::Base.connection, program.database_name, program.instance.db_user_name)
+        program.db_status = 'everywhere_exists'
       end
     end
   end

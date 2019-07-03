@@ -1,4 +1,6 @@
 class Program < ApplicationRecord
+  include DualStorage
+
   belongs_to :instance
   has_many :ports
 

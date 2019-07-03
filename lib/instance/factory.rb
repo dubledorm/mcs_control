@@ -2,7 +2,7 @@ class Instance
   class Factory
 
     def self.build(name)
-      instance = Instance.new(name: name)
+      instance = Instance.new(name: name, db_status: 'undefined')
       Instance::DatabaseControl::DbPrepare.build(instance)
       instance.save
 

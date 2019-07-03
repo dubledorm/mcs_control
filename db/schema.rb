@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_02_154647) do
+ActiveRecord::Schema.define(version: 2019_07_03_114043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2019_07_02_154647) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "db_user_name", null: false
     t.string "db_user_password"
+    t.string "db_status"
     t.index ["name"], name: "index_instances_on_name", unique: true
   end
 
@@ -59,6 +60,7 @@ ActiveRecord::Schema.define(version: 2019_07_02_154647) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "program_id"
     t.string "port_type"
+    t.string "db_status"
     t.index ["instance_id"], name: "index_ports_on_instance_id"
     t.index ["number"], name: "index_ports_on_number"
     t.index ["program_id"], name: "index_ports_on_program_id"
@@ -72,6 +74,7 @@ ActiveRecord::Schema.define(version: 2019_07_02_154647) do
     t.string "database_name"
     t.string "additional_name"
     t.string "identification_name"
+    t.string "db_status"
     t.index ["identification_name"], name: "index_programs_on_identification_name", unique: true
     t.index ["instance_id"], name: "index_programs_on_instance_id"
     t.index ["program_type"], name: "index_programs_on_program_type"

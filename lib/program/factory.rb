@@ -4,7 +4,8 @@ class Program
     def self.build(instance, program_type, additional_name = nil)
       program = Program.new(instance: instance,
                             program_type: program_type,
-                            additional_name: additional_name)
+                            additional_name: additional_name,
+                            db_status: 'undefined')
 
       program.set_identification_name
 
@@ -32,7 +33,8 @@ class Program
         port_number = Port::FindFreeService.new(port_type).call
         program.ports.create(port_type: port_type,
                              number: port_number,
-                             instance: program.instance)
+                             instance: program.instance,
+                             db_status: 'undefined')
       end
 
       def self.need_database?(program_type)
