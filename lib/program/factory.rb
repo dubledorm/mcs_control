@@ -1,5 +1,7 @@
+require 'database_name'
 class Program
   class Factory
+    extend DatabaseName
 
     def self.build(instance, program_type, additional_name = nil)
       program = Program.new(instance: instance,
@@ -7,7 +9,7 @@ class Program
                             additional_name: additional_name,
                             db_status: 'undefined')
 
-      program.set_identification_name
+      program.identification_name = make_identification_name(instance.name, program_type, additional_name)
 
       Program::DatabaseControl::DbPrepare.build(program) if need_database?(program_type)
 

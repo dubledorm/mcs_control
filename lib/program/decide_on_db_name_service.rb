@@ -1,7 +1,9 @@
 require 'database_tools'
+require 'database_name'
 class Program
   class DecideOnDbNameService # Выбрать имя базы данных для программы
     include DatabaseTools
+    include DatabaseName
 
     class DoNotNeedDatabase < StandardError; end
 
@@ -33,12 +35,7 @@ class Program
       end
 
       def create_db_name
-        program.instance.database_prefix +
-          ("_#{ translate_program_type }#{ program.additional_name.blank? ? '' : '_' + program.additional_name }").gsub('-', '_')
-      end
-    
-      def translate_program_type
-        { mc: 'mc', op: 'op', 'dcs-cli'.to_sym => 'dcs4'}[program.program_type.to_sym]
+        create_database_name(program.instance.name, program.program_type, program.additional_name)
       end
     end
 end
