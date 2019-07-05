@@ -69,13 +69,17 @@ describe Program::DatabaseControl::CollateDcsDevWithDbService do
 
       it 'should add ports here' do
         allow_any_instance_of(Program::DatabaseControl::CollateDcsDevWithDbService).to receive(:get_there_object_list).
-            and_return([9003, 9004, 9005])
+            and_return( [{'input_value' => '9003', 'serial_number' => 'serial1', 'device_type' => '4'},
+                         {'input_value' => '9004', 'serial_number' => 'serial2', 'device_type' => '4'},
+                         {'input_value' => '9005', 'serial_number' => 'serial3', 'device_type' => '4'}
+                        ] )
 
         Program::DatabaseControl::CollateDcsDevWithDbService.new(program_dev).call
         program_dev.reload
-        expect(program_dev.ports.to_a.map{|port| [port.number, port.sym_db_status]}).to eq([[9003, :only_there_exists],
-                                                                                            [9004, :only_there_exists],
-                                                                                            [9005, :only_there_exists]])
+        expect(program_dev.ports.to_a.map{|port| [port.number, port.sym_db_status]}.sort).to eq([[9003, :only_there_exists],
+                                                                                                 [9004, :only_there_exists],
+                                                                                                 [9005, :only_there_exists]
+                                                                                                ].sort)
       end
     end
 
@@ -94,22 +98,26 @@ describe Program::DatabaseControl::CollateDcsDevWithDbService do
 
         Program::DatabaseControl::CollateDcsDevWithDbService.new(program_dev).call
         program_dev.reload
-        expect(program_dev.ports.to_a.map{|port| [port.number, port.sym_db_status]}).to eq([[9003, :only_here_exists],
-                                                                                            [9004, :only_here_exists],
-                                                                                            [9005, :only_here_exists]])
+        expect(program_dev.ports.to_a.map{|port| [port.number, port.sym_db_status]}.sort).to eq([[9003, :only_here_exists],
+                                                                                                 [9004, :only_here_exists],
+                                                                                                 [9005, :only_here_exists]
+                                                                                                ].sort)
       end
 
       it 'should add port' do
         allow_any_instance_of(Program::DatabaseControl::CollateDcsDevWithDbService).to receive(:get_there_object_list).
-            and_return([9005, 9006])
+            and_return( [{'input_value' => '9006', 'serial_number' => 'serial1', 'device_type' => '4'},
+                         {'input_value' => '9005', 'serial_number' => 'serial3', 'device_type' => '4'}
+                        ] )
+
 
         Program::DatabaseControl::CollateDcsDevWithDbService.new(program_dev).call
         program_dev.reload
-        expect(program_dev.ports.to_a.map{|port| [port.number, port.sym_db_status]}).to eq([[9003, :only_here_exists],
-                                                                                            [9004, :only_here_exists],
-                                                                                            [9005, :everywhere_exists],
-                                                                                            [9006, :only_there_exists]
-                                                                                           ])
+        expect(program_dev.ports.to_a.map{|port| [port.number, port.sym_db_status]}.sort).to eq([[9003, :only_here_exists],
+                                                                                                 [9004, :only_here_exists],
+                                                                                                 [9005, :everywhere_exists],
+                                                                                                 [9006, :only_there_exists]
+                                                                                                ].sort)
       end
     end
   end
