@@ -2,41 +2,52 @@ require 'database_tools'
 require 'infosphera_sql'
 require 'infosphera_tools'
 
+# Класс, для заполнения программы dcs-dev списком портов.
+# Порты, используемые dcs-dev лежат в базе программы op.
+# Поэтому, лезем в Instance, от него находим базу op, берём её database_name,
+# подключаемся к ней и сравниваем список портов там и здесь
 class Program
   module DatabaseControl
-    class CollateWithDbService  # Сравнить записи в управляющей БД с реальными БД, проставить db_status.
-      # При необходимости, создавать объекты в управляющей БД
+    class CollateWithDbService < CollateBaseService
       include DatabaseTools
       include InfospheraSql
       include InfospheraTools
 
-      def initialize(program)
-        @program = program
-      end
+      def get_there_object_list(parent_object)
+        # Находим программу :op
+        program_op = parent_object.instance.programs.where(program_type: :op).first
+        raise StandardError if program_op.nil?
 
-      def call
+        # Получаем список портов в Инфосфера
         config   = Rails.configuration.database_configuration
         connection = get_custom_connection('temporary',
                                            config[Rails.env]['host'],
                                            config[Rails.env]['port'],
-                                           program.database_name,
+                                           program_op.database_name,
                                            config[Rails.env]["admin_username"],
                                            config[Rails.env]["admin_password"])
-    #    ports = get_all_ports_of_uspd(connection)
+        ports = get_all_ports_of_uspd(connection)
         close_custom_connection
-   #     ports.each do |port|
-   #       check_and_create_port(port)
-   #     end
+        return ports.map{|port| port['input_value']}
       end
 
-      private
-      attr_accessor :program
+      def get_here_object_list(parent_object)
+        raise ArgumentError if parent_object.program_type != program_type_to_s(:dcs_dev)
+        parent_object.ports.map{ |port| port.number }
+      end
 
-      def check_and_create_port(port)
-        program.ports.create!(number: port['input_value'],
-                              instance: program.instance,
-                              port_type: get_port_type(program.sym_program_type)
-        ) if get_port_type(program.sym_program_type).present?
+      def add_object_to_us(object_value, db_status)
+        parent_object.ports.create!(number: object_value.to_i,
+                                    instance: parent_object.instance,
+                                    port_type: get_port_type(parent_object.sym_program_type).to_s
+                                   )
+      end
+
+      def set_object_db_status(object_value, db_status)
+        # Найти по номеру порт и поменять значение
+        port = parent_object.ports.where(number: object_value).first
+        port.db_status = db_status
+        port.save!
       end
     end
   end
