@@ -57,6 +57,9 @@ ru:
             argument_error:
               type_and_instance: 'Объект класса Program должен иметь заполненные поля instance и program_type'
             do_not_need_database: 'Для такого типа программы (program.program_type) не требуется база данных'
+          collate_dcs_dev_with_db_service:
+            only_dcs_dev: 'Этот сервис можно испол зовать только для программ типа dcs-dev'
+            not_found_op: Не могу обнаружить программу 'op' (оператор сети). По базе данных этой программы считываются значения сетевых портов для dcs-dev
           create_database_interactor:
             standard_error:
               cause_of_error: "Ошибка при создании базы данных. Причина %{error_message}"

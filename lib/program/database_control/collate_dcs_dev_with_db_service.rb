@@ -16,7 +16,8 @@ class Program
       def get_there_object_list(parent_object)
         # Находим программу :op
         program_op = parent_object.instance.programs.where(program_type: :op).first
-        raise StandardError if program_op.nil?
+        raise StandardError, I18n.t('activerecord.errors.exceptions.program.' +
+                                     'collate_dcs_dev_with_db_service.not_found_op') if program_op.nil?
 
         # Получаем список портов в Инфосфера
         config   = Rails.configuration.database_configuration
@@ -32,7 +33,8 @@ class Program
       end
 
       def get_here_object_list(parent_object)
-        raise ArgumentError if parent_object.program_type != program_type_to_s(:dcs_dev)
+        raise ArgumentError, message: I18n.t('activerecord.errors.exceptions.program.' +
+                                             'collate_dcs_dev_with_db_service.only_dcs_dev') if parent_object.program_type != program_type_to_s(:dcs_dev)
         parent_object.ports.map{ |port| port.number }
       end
 
