@@ -1,4 +1,4 @@
-require 'custom_temporary'
+require 'custom_active_record'
 module DatabaseTools
 
   def get_database_list( connection ) # Вернуть список существующих баз данных
@@ -33,12 +33,12 @@ module DatabaseTools
   end
 
   def get_custom_connection(identifier, host, port, dbname, dbuser, password)
-    CustomTemporary.establish_connection(:adapter=>'postgresql', :host=>host, :port=>port, :database=>dbname,
-                                         :username=>dbuser, :password=>password)
-    return CustomTemporary.connection
+    CustomActiveRecord.establish_connection(:adapter=>'postgresql', :host=>host, :port=>port, :database=>dbname,
+                                            :username=>dbuser, :password=>password)
+    return CustomActiveRecord.connection
   end
 
   def close_custom_connection
-    CustomTemporary.connection.disconnect!
+    CustomActiveRecord.connection.disconnect!
   end
 end
