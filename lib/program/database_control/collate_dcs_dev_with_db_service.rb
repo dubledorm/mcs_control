@@ -8,7 +8,7 @@ require 'infosphera_tools'
 # подключаемся к ней и сравниваем список портов там и здесь
 class Program
   module DatabaseControl
-    class CollateWithDbService < CollateBaseService
+    class CollateDcsDevWithDbService < CollateBaseService
       include DatabaseTools
       include InfospheraSql
       include InfospheraTools

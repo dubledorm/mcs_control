@@ -2,7 +2,7 @@ require 'rails_helper_without_transactions'
 require 'database_tools'
 require 'support/shared/instance_thick_collate'
 
-describe Program::DatabaseControl::CollateWithDbService do
+describe Program::DatabaseControl::CollateDcsDevWithDbService do
   include DatabaseTools
   describe 'only_here_exists' do
     include_context 'instance with content'
@@ -14,7 +14,7 @@ describe Program::DatabaseControl::CollateWithDbService do
       instance.db_user_password = config[Rails.env]["admin_password"]
       program_op.save!
 
-      Program::DatabaseControl::CollateWithDbService.new(program_dev).call
+      Program::DatabaseControl::CollateDcsDevWithDbService.new(program_dev).call
       program_dev.reload
     end
 
