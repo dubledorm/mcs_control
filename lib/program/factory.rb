@@ -1,7 +1,9 @@
 require 'database_name'
+require 'infosphera_tools'
 class Program
   class Factory
     extend DatabaseName
+    extend InfospheraTools
 
     def self.build(instance, program_type, additional_name = nil)
       program = Program.new(instance: instance,
@@ -23,14 +25,7 @@ class Program
     end
 
     private
-
-      def self.get_port_type(program_type_sym) # Возвращает тип порта, необходимый для программы
-        { mc: :http,
-          op: :http,
-          dcs_dev: :tcp,
-          dcs_cli: nil }[program_type_sym]
-      end
-
+    
       def self.add_port(port_type, program)
         port_number = Port::FindFreeService.new(port_type).call
         program.ports.create(port_type: port_type,

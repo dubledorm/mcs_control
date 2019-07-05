@@ -1,3 +1,4 @@
+require 'custom_temporary'
 module DatabaseTools
 
   def get_database_list( connection ) # Вернуть список существующих баз данных
@@ -29,5 +30,15 @@ module DatabaseTools
 
   def grant_all_privileges( connection, database_name, user_name)
     connection.execute("grant all privileges on database #{database_name} to #{user_name};")
+  end
+
+  def get_custom_connection(identifier, host, port, dbname, dbuser, password)
+    CustomTemporary.establish_connection(:adapter=>'postgresql', :host=>host, :port=>port, :database=>dbname,
+                                         :username=>dbuser, :password=>password)
+    return CustomTemporary.connection
+  end
+
+  def close_custom_connection
+    CustomTemporary.connection.disconnect!
   end
 end
