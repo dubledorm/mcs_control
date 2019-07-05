@@ -4,25 +4,25 @@ describe Program do
 
   shared_examples 'database name eq' do
     context 'empty database' do
-      it { expect(Program::DecideOnDbNameService.new(program).call).to eq(coming_db_name) }
+      it { expect(Program::DatabaseControl::DecideOnDbNameService.new(program).call).to eq(coming_db_name) }
     end
 
     context 'database has two databases' do
       it 'should increment name counter if same name already exists' do
-        allow_any_instance_of(Program::DecideOnDbNameService).to receive(:get_database_list).
+        allow_any_instance_of(Program::DatabaseControl::DecideOnDbNameService).to receive(:get_database_list).
             and_return( [coming_db_name, "#{coming_db_name}_1"] )
-        expect(Program::DecideOnDbNameService.new(program).call).to eq("#{coming_db_name}_2")
+        expect(Program::DatabaseControl::DecideOnDbNameService.new(program).call).to eq("#{coming_db_name}_2")
       end
     end
   end
 
   shared_examples 'database does not need' do
-    it { expect{Program::DecideOnDbNameService.new(program).call}.to raise_error Program::DecideOnDbNameService::DoNotNeedDatabase}
+    it { expect{Program::DatabaseControl::DecideOnDbNameService.new(program).call}.to raise_error Program::DatabaseControl::DecideOnDbNameService::DoNotNeedDatabase}
 
     it 'test print' do
       begin
-        Program::DecideOnDbNameService.new(program).call
-      rescue Program::DecideOnDbNameService::DoNotNeedDatabase => e
+        Program::DatabaseControl::DecideOnDbNameService.new(program).call
+      rescue Program::DatabaseControl::DecideOnDbNameService::DoNotNeedDatabase => e
         puts 'Отладочная печать:'
         puts e.message
       end
