@@ -14,7 +14,7 @@ class Instance
       private
         def get_there_object_list(parent_object)
           get_database_list(ActiveRecord::Base.connection).
-              find_all{|database_name| database_name =~ /^#{database_prefix(parent_object.name)}/}
+              find_all{|database_name| database_name =~ /^(mc|op|dcs4)_#{database_prefix(parent_object.name)}/}
         end
 
         def get_here_object_list(parent_object)

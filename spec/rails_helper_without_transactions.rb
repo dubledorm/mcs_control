@@ -80,12 +80,12 @@ RSpec.configure do |config|
   end
 
   def clear_users_and_databases
-    get_database_list(ActiveRecord::Base.connection).find_all{ |database_name| database_name =~ /^test_milandr_\w+$/}.each do |database_name|
+    get_database_list(ActiveRecord::Base.connection).find_all{ |database_name| database_name =~ /^(mc|op|dcs4)_testmilandr\w+$/}.each do |database_name|
       puts database_name
       drop_database( ActiveRecord::Base.connection, database_name )
     end
 
-    get_database_users_list(ActiveRecord::Base.connection).find_all{ |user_name| user_name =~ /^test_milandr_\w+$/}.each do |user_name|
+    get_database_users_list(ActiveRecord::Base.connection).find_all{ |user_name| user_name =~ /^testmilandr\w+$/}.each do |user_name|
       puts user_name
       drop_user( ActiveRecord::Base.connection, user_name )
     end

@@ -32,43 +32,43 @@ describe Program do
 
   describe 'database name' do
     let(:instance) { FactoryGirl.build :instance, name: 'chicken' }
-    let(:super_instance) { FactoryGirl.build :instance, name: 'super-chicken' }
+    let(:super_instance) { FactoryGirl.build :instance, name: 'superchicken' }
 
 
     it_should_behave_like 'database name eq' do
       let(:program) { FactoryGirl.build :program, instance: instance, program_type: 'mc' }
-      let(:coming_db_name) { 'chicken_mc' }
+      let(:coming_db_name) { 'mc_chicken' }
     end
 
     it_should_behave_like 'database name eq' do
       let(:program) { FactoryGirl.build :program, instance: instance, program_type: 'mc', additional_name: 'fnc',
                                         identification_name: 'chicken-mc-fnc' }
-      let(:coming_db_name) { 'chicken_mc_fnc' }
+      let(:coming_db_name) { 'mc_chicken_fnc' }
     end
 
     it_should_behave_like 'database name eq' do
       let(:program) { FactoryGirl.build :program, instance: instance, program_type: 'op' }
-      let(:coming_db_name) { 'chicken_op' }
+      let(:coming_db_name) { 'op_chicken' }
     end
 
     it_should_behave_like 'database name eq' do
       let(:program) { FactoryGirl.build :program, instance: instance, program_type: 'mc', additional_name: 'fnc' }
-      let(:coming_db_name) { 'chicken_mc_fnc' }
+      let(:coming_db_name) { 'mc_chicken_fnc' }
     end
 
     it_should_behave_like 'database name eq' do
       let(:program) { FactoryGirl.build :program, instance: super_instance, program_type: 'mc', additional_name: 'super-fnc' }
-      let(:coming_db_name) { 'super_chicken_mc_super_fnc' }
+      let(:coming_db_name) { 'mc_superchicken_super_fnc' }
     end
 
     it_should_behave_like 'database name eq' do
       let(:program) { FactoryGirl.build :program, instance: instance, program_type: 'dcs-cli' }
-      let(:coming_db_name) { 'chicken_dcs4' }
+      let(:coming_db_name) { 'dcs4_chicken' }
     end
 
     it_should_behave_like 'database name eq' do
       let(:program) { FactoryGirl.build :program, instance: instance, program_type: 'dcs-cli', additional_name: 'fnc' }
-      let(:coming_db_name) { 'chicken_dcs4_fnc' }
+      let(:coming_db_name) { 'dcs4_chicken_fnc' }
     end
 
     it_should_behave_like 'database does not need' do

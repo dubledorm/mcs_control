@@ -13,9 +13,10 @@ describe Instance do
     it { should validate_presence_of(:db_user_name) }
     # noinspection RubyResolve
     it { expect(FactoryGirl.build(:instance, name: "")).to be_invalid}
-    it { expect(FactoryGirl.build(:instance, name: "the-name1234")).to be_valid}
+    it { expect(FactoryGirl.build(:instance, name: "thename1234")).to be_valid}
     # noinspection RubyResolve
     it { expect(FactoryGirl.build(:instance, name: "the_name1234")).to be_invalid}
+    it { expect(FactoryGirl.build(:instance, name: "the-name1234")).to be_invalid}
 
     # Relationships
     it {should have_many(:ports)}

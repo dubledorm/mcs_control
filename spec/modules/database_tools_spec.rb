@@ -8,7 +8,7 @@ describe DatabaseTools do
     before :each do
       # noinspection RubyEmptyRescueBlockInspection
       begin
-        ActiveRecord::Base.connection.execute("create database test_milandr_chicken")
+        ActiveRecord::Base.connection.execute("create database mc_testmilandrchicken")
       rescue
       end
     end
@@ -18,29 +18,29 @@ describe DatabaseTools do
     end
 
     it 'should find chicken_test' do
-      expect(get_database_list(ActiveRecord::Base.connection ).include?('test_milandr_chicken')).to be(true)
+      expect(get_database_list(ActiveRecord::Base.connection ).include?('mc_testmilandrchicken')).to be(true)
     end
   end
 
 
   describe 'create database' do
-    it { expect{create_database(ActiveRecord::Base.connection, 'test_milandr_chicken' )}.not_to raise_error }
+    it { expect{create_database(ActiveRecord::Base.connection, 'mc_testmilandrchicken' )}.not_to raise_error }
 
     it 'should generate exception if database already exists' do
-      create_database(ActiveRecord::Base.connection, 'test_milandr_chicken' )
-      expect{create_database(ActiveRecord::Base.connection, 'test_milandr_chicken' )}.to raise_error ActiveRecord::StatementInvalid
+      create_database(ActiveRecord::Base.connection, 'op_testmilandrchicken' )
+      expect{create_database(ActiveRecord::Base.connection, 'op_testmilandrchicken' )}.to raise_error ActiveRecord::StatementInvalid
     end
   end
 
 
   describe 'drop database' do
     it 'should not generate exception if database exists' do
-      create_database(ActiveRecord::Base.connection, 'test_milandr_chicken_mc_1' )
-      expect{drop_database(ActiveRecord::Base.connection, 'test_milandr_chicken_mc_1' )}.not_to raise_error
+      create_database(ActiveRecord::Base.connection, 'dcs4_testmilandrchicken_1' )
+      expect{drop_database(ActiveRecord::Base.connection, 'dcs4_testmilandrchicken_1' )}.not_to raise_error
     end
 
     it 'should generate exception if database does not exists' do
-      expect{drop_database(ActiveRecord::Base.connection, 'test_milandr_chicken_mc_1' )}.to raise_error ActiveRecord::StatementInvalid
+      expect{drop_database(ActiveRecord::Base.connection, 'dcs4_testmilandrchicken_1' )}.to raise_error ActiveRecord::StatementInvalid
     end
   end
 
@@ -48,7 +48,7 @@ describe DatabaseTools do
     before :each do
       # noinspection RubyEmptyRescueBlockInspection
       begin
-        ActiveRecord::Base.connection.execute("create user test_milandr_chicken_user")
+        ActiveRecord::Base.connection.execute("create user testmilandrchicken_user")
       rescue
       end
     end
@@ -58,13 +58,17 @@ describe DatabaseTools do
     end
 
     it 'should find chicken_user' do
-      expect(get_database_users_list(ActiveRecord::Base.connection ).include?('test_milandr_chicken_user')).to be(true)
+      expect(get_database_users_list(ActiveRecord::Base.connection ).include?('testmilandrchicken_user')).to be(true)
     end
   end
 
 
   describe 'create_user' do
-    it { expect{create_user(ActiveRecord::Base.connection, 'test_milandr_chicken_user' )}.not_to raise_error }
-    it { expect{create_user(ActiveRecord::Base.connection, 'test_milandr_chicken_user', 'password' )}.not_to raise_error }
+    it { expect{create_user(ActiveRecord::Base.connection, 'testmilandrchicken_user' )}.not_to raise_error }
+    it { expect{create_user(ActiveRecord::Base.connection, 'testmilandrchicken_user', 'password' )}.not_to raise_error }
+    it 'should create user' do
+      create_user(ActiveRecord::Base.connection, 'testmilandrchicken_user' )
+      expect(get_database_users_list(ActiveRecord::Base.connection ).include?('testmilandrchicken_user')).to be(true)
+    end
   end
 end

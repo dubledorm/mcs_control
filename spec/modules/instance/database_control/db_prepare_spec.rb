@@ -5,7 +5,7 @@ describe Instance::DatabaseControl::DbPrepare do
   include DatabaseTools
 
   describe 'standard call' do
-    let(:instance) {FactoryGirl.build :instance, name: 'test-milandr-chicken'}
+    let(:instance) {FactoryGirl.build :instance, name: 'testmilandrchicken'}
 
     it 'should not to raise error' do
       expect {Instance::DatabaseControl::DbPrepare.build(instance)}.not_to raise_error
@@ -15,7 +15,7 @@ describe Instance::DatabaseControl::DbPrepare do
       # noinspection SpellCheckingInspection
       Instance::DatabaseControl::DbPrepare.build(instance)
       # noinspection SpellCheckingInspection
-      expect(instance.db_user_name).to eq('test_milandr_chicken')
+      expect(instance.db_user_name).to eq('testmilandrchicken')
     end
 
 
@@ -23,23 +23,23 @@ describe Instance::DatabaseControl::DbPrepare do
       # noinspection SpellCheckingInspection
       Instance::DatabaseControl::DbPrepare.build(instance)
       # noinspection SpellCheckingInspection
-      expect(get_database_users_list(ActiveRecord::Base.connection).include?('test_milandr_chicken')).to be(true)
+      expect(get_database_users_list(ActiveRecord::Base.connection).include?('testmilandrchicken')).to be(true)
     end
   end
 
   describe 'database user already exists' do
-    let(:instance) {FactoryGirl.build :instance, name: 'test-milandr-chicken'}
+    let(:instance) {FactoryGirl.build :instance, name: 'testmilandrchicken'}
 
     before :each do
       # noinspection SpellCheckingInspection,SpellCheckingInspection
-      create_user(ActiveRecord::Base.connection, 'test_milandr_chicken', 'test_milandr_chicken')
+      create_user(ActiveRecord::Base.connection, 'testmilandrchicken', 'testmilandrchicken')
     end
 
     it 'should create database user' do
       # noinspection SpellCheckingInspection
       Instance::DatabaseControl::DbPrepare.build(instance)
       # noinspection SpellCheckingInspection
-      expect(get_database_users_list(ActiveRecord::Base.connection).include?('test_milandr_chicken_1')).to be(true)
+      expect(get_database_users_list(ActiveRecord::Base.connection).include?('testmilandrchicken_1')).to be(true)
     end
   end
 end

@@ -5,7 +5,7 @@ describe Program::Factory do
   include DatabaseTools
 
   before :each do
-    @instance = Instance.new(name: 'test-milandr-chicken')
+    @instance = Instance.new(name: 'testmilandrchicken')
 
     Instance::DatabaseControl::DbPrepare.build(@instance)
 
@@ -19,8 +19,8 @@ describe Program::Factory do
 
     it 'should create database' do
       Program::Factory::build_and_create_db(instance, program_type, additional_name)
-      database_name = 'test_milandr_chicken_'
-      database_name += program_type == 'dcs-cli' ? 'dcs4' : program_type
+      database_name = program_type == 'dcs-cli' ? 'dcs4' : program_type
+      database_name += '_testmilandrchicken'
       database_name += '_' + additional_name unless additional_name.blank?
       # noinspection SpellCheckingInspection
       expect(get_database_list(ActiveRecord::Base.connection).include?(database_name)).to be(true)
@@ -152,12 +152,12 @@ describe Program::Factory do
     
     before :each do
       # noinspection SpellCheckingInspection,SpellCheckingInspection
-      create_database(ActiveRecord::Base.connection, 'test_milandr_chicken_mc')
+      create_database(ActiveRecord::Base.connection, 'mc_testmilandrchicken')
     end
 
     it 'should create database with additional number' do
       Program::Factory::build_and_create_db(instance, program_type, additional_name)
-      expect(get_database_list(ActiveRecord::Base.connection).include?('test_milandr_chicken_mc_1')).to be(true)
+      expect(get_database_list(ActiveRecord::Base.connection).include?('mc_testmilandrchicken_1')).to be(true)
     end
   end
 end

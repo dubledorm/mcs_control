@@ -25,9 +25,9 @@ describe Instance::DatabaseControl::CollateWithDbService do
     include_context 'instance with content'
 
     before :each do
-      create_database( ActiveRecord::Base.connection, 'test_milandr_chicken_mc' )
-      create_database( ActiveRecord::Base.connection, 'test_milandr_chicken_op' )
-      create_database( ActiveRecord::Base.connection, 'test_milandr_chicken_dcs4' )
+      create_database( ActiveRecord::Base.connection, 'mc_testmilandrchicken' )
+      create_database( ActiveRecord::Base.connection, 'op_testmilandrchicken' )
+      create_database( ActiveRecord::Base.connection, 'dcs4_testmilandrchicken' )
 
       Instance::DatabaseControl::CollateWithDbService.new(instance).call
       program_mc.reload
@@ -43,12 +43,12 @@ describe Instance::DatabaseControl::CollateWithDbService do
   end
 
   describe 'only_there_exists' do
-    let!(:instance) {FactoryGirl.create :instance, name: 'test-milandr-chicken', db_user_name: 'test_milandr_chicken', db_status: 'undefined'}
+    let!(:instance) {FactoryGirl.create :instance, name: 'testmilandrchicken', db_user_name: 'testmilandrchicken', db_status: 'undefined'}
 
     before :each do
-      create_database( ActiveRecord::Base.connection, 'test_milandr_chicken_mc' )
-      create_database( ActiveRecord::Base.connection, 'test_milandr_chicken_op' )
-      create_database( ActiveRecord::Base.connection, 'test_milandr_chicken_dcs4' )
+      create_database( ActiveRecord::Base.connection, 'mc_testmilandrchicken' )
+      create_database( ActiveRecord::Base.connection, 'op_testmilandrchicken' )
+      create_database( ActiveRecord::Base.connection, 'dcs4_testmilandrchicken' )
 
       Instance::DatabaseControl::CollateWithDbService.new(instance).call
     end

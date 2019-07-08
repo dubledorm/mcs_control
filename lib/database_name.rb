@@ -1,10 +1,10 @@
 module DatabaseName
-  REGEXP_DATABASE_NAME = /^(?<prefix>[a-zA-Z\_\d]+)_(?<program_type>mc|op|dcs4)(?:_(?<add_name>[a-zA-Z\_\d]+?))??(?:_(?<digit>\d*))??$/.freeze
+  REGEXP_DATABASE_NAME = /^(?<program_type>mc|op|dcs4)_(?<prefix>[a-zA-Z\d]+)(?:_(?<add_name>[a-zA-Z\_\d]+?))??(?:_(?<digit>\d*))??$/.freeze
   DATABASE_NAMES = { mc: 'mc', op: 'op', dcs_cli: 'dcs4'}.freeze
 
   def create_database_name(instance_name, program_type, additional_name)
-    (instance_name + '_' +
-        DATABASE_NAMES[program_type.parameterize.underscore.to_sym] +
+    (DATABASE_NAMES[program_type.parameterize.underscore.to_sym] + '_' +
+        instance_name +
         (additional_name.blank? ? '' : '_' + additional_name)).gsub('-','_')
   end
 

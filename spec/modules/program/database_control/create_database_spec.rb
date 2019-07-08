@@ -5,7 +5,7 @@ describe Program::DatabaseControl::CreateDatabase do
   include DatabaseTools
 
   before :each do
-    @instance = Instance.new(name: 'test-milandr-chicken')
+    @instance = Instance.new(name: 'testmilandrchicken')
 
     Instance::DatabaseControl::DbPrepare.build(@instance)
 
@@ -26,7 +26,7 @@ describe Program::DatabaseControl::CreateDatabase do
 
     it 'should create database' do
       Program::DatabaseControl::CreateDatabase.build(program)
-      expect(get_database_list(ActiveRecord::Base.connection).include?('test_milandr_chicken_mc')).to be(true)
+      expect(get_database_list(ActiveRecord::Base.connection).include?('mc_testmilandrchicken')).to be(true)
     end
 
     it 'should grant access to user' do
@@ -48,12 +48,12 @@ describe Program::DatabaseControl::CreateDatabase do
 
     before :each do
       # noinspection SpellCheckingInspection,SpellCheckingInspection
-      create_database(ActiveRecord::Base.connection, 'test_milandr_chicken_mc')
+      create_database(ActiveRecord::Base.connection, 'mc_testmilandrchicken')
     end
 
     it 'should create database' do
       Program::DatabaseControl::CreateDatabase.build(program)
-      expect(get_database_list(ActiveRecord::Base.connection).include?('test_milandr_chicken_mc_1')).to be(true)
+      expect(get_database_list(ActiveRecord::Base.connection).include?('mc_testmilandrchicken_1')).to be(true)
     end
   end
 end
