@@ -4,10 +4,8 @@ require 'generate_password'
 class Instance
   module DatabaseControl
     class DbPrepare
-      include DatabaseTools
-      include GeneratePassword
-
-  #    DB_USER_PASSWORD_LENGTH = 8
+      extend DatabaseTools
+      extend GeneratePassword
 
       def self.build(instance)
         instance.db_user_name = Instance::DatabaseControl::DecideOnDbUserService.new(instance).call

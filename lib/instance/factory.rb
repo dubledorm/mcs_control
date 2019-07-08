@@ -4,12 +4,12 @@ class Instance
     def self.build(name)
       instance = Instance.new(name: name, db_status: 'undefined')
       Instance::DatabaseControl::DbPrepare.build(instance)
-      instance.save
+      instance.save!
 
-      Program::Factory::build(instance, 'mc')
-      Program::Factory::build(instance, 'op')
-      Program::Factory::build(instance, 'dcs-dev')
-      Program::Factory::build(instance, 'dcs-cli')
+      Program::Factory::build_and_create_db(instance, 'mc')
+      Program::Factory::build_and_create_db(instance, 'op')
+      Program::Factory::build_and_create_db(instance, 'dcs-dev')
+      Program::Factory::build_and_create_db(instance, 'dcs-cli')
 
       return instance
     end

@@ -9,6 +9,9 @@ ru:
         name: Название
         owner_name: Владелец
         description: Описание
+        db_user_name: Пользователь БД
+        db_user_password: Пароль пльзователя БД
+        db_status: Статус БД
         created_at: Создан
         updated_at: Изменён
       port:
@@ -23,6 +26,9 @@ ru:
       models:
         instance:
           attributes:
+            db_user_name:
+              blank: должен быть заполнен
+              invalid: может содержать буквы латинского алфавита, цифры, знак '_'
             name:
               taken: уже используется
               blank: должно быть заполнено

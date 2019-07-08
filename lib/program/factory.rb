@@ -5,7 +5,7 @@ class Program
     extend DatabaseName
     extend InfospheraTools
 
-    def self.build(instance, program_type, additional_name = nil)
+    def self.build_and_create_db(instance, program_type, additional_name = nil)
       program = Program.new(instance: instance,
                             program_type: program_type,
                             additional_name: additional_name,
@@ -13,7 +13,7 @@ class Program
 
       program.identification_name = make_identification_name(instance.name, program_type, additional_name)
 
-      Program::DatabaseControl::DbPrepare.build(program) if need_database?(program_type)
+      Program::DatabaseControl::CreateDatabase::build(program) if need_database?(program_type)
 
       program.save
 

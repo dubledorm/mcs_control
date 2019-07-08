@@ -2,8 +2,8 @@ require 'database_tools'
 
 class Program
   module DatabaseControl
-    class DbPrepare
-      include DatabaseTools
+    class CreateDatabase
+      extend DatabaseTools
 
       def self.build(program)
         program.database_name = Program::DatabaseControl::DecideOnDbNameService.new(program).call if program.program_type != 'dcs-dev'

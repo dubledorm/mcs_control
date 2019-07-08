@@ -1,7 +1,7 @@
 require 'rails_helper_without_transactions'
 require 'database_tools'
 
-describe Program::DatabaseControl::DbPrepare do
+describe Program::DatabaseControl::CreateDatabase do
   include DatabaseTools
 
   before :each do
@@ -20,17 +20,17 @@ describe Program::DatabaseControl::DbPrepare do
 
     it 'should not to raise error' do
       expect {
-        Program::DatabaseControl::DbPrepare.build(program)
+        Program::DatabaseControl::CreateDatabase.build(program)
       }.not_to raise_error
     end
 
     it 'should create database' do
-      Program::DatabaseControl::DbPrepare.build(program)
+      Program::DatabaseControl::CreateDatabase.build(program)
       expect(get_database_list(ActiveRecord::Base.connection).include?('test_milandr_chicken_mc')).to be(true)
     end
 
     it 'should grant access to user' do
-      Program::DatabaseControl::DbPrepare.build(program)
+      Program::DatabaseControl::CreateDatabase.build(program)
 
       cmd = "psql -h #{Rails.configuration.database_configuration[Rails.env]["host"]}" +
             " -U #{program.instance.db_user_name} -w" +
@@ -52,7 +52,7 @@ describe Program::DatabaseControl::DbPrepare do
     end
 
     it 'should create database' do
-      Program::DatabaseControl::DbPrepare.build(program)
+      Program::DatabaseControl::CreateDatabase.build(program)
       expect(get_database_list(ActiveRecord::Base.connection).include?('test_milandr_chicken_mc_1')).to be(true)
     end
   end
