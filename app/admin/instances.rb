@@ -18,26 +18,19 @@ ActiveAdmin.register Instance do
      input :name
      input :description
      input :owner_name
- #    input :db_user_name
-   end
-   # panel 'Markup' do
-   #  "The following can be used in the content below..."
-   # end
-   # inputs 'Content', :body
-   para "Press cancel to return to the list without saving."
+    end
    actions
   end
 
   controller do
 
     def create
-      instance = Instance::Factory::build(params[:instance][:name])
-      instance.description = params[:instance][:description]
-      instance.owner_name = params[:instance][:owner_name]
-      if instance.save
-        redirect_to admin_instance_path(id: instance.id)
-      else
-        render :new
+      begin
+        @instance = Instance.new(params.require(:instance).permit(:name, :owner_name, :description))
+        Instance::Factory::build_and_create_db(@instance)
+        redirect_to admin_instance_path(id: @instance.id)
+      rescue StandardError => e
+        render :new, alert: e.message
       end
     end
   end

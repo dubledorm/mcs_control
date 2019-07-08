@@ -7,7 +7,7 @@ describe Program::DatabaseControl::CreateDatabase do
   before :each do
     @instance = Instance.new(name: 'testmilandrchicken')
 
-    Instance::DatabaseControl::DbPrepare.build(@instance)
+    Instance::DatabaseControl::CreateUser.build(@instance)
 
     @instance.save
   end
