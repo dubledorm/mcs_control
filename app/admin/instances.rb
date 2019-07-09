@@ -13,6 +13,24 @@ ActiveAdmin.register Instance do
 # end
 
 
+
+  show do
+      attributes_table do
+        row :name
+        row :description
+        row :owner_name
+        row :db_user_name
+        row :db_user_password
+      end
+
+
+      panel Instance.human_attribute_name(:programs) do
+        render 'admin/shared/program_show', programs: instance.programs
+      end
+      active_admin_comments
+  end
+
+
   form title: Instance.model_name.human do |f|
    inputs 'Details' do
      input :name

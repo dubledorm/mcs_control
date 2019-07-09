@@ -73,6 +73,7 @@
     <orderEntry type="library" scope="PROVIDED" name="formtastic (v3.1.5, RVM: ruby-2.6.3 [milandr]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="formtastic_i18n (v0.6.0, RVM: ruby-2.6.3 [milandr]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="globalid (v0.4.2, RVM: ruby-2.6.3 [milandr]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="haml (v5.1.1, RVM: ruby-2.6.3 [milandr]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="has_scope (v0.7.2, RVM: ruby-2.6.3 [milandr]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="hashdiff (v0.4.0, RVM: ruby-2.6.3 [milandr]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="i18n (v1.6.0, RVM: ruby-2.6.3 [milandr]) [gem]" level="application" />
@@ -155,6 +156,7 @@
     <orderEntry type="library" scope="PROVIDED" name="sprockets (v3.7.2, RVM: ruby-2.6.3 [milandr]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sprockets-es6 (v0.9.2, RVM: ruby-2.6.3 [milandr]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sprockets-rails (v3.2.1, RVM: ruby-2.6.3 [milandr]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="temple (v0.8.1, RVM: ruby-2.6.3 [milandr]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="test-unit (v3.3.3, RVM: ruby-2.6.3 [milandr]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="thor (v0.20.3, RVM: ruby-2.6.3 [milandr]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="thread_safe (v0.3.6, RVM: ruby-2.6.3 [milandr]) [gem]" level="application" />

@@ -1,0 +1,25 @@
+.section
+  %table
+    %thead
+      %tr
+        %th
+          = Program.human_attribute_name(:program_type)
+        %th
+          = Program.human_attribute_name(:identification_name)
+        %th
+          = Program.human_attribute_name(:database_name)
+        %th
+          = Program.human_attribute_name(:db_status)
+    %tbody
+      - programs.each do |program|
+        %tr
+          %td
+            = program.program_type
+          %td
+            = link_to program.identification_name, admin_program_path(id: program.id)
+          %td
+            = program.database_name
+          %td
+            = program.db_status
+
+

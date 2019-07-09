@@ -12,6 +12,7 @@ ru:
         db_user_name: Пользователь БД
         db_user_password: Пароль пльзователя БД
         db_status: Статус БД
+        programs: Программы
         created_at: Создан
         updated_at: Изменён
       port:
@@ -20,6 +21,13 @@ ru:
       program:
         name: Название
         program_type: Тип
+        identification_name: Идентифкатор
+        database_name: База данных
+        db_status: Статус БД
+        additional_name: Доп. имя
+        instance: Инстанс
+        created_at: Создан
+        updated_at: Изменён
     errors:
       messages:
         record_invalid: ошибка при создании записи, вероятнее всего переданы неверные значения полей
