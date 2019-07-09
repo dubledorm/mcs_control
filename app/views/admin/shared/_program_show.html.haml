@@ -10,6 +10,9 @@
           = Program.human_attribute_name(:database_name)
         %th
           = Program.human_attribute_name(:db_status)
+        %th
+          = Program.human_attribute_name(:ports)
+
     %tbody
       - programs.each do |program|
         %tr
@@ -21,5 +24,7 @@
             = program.database_name
           %td
             = program.db_status
+          %td
+            = program.decorate.ports_str
 
 

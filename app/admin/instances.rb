@@ -12,6 +12,18 @@ ActiveAdmin.register Instance do
 #   permitted
 # end
 
+  index do
+    selectable_column
+    id_column
+    column :name
+    column :description
+    column :owner_name
+    column :db_status do |instance|
+      instance.decorate.collate_base_status
+    end
+    column :created_at
+    actions
+  end
 
 
   show do
@@ -21,6 +33,9 @@ ActiveAdmin.register Instance do
         row :owner_name
         row :db_user_name
         row :db_user_password
+        row :db_status do |instance|
+          instance.decorate.collate_base_status
+        end
       end
 
 

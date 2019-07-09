@@ -13,6 +13,7 @@ ru:
         db_user_password: Пароль пльзователя БД
         db_status: Статус БД
         programs: Программы
+        ports: Порты
         created_at: Создан
         updated_at: Изменён
       port:
@@ -28,6 +29,14 @@ ru:
         instance: Инстанс
         created_at: Создан
         updated_at: Изменён
+
+    decorate:
+      instance:
+        db_status:
+          undefined: Не определено
+          everywhere_exists: Ок (есть везде)
+          only_here_exists: Только здесь
+          only_there_exists: Только там
     errors:
       messages:
         record_invalid: ошибка при создании записи, вероятнее всего переданы неверные значения полей
