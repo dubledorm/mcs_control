@@ -16,14 +16,19 @@ describe Program::Destructor do
 
   it {expect(Program.count).to eq(5)}
 
-  it {    expect(get_database_list(ActiveRecord::Base.connection).include?('mc_testmilandrchicken_temp')).to be(true)}
+  it {expect(get_database_list(ActiveRecord::Base.connection).include?('mc_testmilandrchicken_temp')).to be(true)}
 
   it 'should decrement Program.count' do
     expect{Program::Destructor::destroy_and_drop_db(@program_tmp)}.to change(Program, :count).by(-1)
   end
 
-  it 'should drop database dcs4_testmilandrchicken' do
+  it 'should drop database mc_testmilandrchicken_temp' do
     Program::Destructor::destroy_and_drop_db(@program_tmp)
     expect(get_database_list(ActiveRecord::Base.connection).include?('mc_testmilandrchicken_temp')).to be(false)
+  end
+
+  it 'database does not exists' do
+    drop_database( ActiveRecord::Base.connection, 'mc_testmilandrchicken_temp' )
+    expect{Program::Destructor::destroy_and_drop_db(@program_tmp)}.to change(Program, :count).by(-1)
   end
 end

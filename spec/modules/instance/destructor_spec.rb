@@ -15,11 +15,15 @@ describe Instance::Destructor do
   it {expect(get_database_list(ActiveRecord::Base.connection).include?('mc_testmilandrchicken')).to be(true)}
   it {expect(get_database_list(ActiveRecord::Base.connection).include?('op_testmilandrchicken')).to be(true)}
   it {expect(get_database_list(ActiveRecord::Base.connection).include?('dcs4_testmilandrchicken')).to be(true)}
-
+  it {expect(get_database_users_list(ActiveRecord::Base.connection).include?('testmilandrchicken')).to be(true)}
 
 
   it 'should decrement Program.count' do
     expect{Instance::Destructor::destroy_and_drop_db(@instance)}.to change(Program, :count).by(-4)
+  end
+
+  it 'should decrement Instance.count' do
+    expect{Instance::Destructor::destroy_and_drop_db(@instance)}.to change(Instance, :count).by(-1)
   end
 
   it 'should drop databases ' do
@@ -28,4 +32,14 @@ describe Instance::Destructor do
     expect(get_database_list(ActiveRecord::Base.connection).include?('op_testmilandrchicken')).to be(false)
     expect(get_database_list(ActiveRecord::Base.connection).include?('dcs4_testmilandrchicken')).to be(false)
   end
+
+  it 'should drop database user' do
+    Instance::Destructor::destroy_and_drop_db(@instance)
+    expect(get_database_users_list(ActiveRecord::Base.connection).include?('testmilandrchicken')).to be(false)
+  end
+
+  # it 'should do if database user does not exists' do
+  #   drop_user(ActiveRecord::Base.connection, 'testmilandrchicken')
+  #   expect{Instance::Destructor::destroy_and_drop_db(@instance)}.to change(Instance, :count).by(-1)
+  # end
 end

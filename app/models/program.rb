@@ -3,7 +3,7 @@ class Program < ApplicationRecord
   include DualStorage
 
   belongs_to :instance
-  has_many :ports
+  has_many :ports, dependent: :destroy
 
   validates :database_name, uniqueness: true, allow_nil: true
   validates :identification_name, presence: true, uniqueness: true, format: { with: /\A[a-zA-Z\-\d]+\z/}

@@ -54,6 +54,15 @@ ActiveAdmin.register Instance do
         render :new, alert: e.message
       end
     end
+
+    def destroy
+      begin
+        Instance::Destructor::destroy_and_drop_db(resource)
+        redirect_to admin_instances_path
+      rescue StandardError => e
+        redirect_to admin_instance_path(resource), alert: e.message
+      end
+    end
   end
 
 

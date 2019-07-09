@@ -71,4 +71,17 @@ describe DatabaseTools do
       expect(get_database_users_list(ActiveRecord::Base.connection ).include?('testmilandrchicken_user')).to be(true)
     end
   end
+
+  describe 'drop_user' do
+    before :each do
+      create_user(ActiveRecord::Base.connection, 'testmilandrchicken_user' )
+    end
+
+    it {expect(get_database_users_list(ActiveRecord::Base.connection ).include?('testmilandrchicken_user')).to be(true)}
+
+    it 'should drop database role' do
+      drop_user(ActiveRecord::Base.connection, 'testmilandrchicken_user' )
+      expect(get_database_users_list(ActiveRecord::Base.connection ).include?('testmilandrchicken_user')).to be(false)
+    end
+  end
 end
