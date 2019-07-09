@@ -1,5 +1,6 @@
 ActiveAdmin.register Instance do
   includes :programs
+  decorate_with InstanceDecorator
 
   permit_params :name, :description, :owner_name, :db_user_name, :db_user_password
 
@@ -9,9 +10,7 @@ ActiveAdmin.register Instance do
     column :name
     column :description
     column :owner_name
-    column :db_status do |instance|
-      instance.decorate.collate_base_status
-    end
+    column :collate_base_status
     column :created_at
     actions
   end
@@ -24,9 +23,7 @@ ActiveAdmin.register Instance do
         row :owner_name
         row :db_user_name
         row :db_user_password
-        row :db_status do |instance|
-          instance.decorate.collate_base_status
-        end
+        row :collate_base_status
       end
 
 
@@ -58,4 +55,13 @@ ActiveAdmin.register Instance do
       end
     end
   end
+
+  # action_item :check do
+  #   link_to I18n.t('actions.instance.check'), check_admin_instance_path(resource)
+  # end
+  #
+  # member_action :check, method: :put do
+  #  # resource.lock!
+  #   redirect_to resource_path, notice: "Checked!"
+  # end
 end

@@ -1,5 +1,6 @@
 ActiveAdmin.register Program do
   menu false
+  decorate_with ProgramDecorator
 
   show do
     attributes_table do
@@ -8,9 +9,7 @@ ActiveAdmin.register Program do
       row :program_type
       row :additional_name
       row :database_name
-      row :db_status do |program|
-        program.decorate.collate_base_status
-      end
+      row :collate_base_status
       row :created_at
       row :updated_at
     end

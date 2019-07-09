@@ -12,6 +12,7 @@ ru:
         db_user_name: Пользователь БД
         db_user_password: Пароль пльзователя БД
         db_status: Статус БД
+        collate_base_status: Статус БД
         programs: Программы
         ports: Порты
         created_at: Создан
@@ -25,6 +26,7 @@ ru:
         identification_name: Идентифкатор
         database_name: База данных
         db_status: Статус БД
+        collate_base_status: Статус БД
         additional_name: Доп. имя
         instance: Инстанс
         created_at: Создан
@@ -96,3 +98,6 @@ ru:
           create_db_user_interactor:
             standard_error:
               cause_of_error: "Ошибка при создании пользователя базы данных. Причина %{error_message}"
+  actions:
+    instance:
+      check: Сверить с БД
