@@ -28,6 +28,11 @@ module DatabaseTools
     connection.execute("drop user #{user_name}")
   end
 
+  def db_user_exists?(db_user_name)
+    return false if db_user_name.blank?
+    get_database_users_list(ActiveRecord::Base.connection).include?(db_user_name)
+  end
+
   def grant_all_privileges( connection, database_name, user_name)
     connection.execute("grant all privileges on database #{database_name} to #{user_name};")
   end

@@ -1,5 +1,5 @@
 RSpec.shared_context 'instance with content' do
-  let!(:instance) {FactoryGirl.create :instance, name: 'testmilandrchicken', db_user_name: 'test_milandr_chicken', db_status: 'undefined'}
+  let!(:instance) {FactoryGirl.create :instance, name: 'testmilandrchicken', db_user_name: 'testmilandrchicken', db_status: 'undefined'}
   let!(:program_mc) {FactoryGirl.create :program, instance: instance, program_type: 'mc', database_name: 'mc_testmilandrchicken',
                                         identification_name: 'testmilandrchicken-mc', db_status: 'undefined'}
   let!(:program_op) {FactoryGirl.create :program, instance: instance, program_type: 'op', database_name: 'op_testmilandrchicken',

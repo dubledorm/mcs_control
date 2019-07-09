@@ -10,6 +10,7 @@ describe Program::Destructor do
     create_database( ActiveRecord::Base.connection, 'mc_testmilandrchicken' )
     create_database( ActiveRecord::Base.connection, 'op_testmilandrchicken' )
     create_database( ActiveRecord::Base.connection, 'dcs4_testmilandrchicken' )
+    create_user(ActiveRecord::Base.connection, 'testmilandrchicken')
 
     @program_tmp =  Program::Factory::build_and_create_db(instance, 'mc', 'temp')
   end
