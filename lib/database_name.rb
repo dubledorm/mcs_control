@@ -1,5 +1,6 @@
 module DatabaseName
-  REGEXP_DATABASE_NAME = /^(?<program_type>mc|op|dcs4)_(?<prefix>[a-zA-Z\d]+)(?:_(?<add_name>[a-zA-Z\_\d]+?))??(?:_(?<digit>\d*))??$/.freeze
+  REGEXP_DATABASE_NAME = /^(?<program_type>mc|op|dcs4)_(?<prefix>[a-zA-Z\d]+)(?:_(?<add_name>[a-zA-Z_\d]+?))??(?:_(?<digit>\d*))??$/.freeze
+  REGEXP_DATABASE_NAME_PREFIX = '^(?<program_type>mc|op|dcs4)_(?<prefix>PREFIX_NAME)(?:_(?<add_name>[a-zA-Z_\d]+?))??(?:_(?<digit>\d*))??$'.freeze
   DATABASE_NAMES = { mc: 'mc', op: 'op', dcs_cli: 'dcs4'}.freeze
 
   def create_database_name(instance_name, program_type, additional_name)
@@ -31,5 +32,9 @@ module DatabaseName
 
   def database_prefix(instance_name)
     instance_name.gsub('-', '_')
+  end
+
+  def regexp_for_prefix(prefix) # Получить рег. эксп для отбора всех баз данных для определённого инмтанса. Имя инстанса - prefix
+    Regexp.new REGEXP_DATABASE_NAME_PREFIX.gsub('PREFIX_NAME', prefix)
   end
 end

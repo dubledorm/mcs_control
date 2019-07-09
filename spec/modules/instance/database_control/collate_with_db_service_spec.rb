@@ -58,4 +58,24 @@ describe Instance::DatabaseControl::CollateWithDbService do
     it { expect(instance.programs[1].sym_db_status).to eq(:only_there_exists) }
     it { expect(instance.programs[2].sym_db_status).to eq(:only_there_exists) }
   end
+
+  describe 'one database name looks like another' do
+    include_context 'instance with content'
+
+    before :each do
+      create_database( ActiveRecord::Base.connection, 'mc_testmilandrchicken' )
+      create_database( ActiveRecord::Base.connection, 'mc_testmilandrchickennn' )
+
+      Instance::DatabaseControl::CollateWithDbService.new(instance).call
+      program_mc.reload
+      program_op.reload
+      program_cli.reload
+      program_dev.reload
+    end
+
+    it {expect(program_mc.sym_db_status).to eq(:everywhere_exists)}
+    it {expect(program_op.sym_db_status).to eq(:only_here_exists)}
+    it {expect(program_cli.sym_db_status).to eq(:only_here_exists)}
+    it {expect(program_dev.sym_db_status).to eq(:only_here_exists)}
+  end
 end

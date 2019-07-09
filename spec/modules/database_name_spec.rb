@@ -70,4 +70,9 @@ describe DatabaseName do
     it { expect(make_identification_name('arch-energo', :dcs_cli, '')).to eq('arch-energo-dcs-cli') }
     it { expect(make_identification_name('arch-energo', :dcs_dev, '')).to eq('arch-energo-dcs-dev') }
   end
+
+
+  describe 'regexp_for_prefix' do
+    it { expect(regexp_for_prefix('archenergo')).to eq(/^(?<program_type>mc|op|dcs4)_(?<prefix>archenergo)(?:_(?<add_name>[a-zA-Z_\d]+?))??(?:_(?<digit>\d*))??$/) }
+  end
 end

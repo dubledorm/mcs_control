@@ -56,12 +56,13 @@ ActiveAdmin.register Instance do
     end
   end
 
-  # action_item :check do
-  #   link_to I18n.t('actions.instance.check'), check_admin_instance_path(resource)
-  # end
-  #
-  # member_action :check, method: :put do
-  #  # resource.lock!
-  #   redirect_to resource_path, notice: "Checked!"
-  # end
+
+  action_item :check, only: :show do
+    link_to I18n.t('actions.instance.check'), check_admin_instance_path(resource), method: :put
+  end
+
+  member_action :check, method: :put do
+    Instance::DatabaseControl::CollateWithDbService.new(resource).call
+    redirect_to admin_instance_path(resource), notice: "Checked!"
+  end
 end
