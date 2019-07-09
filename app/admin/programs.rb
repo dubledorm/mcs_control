@@ -2,7 +2,7 @@ ActiveAdmin.register Program do
   menu false
   decorate_with ProgramDecorator
 
-  show do
+  show title: :identification_name do
     attributes_table do
       row :identification_name
       row :instance
@@ -15,4 +15,5 @@ ActiveAdmin.register Program do
     end
     active_admin_comments
   end
+
 end
