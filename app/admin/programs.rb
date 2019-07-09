@@ -1,13 +1,19 @@
 ActiveAdmin.register Program do
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
-#
-# or
-#
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if params[:action] == 'create' && current_user.admin?
-#   permitted
-# end
+  menu false
+
+  show do
+    attributes_table do
+      row :identification_name
+      row :instance
+      row :program_type
+      row :additional_name
+      row :database_name
+      row :db_status do |program|
+        program.decorate.collate_base_status
+      end
+      row :created_at
+      row :updated_at
+    end
+    active_admin_comments
+  end
 end
