@@ -49,5 +49,10 @@ describe Instance do
     it_should_behave_like 'argument error' do
       let(:instance) { FactoryGirl.build :instance, name: nil }
     end
+
+    it_should_behave_like 'database user name eq' do
+      let(:instance) { FactoryGirl.build :instance, name: '1234' }
+      let(:coming_database_user) { '1234' }
+    end
   end
 end

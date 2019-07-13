@@ -6,7 +6,7 @@ class Instance
 
     def self.build_and_create_db(instance)
       begin
-        Instance::DatabaseControl::CreateUser.build(instance)
+        Instance::DatabaseControl::CreateUser::build(instance)
         instance.db_status = 'undefined'
         instance.save!
 
@@ -18,9 +18,9 @@ class Instance
         instance.db_status = 'everywhere_exists'
         instance.save!
         return instance
-      rescue
+      rescue StandardError => e
         restore(instance)
-        raise
+        raise e
       end
     end
 

@@ -70,6 +70,8 @@ describe DatabaseTools do
       create_user(ActiveRecord::Base.connection, 'testmilandrchicken_user' )
       expect(get_database_users_list(ActiveRecord::Base.connection ).include?('testmilandrchicken_user')).to be(true)
     end
+
+    it { expect{create_user(ActiveRecord::Base.connection, '1111' )}.to raise_error ActiveRecord::StatementInvalid}
   end
 
   describe 'drop_user' do

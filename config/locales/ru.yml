@@ -101,3 +101,10 @@ ru:
   actions:
     instance:
       check: Сверить с БД
+
+  forms:
+    activeadmin:
+      instance:
+        attributes: Атрибуты
+        create_database_title: Создание базы данных
+        need_database_create:  Создать все базы данных

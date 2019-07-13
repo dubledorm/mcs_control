@@ -35,12 +35,17 @@ ActiveAdmin.register Instance do
 
 
   form title: Instance.model_name.human do |f|
-   inputs 'Details' do
-     input :name
-     input :description
-     input :owner_name
+    inputs I18n.t('forms.activeadmin.instance.attributes') do
+      input :name
+      input :description
+      input :owner_name
     end
-   actions
+
+    inputs I18n.t('forms.activeadmin.instance.create_database_title') do
+      render 'admin/shared/cb_and_label', variable_name: :need_database_create,
+             variable_title: I18n.t('forms.activeadmin.instance.need_database_create'), checked: true
+    end
+    actions
   end
 
   controller do
