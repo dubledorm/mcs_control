@@ -35,6 +35,7 @@ ActiveAdmin.register Instance do
 
 
   form title: Instance.model_name.human do |f|
+    f.semantic_errors *f.object.errors.keys
     inputs I18n.t('forms.activeadmin.instance.attributes') do
       input :name
       input :description
@@ -49,7 +50,6 @@ ActiveAdmin.register Instance do
   end
 
   controller do
-
     def create
       begin
         @instance = Instance.new(params.require(:instance).permit(:name, :owner_name, :description))
@@ -61,9 +61,18 @@ ActiveAdmin.register Instance do
     end
 
     def destroy
+      @page_title = I18n.t('forms.activeadmin.confirm.page_title', instance_name: resource.name)
       begin
-        Instance::Destructor::destroy_and_drop_db(resource)
-        redirect_to admin_instances_path
+        if params[:confirm].present?
+          Instance::Destructor::destroy_and_drop_db(resource)
+          redirect_to admin_instances_path
+        else
+          render 'admin/shared/destroy_instance_confirm', layout: 'active_admin',
+                 locals: {database_names: resource.decorate.database_names,
+                          program_names: resource.decorate.program_names,
+                          port_names: resource.decorate.ports
+                 }
+        end
       rescue StandardError => e
         redirect_to admin_instance_path(resource), alert: e.message
       end

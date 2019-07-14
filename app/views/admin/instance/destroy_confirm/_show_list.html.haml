@@ -1,0 +1,12 @@
+%tr.row
+  %th
+    = list_title
+  - if objects.empty?
+    %tr.row
+      %td
+        = I18n.t('words.empty')
+  -else
+    - objects.each do |object|
+      %tr.row
+        %td
+          = object
