@@ -21,6 +21,7 @@ class Program
       return program if port_type.blank?
 
       add_port(port_type, program)
+      Rails.logger.info 'Created program ' + program.identification_name
       return program
     end
 

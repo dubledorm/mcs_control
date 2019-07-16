@@ -56,6 +56,7 @@ ActiveAdmin.register Instance do
         Instance::Factory::build_and_create_db(@instance)
         redirect_to admin_instance_path(id: @instance.id)
       rescue StandardError => e
+        flash[:alert] = e.message
         render :new, alert: e.message
       end
     end
