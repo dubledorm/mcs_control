@@ -9,10 +9,12 @@ module DatabaseTools
 
   def create_database( connection, database_name )
     connection.execute("create database #{database_name}")
+    Rails.logger.info 'Created database ' + database_name
   end
 
   def drop_database( connection, database_name )
     connection.execute("drop database #{database_name}")
+    Rails.logger.info 'Deleted database ' + database_name
   end
 
   def get_database_users_list( connection )
@@ -22,10 +24,12 @@ module DatabaseTools
 
   def create_user( connection, user_name, user_password = '')
     connection.execute("create user #{user_name} with password '#{user_password}'")
+    Rails.logger.info 'Created database user ' + user_name
   end
 
   def drop_user( connection, user_name)
     connection.execute("drop user #{user_name}")
+    Rails.logger.info 'Deleted database user ' + user_name
   end
 
   def db_user_exists?(db_user_name)
@@ -35,6 +39,7 @@ module DatabaseTools
 
   def grant_all_privileges( connection, database_name, user_name)
     connection.execute("grant all privileges on database #{database_name} to #{user_name};")
+    Rails.logger.info 'Granted privileges on database ' + database_name + 'to user ' + user_name
   end
 
   def get_custom_connection(identifier, host, port, dbname, dbuser, password)

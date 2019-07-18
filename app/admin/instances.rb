@@ -37,23 +37,36 @@ ActiveAdmin.register Instance do
   form title: Instance.model_name.human do |f|
     f.semantic_errors *f.object.errors.keys
     inputs I18n.t('forms.activeadmin.instance.attributes') do
-      input :name
+      input :name unless resource.persisted?
       input :description
       input :owner_name
     end
 
-    inputs I18n.t('forms.activeadmin.instance.create_database_title') do
-      render 'admin/shared/cb_and_label', variable_name: :need_database_create,
-             variable_title: I18n.t('forms.activeadmin.instance.need_database_create'), checked: true
+    unless resource.persisted?
+      inputs I18n.t('forms.activeadmin.instance.create_database_title') do
+        render 'admin/shared/cb_and_label', variable_name: :need_database_create,
+               variable_title: I18n.t('forms.activeadmin.instance.need_database_create'), checked: need_database_create || false
+      end
     end
     actions
   end
 
   controller do
+    def new
+      @need_database_create = true
+      super
+    end
+
     def create
       begin
+        flash.delete(:alert)
+        @need_database_create = params.try(:[], :need_database_create) || false
         @instance = Instance.new(params.require(:instance).permit(:name, :owner_name, :description))
-        Instance::Factory::build_and_create_db(@instance)
+        if params[:need_database_create].present?
+          Instance::Factory::build_and_create_db(@instance)
+        else
+          Instance::Factory::build(@instance)
+        end
         redirect_to admin_instance_path(id: @instance.id)
       rescue StandardError => e
         flash[:alert] = e.message

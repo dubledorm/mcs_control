@@ -4,12 +4,12 @@ require 'database_tools'
 describe Instance::Factory do
   include DatabaseTools
 
-  describe 'build' do
+  describe 'build and create db' do
     it 'should not to raise error' do
       expect{Instance::Factory::build_and_create_db(Instance.new(name: 'testmilandrchicken'))}.to_not raise_error
     end
 
-    it "should create instance" do
+    it "should save instance" do
       expect{Instance::Factory::build_and_create_db(Instance.new(name: 'testmilandrchicken'))}.to change(Instance, :count).by(1)
     end
 
@@ -32,6 +32,22 @@ describe Instance::Factory do
       instance = Instance::Factory::build_and_create_db(Instance.new(name: 'testmilandrchicken'))
       instance.reload
       expect(instance.db_status).to eq('everywhere_exists')
+    end
+  end
+
+  describe 'build' do
+    it 'should not to raise error' do
+      expect{Instance::Factory::build(Instance.new(name: 'testmilandrchicken'))}.to_not raise_error
+    end
+
+    it "should save instance" do
+      expect{Instance::Factory::build(Instance.new(name: 'testmilandrchicken'))}.to change(Instance, :count).by(1)
+    end
+
+    it 'program.db_status should set to undefined' do
+      instance = Instance::Factory::build(Instance.new(name: 'testmilandrchicken'))
+      instance.reload
+      expect(instance.db_status).to eq('undefined')
     end
   end
 end

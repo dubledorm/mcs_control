@@ -24,6 +24,18 @@ class Instance
       end
     end
 
+    def self.build(instance)
+      begin
+        Instance::DatabaseControl::CreateUser::build(instance)
+        instance.db_status = 'undefined'
+        instance.save!
+        return instance
+      rescue StandardError => e
+        restore(instance)
+        raise e
+      end
+    end
+
     private
 
       def self.restore(instance)
