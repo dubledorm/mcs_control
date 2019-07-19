@@ -1,6 +1,7 @@
 ActiveAdmin.register Program do
   belongs_to :instance
   decorate_with ProgramDecorator
+  actions :show, :new, :create, :destroy
 
   show title: :identification_name do
     attributes_table do
