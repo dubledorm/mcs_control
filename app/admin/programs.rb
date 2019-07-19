@@ -1,5 +1,5 @@
 ActiveAdmin.register Program do
-  menu false
+  belongs_to :instance
   decorate_with ProgramDecorator
 
   show title: :identification_name do
@@ -15,5 +15,4 @@ ActiveAdmin.register Program do
     end
     active_admin_comments
   end
-
 end
