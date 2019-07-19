@@ -3,7 +3,7 @@ require 'rails_helper'
 require 'support/feature_helper'
 require 'support/shared/instance_thick_collate'
 
-RSpec.feature 'User registration', js: true do
+RSpec.feature 'Instance', js: true do
   include FeatureHelper
 
   describe 'new and edit' do
@@ -41,12 +41,12 @@ RSpec.feature 'User registration', js: true do
       context 'persistent record' do
         include_context 'instance with content'
 
-        it 'should need_database_create checked for new' do
+        it 'need_database_create should not available for edit' do
           visit edit_admin_instance_path(id: instance.id)
           expect(page.has_checked_field?(id: 'need_database_create')).to be(false)
         end
 
-        it 'should field name available for new' do
+        it 'field name should not available for edit' do
           visit edit_admin_instance_path(id: instance.id)
           expect(page.has_field?(id: 'instance_name')).to be(false)
         end
