@@ -1,7 +1,7 @@
-class InstanceDecorator < ApplicationDecorator
+class InstanceDecorator < ObjectBaseDecorator
   delegate_all
 
-  def ports
+  def port_names
     object.programs.map{|program| program.ports.map{|port| "#{port.number}/#{port.port_type}"}}.flatten.sort
   end
 

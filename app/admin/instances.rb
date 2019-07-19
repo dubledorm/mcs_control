@@ -28,7 +28,7 @@ ActiveAdmin.register Instance do
 
 
       panel Instance.human_attribute_name(:programs) do
-        render 'admin/shared/program_show', programs: instance.programs
+        render 'admin/shared/programs_show', programs: instance.programs
       end
       active_admin_comments
   end
@@ -75,16 +75,16 @@ ActiveAdmin.register Instance do
     end
 
     def destroy
-      @page_title = I18n.t('forms.activeadmin.confirm.page_title', instance_name: resource.name)
+      @page_title = I18n.t('forms.activeadmin.confirm.delete_instance_page_title', instance_name: resource.name)
       begin
         if params[:confirm].present?
           Instance::Destructor::destroy_and_drop_db(resource)
           redirect_to admin_instances_path
         else
-          render 'admin/instance/destroy_instance_confirm', layout: 'active_admin',
-                 locals: {database_names: resource.decorate.database_names,
-                          program_names: resource.decorate.program_names,
-                          port_names: resource.decorate.ports
+          render 'admin/shared/destroy_confirm', layout: 'active_admin',
+                 locals: {title: I18n.t('forms.activeadmin.confirm.delete_instance_message'),
+                          back_path: admin_instance_path(resource),
+                          delete_path: admin_instance_path(resource, confirm: true)
                  }
         end
       rescue StandardError => e
