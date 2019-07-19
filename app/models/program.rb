@@ -5,7 +5,7 @@ class Program < ApplicationRecord
   belongs_to :instance
   has_many :ports, dependent: :destroy
 
-  validates :database_name, uniqueness: true, allow_nil: true
+  validates :database_name, uniqueness: true, allow_nil: true, format: { with: /\A[a-zA-Z][a-zA-Z_\d]+\z/}
   validates :identification_name, presence: true, uniqueness: true, format: { with: /\A[a-zA-Z\-\d]+\z/}
   validates :additional_name, format: { with: /\A([a-zA-Z\-\d]+)??\z/}, allow_nil: true
   validates :program_type, presence: true, inclusion: { in: %w(mc op dcs-dev dcs-cli) }

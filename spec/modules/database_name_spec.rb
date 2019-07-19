@@ -34,10 +34,6 @@ describe DatabaseName do
     it { expect(get_database_prefix('mc_chicken_a_d_d')).to eq('chicken') }
     it { expect(get_database_prefix('op_chicken_a_d_d')).to eq('chicken') }
     it { expect(get_database_prefix('dcs4_chicken_a_d_d')).to eq('chicken') }
-
-    # it { expect(get_database_prefix('mc_chi_cken_a_d_d_35')).to eq('chi_cken') }
-    # it { expect(get_database_prefix('op_chi_cken_a_d_d_35')).to eq('chi_cken') }
-    # it { expect(get_database_prefix('dcs4_chi_cken_a_d_d_35')).to eq('chi_cken') }
   end
 
   describe 'get_additional_name' do
@@ -52,10 +48,6 @@ describe DatabaseName do
     it { expect(get_additional_name('mc_chicken_a_d_d')).to eq('a_d_d') }
     it { expect(get_additional_name('op_chicken_a_d_d')).to eq('a_d_d') }
     it { expect(get_additional_name('dcs4_chicken_a_d_d')).to eq('a_d_d') }
-
-    # it { expect(get_additional_name('mc_chi_cken_a_d_d_35')).to eq('a_d_d') }
-    # it { expect(get_additional_name('op_chi_cken_a_d_d_35')).to eq('a_d_d') }
-    # it { expect(get_additional_name('dcs4_chi_cken_a_d_d_35')).to eq('a_d_d') }
   end
 
   describe 'get_program_type_to_s' do
@@ -69,6 +61,7 @@ describe DatabaseName do
     it { expect(make_identification_name('arch-energo', :op, '')).to eq('arch-energo-op') }
     it { expect(make_identification_name('arch-energo', :dcs_cli, '')).to eq('arch-energo-dcs-cli') }
     it { expect(make_identification_name('arch-energo', :dcs_dev, '')).to eq('arch-energo-dcs-dev') }
+    it { expect(make_identification_name('Arch-Energo', :dcs_dev, 'Fnc')).to eq('Arch-Energo-dcs-dev-Fnc') }
   end
 
 

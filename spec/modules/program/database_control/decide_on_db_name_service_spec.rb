@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Program do
+describe 'DecideOnDbNameService' do
 
   shared_examples 'database name eq' do
     context 'empty database' do
@@ -33,6 +33,7 @@ describe Program do
   describe 'database name' do
     let(:instance) { FactoryGirl.build :instance, name: 'chicken' }
     let(:super_instance) { FactoryGirl.build :instance, name: 'superchicken' }
+    let(:foxy_instance) { FactoryGirl.build :instance, name: 'FoxyChicken' }
 
 
     it_should_behave_like 'database name eq' do
@@ -77,6 +78,11 @@ describe Program do
 
     it_should_behave_like 'database does not need' do
       let(:program) { FactoryGirl.build :program, instance: instance, program_type: 'dcs-dev', additional_name: 'fnc' }
+    end
+
+    it_should_behave_like 'database name eq' do
+      let(:program) { FactoryGirl.build :program, instance: foxy_instance, program_type: 'mc', additional_name: 'Super-Fnc' }
+      let(:coming_db_name) { 'mc_foxychicken_super_fnc' }
     end
   end
 end

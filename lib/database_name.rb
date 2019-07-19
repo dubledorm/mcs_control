@@ -6,7 +6,7 @@ module DatabaseName
   def create_database_name(instance_name, program_type, additional_name)
     (DATABASE_NAMES[program_type.parameterize.underscore.to_sym] + '_' +
         instance_name +
-        (additional_name.blank? ? '' : '_' + additional_name)).gsub('-','_')
+        (additional_name.blank? ? '' : '_' + additional_name)).gsub('-','_').downcase
   end
 
   def get_program_type(database_name)  # Получить тип программы из имени базы данных
