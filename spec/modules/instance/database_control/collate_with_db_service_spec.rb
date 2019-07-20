@@ -4,7 +4,7 @@ require 'support/shared/instance_thick_collate'
 
 describe Instance::DatabaseControl::CollateWithDbService do
   include DatabaseTools
-  describe 'only_here_exists' do
+  context 'when program`s databases do not exist' do
     include_context 'instance with content'
 
     before :each do
@@ -21,7 +21,7 @@ describe Instance::DatabaseControl::CollateWithDbService do
     it {expect(program_dev.sym_db_status).to eq(:only_here_exists)}
   end
 
-  describe 'everywhere_exists' do
+  context 'when program`s databases exist' do
     include_context 'instance with content'
 
     before :each do
@@ -42,7 +42,7 @@ describe Instance::DatabaseControl::CollateWithDbService do
     it {expect(program_dev.sym_db_status).to eq(:only_here_exists)}
   end
 
-  describe 'only_there_exists' do
+  context 'when programs do not exist while databases exist' do
     let!(:instance) {FactoryGirl.create :instance, name: 'testmilandrchicken', db_user_name: 'testmilandrchicken', db_status: 'undefined'}
 
     before :each do
@@ -59,7 +59,7 @@ describe Instance::DatabaseControl::CollateWithDbService do
     it { expect(instance.programs[2].sym_db_status).to eq(:only_there_exists) }
   end
 
-  describe 'one database name looks like another' do
+  context 'when one database name looks like another' do # Закрываем ошибку по нахождению базы
     include_context 'instance with content'
 
     before :each do

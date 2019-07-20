@@ -3,11 +3,11 @@ require 'rails_helper_without_transactions'
 describe 'DecideOnDbNameService' do
 
   shared_examples 'database name eq' do
-    context 'empty database' do
+    context 'when database empty' do
       it { expect(Program::DatabaseControl::DecideOnDbNameService.new(program).call).to eq(coming_db_name) }
     end
 
-    context 'database has two databases' do
+    context 'when database name already exists' do
       it 'should increment name counter if same name already exists' do
         allow_any_instance_of(Program::DatabaseControl::DecideOnDbNameService).to receive(:get_database_list).
             and_return( [coming_db_name, "#{coming_db_name}_1"] )

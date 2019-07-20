@@ -10,7 +10,7 @@ describe Program::DatabaseControl::CreateDatabase do
     @instance.save
   end
 
-  describe 'when databases do not exist' do
+  context 'when databases do not exist' do
     let(:program) {FactoryGirl.build :program, instance: @instance, program_type: 'mc'}
 
     it 'should not to raise error' do

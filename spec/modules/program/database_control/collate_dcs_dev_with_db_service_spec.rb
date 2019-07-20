@@ -5,7 +5,7 @@ require 'support/shared/instance_thick_collate'
 describe Program::DatabaseControl::CollateDcsDevWithDbService do
   include DatabaseTools
 
-  describe 'call of service - trye and wrong' do
+  describe 'call of service - true and wrong' do
     include_context 'instance with content'
 
     context 'when program`s database exists and has one port' do

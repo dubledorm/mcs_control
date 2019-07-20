@@ -8,6 +8,7 @@ describe Instance::Destructor do
     @instance =  Instance::Factory::build_and_create_db(Instance.new(name: 'testmilandrchicken'))
   end
 
+  # Проверяем готовность тестового окружения
   it {expect(Instance.count).to eq(1)}
 
   it {expect(Program.count).to eq(4)}
@@ -18,6 +19,7 @@ describe Instance::Destructor do
   it {expect(get_database_users_list(ActiveRecord::Base.connection).include?('testmilandrchicken')).to be(true)}
 
 
+  # Проверяем работу деструктора
   it 'should decrement Program.count' do
     expect{Instance::Destructor::destroy_and_drop_db(@instance)}.to change(Program, :count).by(-4)
   end
@@ -37,9 +39,4 @@ describe Instance::Destructor do
     Instance::Destructor::destroy_and_drop_db(@instance)
     expect(get_database_users_list(ActiveRecord::Base.connection).include?('testmilandrchicken')).to be(false)
   end
-
-  # it 'should do if database user does not exists' do
-  #   drop_user(ActiveRecord::Base.connection, 'testmilandrchicken')
-  #   expect{Instance::Destructor::destroy_and_drop_db(@instance)}.to change(Instance, :count).by(-1)
-  # end
 end

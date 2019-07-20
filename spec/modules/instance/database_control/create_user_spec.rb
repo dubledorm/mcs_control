@@ -4,7 +4,7 @@ require 'database_tools'
 describe Instance::DatabaseControl::CreateUser do
   include DatabaseTools
 
-  describe 'standard call' do
+  context 'when database user does not exist' do
     let(:instance) {FactoryGirl.build :instance, name: 'testmilandrchicken'}
 
     it 'should not to raise error' do
@@ -27,7 +27,7 @@ describe Instance::DatabaseControl::CreateUser do
     end
   end
 
-  describe 'database user already exists' do
+  context 'when database user already exists' do
     let(:instance) {FactoryGirl.build :instance, name: 'testmilandrchicken'}
 
     before :each do

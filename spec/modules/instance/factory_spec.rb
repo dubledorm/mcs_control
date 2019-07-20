@@ -4,7 +4,7 @@ require 'database_tools'
 describe Instance::Factory do
   include DatabaseTools
 
-  describe 'build and create db' do
+  describe '.build_and_create_db' do
     it 'should not to raise error' do
       expect{Instance::Factory::build_and_create_db(Instance.new(name: 'testmilandrchicken'))}.to_not raise_error
     end
@@ -35,7 +35,7 @@ describe Instance::Factory do
     end
   end
 
-  describe 'build' do
+  describe '.build' do
     it 'should not to raise error' do
       expect{Instance::Factory::build(Instance.new(name: 'testmilandrchicken'))}.to_not raise_error
     end
