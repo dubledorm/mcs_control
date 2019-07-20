@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="Rails mcs_control: production">
-  <database-model serializer="dbm" rdbms="POSTGRES" format-version="4.7">
+  <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.15">
     <root id="1"/>
     <database id="2" parent="1" name="mcs_control_production">
       <ObjectId>90356</ObjectId>
@@ -50,8 +50,8 @@
       <CreateRole>1</CreateRole>
       <CreateDb>1</CreateDb>
       <CanLogin>1</CanLogin>
-      <Replication>1</Replication>
       <ConnectionLimit>-1</ConnectionLimit>
+      <Replication>1</Replication>
       <BypassRls>1</BypassRls>
     </role>
     <role id="16" parent="1" name="fresh_auto_user">
@@ -139,24 +139,24 @@
     </table>
     <column id="33" parent="31" name="key">
       <Position>1</Position>
-      <DataType>varchar|0</DataType>
+      <DataType>varchar|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>124490</StateNumber>
     </column>
     <column id="34" parent="31" name="value">
       <Position>2</Position>
-      <DataType>varchar|0</DataType>
+      <DataType>varchar|0s</DataType>
       <StateNumber>124490</StateNumber>
     </column>
     <column id="35" parent="31" name="created_at">
       <Position>3</Position>
-      <DataType>timestamp(6)|0</DataType>
+      <DataType>timestamp(6)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>124490</StateNumber>
     </column>
     <column id="36" parent="31" name="updated_at">
       <Position>4</Position>
-      <DataType>timestamp(6)|0</DataType>
+      <DataType>timestamp(6)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>124490</StateNumber>
     </column>
@@ -168,12 +168,12 @@
     <key id="38" parent="31" name="ar_internal_metadata_pkey">
       <ObjectId>90372</ObjectId>
       <ColNames>key</ColNames>
-      <UnderlyingIndexName>ar_internal_metadata_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
+      <UnderlyingIndexName>ar_internal_metadata_pkey</UnderlyingIndexName>
     </key>
     <column id="39" parent="32" name="version">
       <Position>1</Position>
-      <DataType>varchar|0</DataType>
+      <DataType>varchar|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>124489</StateNumber>
     </column>
@@ -185,8 +185,8 @@
     <key id="41" parent="32" name="schema_migrations_pkey">
       <ObjectId>90364</ObjectId>
       <ColNames>version</ColNames>
-      <UnderlyingIndexName>schema_migrations_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
+      <UnderlyingIndexName>schema_migrations_pkey</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>

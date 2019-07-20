@@ -6,9 +6,9 @@ class ApplicationDecorator < Draper::Decorator
                          only_there_exists: I18n.t('activerecord.decorate.instance.db_status.only_there_exists')}
 
   def collate_base_status
-    value = db_status
-    value = :undefined if db_status.blank?
+    value = object.db_status
+    value = :undefined if value.blank?
 
-    h.content_tag(:p, DB_STATUS_TRANSLATE[value.to_sym])
+    DB_STATUS_TRANSLATE[value.to_sym]
   end
 end

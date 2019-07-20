@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="Rails mcs_control: development">
-  <database-model serializer="dbm" rdbms="POSTGRES" format-version="4.7">
+  <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.15">
     <root id="1"/>
     <database id="2" parent="1" name="mcs_control_development">
       <ObjectId>90353</ObjectId>
@@ -50,8 +50,8 @@
       <CreateRole>1</CreateRole>
       <CreateDb>1</CreateDb>
       <CanLogin>1</CanLogin>
-      <Replication>1</Replication>
       <ConnectionLimit>-1</ConnectionLimit>
+      <Replication>1</Replication>
       <BypassRls>1</BypassRls>
     </role>
     <role id="16" parent="1" name="fresh_auto_user">

@@ -1,6 +1,8 @@
 require 'database_name'
+
 class Program < ApplicationRecord
   include DualStorage
+  include ApplicationHelper
 
   belongs_to :instance
   has_many :ports, dependent: :destroy
@@ -12,6 +14,6 @@ class Program < ApplicationRecord
   validates :instance, presence: true
 
   def sym_program_type
-    program_type.parameterize.underscore.to_sym
+    str_to_sym(program_type)
   end
 end

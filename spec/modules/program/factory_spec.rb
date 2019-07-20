@@ -4,14 +4,6 @@ require 'database_tools'
 describe Program::Factory do
   include DatabaseTools
 
-  before :each do
-    @instance = Instance.new(name: 'testmilandrchicken')
-
-    Instance::DatabaseControl::CreateUser.build(@instance)
-
-    @instance.save
-  end
-
   shared_examples 'create program and database' do
     it 'should create program' do
       expect{Program::Factory::build_and_create_db(instance, program_type, additional_name)}.to change(Program, :count).by(1)
@@ -94,70 +86,78 @@ describe Program::Factory do
   end
 
 
-  describe 'build_and_create_db' do
-
-    it_should_behave_like 'program and http port' do
-      let(:instance) {@instance}
-      let(:program_type) {'mc'}
-      let(:additional_name) {''}
-    end
-
-    it_should_behave_like 'program and http port' do
-      let(:instance) {@instance}
-      let(:program_type) {'op'}
-      let(:additional_name) {''}
-    end
-
-    it_should_behave_like 'program no database and tcp port' do
-      let(:instance) {@instance}
-      let(:program_type) {'dcs-dev'}
-      let(:additional_name) {''}
-    end
-
-    it_should_behave_like 'program and no port' do
-      let(:instance) {@instance}
-      let(:program_type) {'dcs-cli'}
-      let(:additional_name) {''}
-    end
-
-    it_should_behave_like 'program and http port' do
-      let(:instance) {@instance}
-      let(:program_type) {'mc'}
-      let(:additional_name) {'add'}
-    end
-
-    it_should_behave_like 'program and http port' do
-      let(:instance) {@instance}
-      let(:program_type) {'op'}
-      let(:additional_name) {'add'}
-    end
-
-    it_should_behave_like 'program no database and tcp port' do
-      let(:instance) {@instance}
-      let(:program_type) {'dcs-dev'}
-      let(:additional_name) {'add'}
-    end
-
-    it_should_behave_like 'program and no port' do
-      let(:instance) {@instance}
-      let(:program_type) {'dcs-cli'}
-      let(:additional_name) {'add'}
-    end
-  end
-
-  describe 'database already exists' do
-    let(:instance) {@instance}
-    let(:program_type) {'mc'}
-    let(:additional_name) {''}
-    
+  describe '#build_and_create_db' do
     before :each do
-      # noinspection SpellCheckingInspection,SpellCheckingInspection
-      create_database(ActiveRecord::Base.connection, 'mc_testmilandrchicken')
+      @instance = Instance.new(name: 'testmilandrchicken')
+      Instance::DatabaseControl::CreateUser.build(@instance)
+      @instance.save
     end
 
-    it 'should create database with additional number' do
-      Program::Factory::build_and_create_db(instance, program_type, additional_name)
-      expect(get_database_list(ActiveRecord::Base.connection).include?('mc_testmilandrchicken_1')).to be(true)
+    context 'when database does not exist yet' do
+
+      it_should_behave_like 'program and http port' do
+        let(:instance) {@instance}
+        let(:program_type) {'mc'}
+        let(:additional_name) {''}
+      end
+
+      it_should_behave_like 'program and http port' do
+        let(:instance) {@instance}
+        let(:program_type) {'op'}
+        let(:additional_name) {''}
+      end
+
+      it_should_behave_like 'program no database and tcp port' do
+        let(:instance) {@instance}
+        let(:program_type) {'dcs-dev'}
+        let(:additional_name) {''}
+      end
+
+      it_should_behave_like 'program and no port' do
+        let(:instance) {@instance}
+        let(:program_type) {'dcs-cli'}
+        let(:additional_name) {''}
+      end
+
+      it_should_behave_like 'program and http port' do
+        let(:instance) {@instance}
+        let(:program_type) {'mc'}
+        let(:additional_name) {'add'}
+      end
+
+      it_should_behave_like 'program and http port' do
+        let(:instance) {@instance}
+        let(:program_type) {'op'}
+        let(:additional_name) {'add'}
+      end
+
+      it_should_behave_like 'program no database and tcp port' do
+        let(:instance) {@instance}
+        let(:program_type) {'dcs-dev'}
+        let(:additional_name) {'add'}
+      end
+
+      it_should_behave_like 'program and no port' do
+        let(:instance) {@instance}
+        let(:program_type) {'dcs-cli'}
+        let(:additional_name) {'add'}
+      end
+    end
+
+    context 'when database already exists' do
+      let(:instance) {@instance}
+      let(:program_type) {'mc'}
+      let(:additional_name) {''}
+
+      before :each do
+        # noinspection SpellCheckingInspection,SpellCheckingInspection
+        create_database(ActiveRecord::Base.connection, 'mc_testmilandrchicken')
+      end
+
+      it 'should create database with additional number' do
+        Program::Factory::build_and_create_db(instance, program_type, additional_name)
+        expect(get_database_list(ActiveRecord::Base.connection).include?('mc_testmilandrchicken_1')).to be(true)
+      end
     end
   end
 end

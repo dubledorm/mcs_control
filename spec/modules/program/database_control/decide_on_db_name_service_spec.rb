@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'rails_helper_without_transactions'
 
 describe 'DecideOnDbNameService' do
 

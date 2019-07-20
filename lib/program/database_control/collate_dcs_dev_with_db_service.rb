@@ -29,7 +29,7 @@ class Program
                                            config[Rails.env]["admin_password"])
         ports = get_all_ports_of_uspd(connection)
         close_custom_connection
-        return ports #.map{|port| port['input_value'].to_i}
+        return ports
       end
 
       def get_here_object_list(parent_object)
@@ -40,7 +40,6 @@ class Program
 
       def add_object_to_us(object_value, db_status)
         parent_object.ports.create!(number: object_value['input_value'].to_i,
-                                    instance: parent_object.instance,
                                     port_type: get_port_type(parent_object.sym_program_type).to_s,
                                     db_status: db_status
                                    )

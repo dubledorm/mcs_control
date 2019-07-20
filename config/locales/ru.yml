@@ -20,6 +20,12 @@ ru:
       port:
         number: Номер
         instance: Инстанс
+        program: programma
+        port_type: Тип
+        db_status: Статус БД
+        collate_base_status: Статус БД
+        created_at: Создан
+        updated_at: Изменён
       program:
         name: Название
         program_type: Тип
@@ -31,7 +37,7 @@ ru:
         instance: Инстанс
         created_at: Создан
         updated_at: Изменён
-
+        ports: Порты
     decorate:
       instance:
         db_status:
@@ -101,6 +107,8 @@ ru:
   actions:
     instance:
       check: Сверить с БД
+    program:
+      add_port: Добавить порт
 
   forms:
     activeadmin:
@@ -108,6 +116,9 @@ ru:
         attributes: Атрибуты
         create_database_title: Создание базы данных
         need_database_create:  Создать все базы данных
+      port:
+        attributes: Атрибуты
+        top_text: Для программы %{program_name} будет выделен новый порт. Использовать его можно будет сразу после создания.
       confirm:
         delete_instance_page_title: 'Удалить инстанс %{instance_name}'
         delete_program_page_title: 'Удалить программу %{program_name}'

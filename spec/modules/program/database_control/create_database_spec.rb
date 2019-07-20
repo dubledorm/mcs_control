@@ -6,17 +6,12 @@ describe Program::DatabaseControl::CreateDatabase do
 
   before :each do
     @instance = Instance.new(name: 'testmilandrchicken')
-
     Instance::DatabaseControl::CreateUser.build(@instance)
-
     @instance.save
   end
 
-  describe 'standard call' do
-    let(:program) {FactoryGirl.build :program,
-                                      instance: @instance,
-                                      program_type: 'mc'
-                   }
+  describe 'when databases do not exist' do
+    let(:program) {FactoryGirl.build :program, instance: @instance, program_type: 'mc'}
 
     it 'should not to raise error' do
       expect {
@@ -40,7 +35,7 @@ describe Program::DatabaseControl::CreateDatabase do
     end
   end
 
-  describe 'database already exists' do
+  context 'when database already exists' do
     let(:program) {FactoryGirl.build :program,
                                      instance: @instance,
                                      program_type: 'mc'

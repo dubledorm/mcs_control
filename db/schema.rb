@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_03_114043) do
+ActiveRecord::Schema.define(version: 2019_07_19_190630) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,13 +55,11 @@ ActiveRecord::Schema.define(version: 2019_07_03_114043) do
 
   create_table "ports", force: :cascade do |t|
     t.integer "number", null: false
-    t.bigint "instance_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "program_id"
     t.string "port_type"
     t.string "db_status"
-    t.index ["instance_id"], name: "index_ports_on_instance_id"
     t.index ["number"], name: "index_ports_on_number"
     t.index ["program_id"], name: "index_ports_on_program_id"
   end
@@ -80,6 +78,5 @@ ActiveRecord::Schema.define(version: 2019_07_03_114043) do
     t.index ["program_type"], name: "index_programs_on_program_type"
   end
 
-  add_foreign_key "ports", "instances"
   add_foreign_key "programs", "instances"
 end

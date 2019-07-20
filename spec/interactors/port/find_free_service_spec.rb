@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 describe Port do
-    describe 'find_free_service' do
+    describe '.find_free_service' do
 
-      describe 'bad argument' do
+      context 'when bad argument' do
         it {expect{Port::FindFreeService.new(:error_type).call}.to raise_error ArgumentError}
       end
 
-      describe 'bring_range_of_diapason' do
+      context 'when bring range of http diapason' do # Заполнен весь http диапазон
         before :each do
           (Port::FindFreeService::RANGE_OF_NUMBER[:http][:left_range]..Port::FindFreeService::RANGE_OF_NUMBER[:http][:right_range]).each do |port|
             FactoryGirl.create(:port, number: port)
@@ -18,25 +18,25 @@ describe Port do
         it {expect{Port::FindFreeService.new(:tcp).call}.to_not raise_error}
       end
 
-      describe 'for empty base' do
+      context 'when base is empty' do
         it {expect(Port::FindFreeService.new(:http).call).to eq(Port::FindFreeService::RANGE_OF_NUMBER[:http][:left_range])}
         it {expect(Port::FindFreeService.new(:tcp).call).to eq(Port::FindFreeService::RANGE_OF_NUMBER[:tcp][:left_range])}
       end
 
-      describe 'left range exist' do
+      context 'when left range exist' do
         let!(:port)  {FactoryGirl.create :port, number: Port::FindFreeService::RANGE_OF_NUMBER[:http][:left_range]}
 
         it {expect(Port::FindFreeService.new(:http).call).to eq(Port::FindFreeService::RANGE_OF_NUMBER[:http][:left_range] + 1)}
 
       end
 
-      describe 'right range exist' do
+      context 'when right range exist' do
         let!(:port)  {FactoryGirl.create :port, number: Port::FindFreeService::RANGE_OF_NUMBER[:http][:right_range]}
 
         it {expect(Port::FindFreeService.new(:http).call).to eq(Port::FindFreeService::RANGE_OF_NUMBER[:http][:left_range])}
       end
 
-      describe 'empty place exists' do
+      context 'when empty place exists' do # есть дырки в диапазоне
         let!(:port1)  {FactoryGirl.create :port, number: Port::FindFreeService::RANGE_OF_NUMBER[:http][:left_range]}
         let!(:port2)  {FactoryGirl.create :port, number: Port::FindFreeService::RANGE_OF_NUMBER[:http][:left_range] + 1 }
         let!(:port3)  {FactoryGirl.create :port, number: Port::FindFreeService::RANGE_OF_NUMBER[:http][:left_range] + 3}
@@ -45,14 +45,14 @@ describe Port do
 
       end
 
-      describe 'existing values do not lay into diapason' do
-        context 'right range' do
+      context 'when existing values do not lay into diapason' do
+        context 'when its lay after right range' do
           let!(:port)  {FactoryGirl.create :port, number: Port::FindFreeService::RANGE_OF_NUMBER[:http][:right_range] + 10}
 
           it {expect(Port::FindFreeService.new(:http).call).to eq(Port::FindFreeService::RANGE_OF_NUMBER[:http][:left_range])}
         end
 
-        context 'left range' do
+        context 'when its lay before left range' do
           let!(:port)  {FactoryGirl.create :port, number: Port::FindFreeService::RANGE_OF_NUMBER[:http][:left_range] - 10}
 
           it {expect(Port::FindFreeService.new(:http).call).to eq(Port::FindFreeService::RANGE_OF_NUMBER[:http][:left_range])}

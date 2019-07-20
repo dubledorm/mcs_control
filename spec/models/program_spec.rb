@@ -32,7 +32,6 @@ describe Program do
     # Relationships
     it {should belong_to(:instance)}
     it {should have_many(:ports)}
-
   end
 
   shared_examples 'identification_name right' do
@@ -50,7 +49,7 @@ describe Program do
     it { expect(program).to be_invalid }
   end
 
-  describe 'identification_name' do
+  describe '#identification_name' do
     it_should_behave_like 'identification_name right' do
       let!(:instance) {FactoryGirl.build :instance, name: 'energizer'}
       let(:program) {FactoryGirl.build :program, instance: instance, program_type: 'mc', additional_name: 'fabric'}

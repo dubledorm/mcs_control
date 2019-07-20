@@ -3,6 +3,10 @@ ActiveAdmin.register Program do
   decorate_with ProgramDecorator
   actions :show, :new, :create, :destroy
 
+  action_item :add_port do
+    link_to I18n.t('actions.program.add_port'), new_admin_program_port_path(program_id: resource.id)
+  end
+
   show title: :identification_name do
     attributes_table do
       row :identification_name
@@ -13,6 +17,10 @@ ActiveAdmin.register Program do
       row :collate_base_status
       row :created_at
       row :updated_at
+    end
+
+    panel Program.human_attribute_name(:ports) do
+      render 'admin/shared/ports_show', ports: program.ports
     end
     active_admin_comments
   end

@@ -10,8 +10,8 @@ RSpec.feature 'Create', js: true do
     admin_login
   end
 
-  context 'need_database_create true' do
-    it 'should create instance and redirect to show action' do
+  context 'when need_database_create is true' do
+    it 'should redirect to show action' do
       visit new_admin_instance_path
       fill_in id: 'instance_name', with: 'testmilandrtest'
       click_button value: 'Create Инстанс'
@@ -31,8 +31,8 @@ RSpec.feature 'Create', js: true do
     end
   end
 
-  context 'need_database_create false' do
-    it 'should create instance and redirect to show action' do
+  context 'when need_database_create is false' do
+    it 'should redirect to show action' do
       visit new_admin_instance_path
       fill_in id: 'instance_name', with: 'testmilandrtest'
       uncheck id: 'need_database_create'

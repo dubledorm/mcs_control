@@ -31,7 +31,6 @@ class Program
         port_number = Port::FindFreeService.new(port_type).call
         program.ports.create(port_type: port_type,
                              number: port_number,
-                             instance: program.instance,
                              db_status: 'undefined')
       end
 
