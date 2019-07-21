@@ -3,9 +3,10 @@ require 'rails_helper_without_transactions'
 require 'support/feature_helper'
 require 'database_tools'
 
-RSpec.feature 'Create', js: true do
+RSpec.feature '#Create', js: true do
   include FeatureHelper
   include DatabaseTools
+
   before :each do
     admin_login
   end

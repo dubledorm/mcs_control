@@ -2,7 +2,7 @@ ActiveAdmin.register Instance do
   includes :programs
   decorate_with InstanceDecorator
 
-  permit_params :name, :description, :owner_name, :db_user_name, :db_user_password
+  permit_params :name, :description, :owner_name
 
   index do
     selectable_column
@@ -58,20 +58,27 @@ ActiveAdmin.register Instance do
     end
 
     def create
-      begin
-        flash.delete(:alert)
-        @need_database_create = params.try(:[], :need_database_create) || false
-        @instance = Instance.new(params.require(:instance).permit(:name, :owner_name, :description))
-        if params[:need_database_create].present?
-          Instance::Factory::build_and_create_db(@instance)
-        else
-          Instance::Factory::build(@instance)
+      @need_database_create = params.try(:[], :need_database_create) || false
+      create! { |success, failure|
+        success.html do
+          begin
+          #  raise StandardError, 'The Message'
+            if @need_database_create
+              Instance::Factory::build_and_create_db(resource)
+            else
+              Instance::Factory::build(resource)
+            end
+            redirect_to admin_instance_path(id: resource.id), :notice => "Resource created successfully."
+          rescue StandardError => e
+            flash[:alert] = e.message
+            render :new, alert: e.message
+          end
         end
-        redirect_to admin_instance_path(id: @instance.id)
-      rescue StandardError => e
-        flash[:alert] = e.message
-        render :new, alert: e.message
-      end
+        failure.html do
+          flash[:error] = "Error(s) : #{resource.errors.full_messages.join(',')}"
+          render :new
+        end
+      }
     end
 
     def destroy

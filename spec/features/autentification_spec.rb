@@ -1,5 +1,5 @@
 #coding: utf-8
-require 'rails_helper'
+require 'rails_helper_without_transactions'
 
 RSpec.feature 'User registration', js: true do
 
@@ -12,7 +12,7 @@ RSpec.feature 'User registration', js: true do
 
     context 'when login is true' do
       # Проверяем что входим при правильном логин
-      it "should redirect to admin_rrot_path" do
+      it "should redirect to admin_root_path" do
         fill_in I18n.t('active_admin.devise.email.title'), with: "admin@example.com"
         fill_in I18n.t('active_admin.devise.password.title'), with: "password"
 

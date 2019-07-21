@@ -1,5 +1,5 @@
 #coding: utf-8
-require 'rails_helper'
+require 'rails_helper_without_transactions'
 require 'support/feature_helper'
 require 'support/shared/instance_thick_collate'
 
@@ -20,7 +20,7 @@ RSpec.feature 'Instance', js: true do
       end
 
       it 'should available new_admin_instance_path' do
-        visit new_admin_instance_path
+       visit new_admin_instance_path
         expect(current_path).to eq(new_admin_instance_path)
       end
 
