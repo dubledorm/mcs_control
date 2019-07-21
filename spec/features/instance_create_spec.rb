@@ -54,4 +54,46 @@ RSpec.feature '#Create', js: true do
       expect(get_database_list(ActiveRecord::Base.connection).include?('op_testmilandrtest')).to be(false)
     end
   end
+
+  context 'when exception call during build databases' do
+    before :each do
+      allow_any_instance_of(ApplicationHelper).to receive(:test_point_exception_enable?).and_return( true )
+    end
+
+    it 'should render new' do
+      visit new_admin_instance_path
+      fill_in id: 'instance_name', with: 'testmilandrtest'
+      click_button value: 'Create Инстанс'
+      sleep(5)
+      expect(current_path).to eq(admin_instances_path)
+    end
+
+    it 'should has error message' do
+      visit new_admin_instance_path
+      fill_in id: 'instance_name', with: 'testmilandrtest'
+      click_button value: 'Create Инстанс'
+      sleep(5)
+      expect(page.has_css?('.flash.flash_error', text: I18n.t('activerecord.errors.messages.unknown_resource_exception', errors: 'Test exception message'))).to be(true)
+    end
+
+    it 'should not increase Instance.count' do
+      expect {
+        visit new_admin_instance_path
+        fill_in id: 'instance_name', with: 'testmilandrtest'
+        click_button value: 'Create Инстанс'
+        sleep(5)
+      }.to change(Instance, :count).by(0)
+    end
+
+    it 'should not create database and user' do
+      visit new_admin_instance_path
+      fill_in id: 'instance_name', with: 'testmilandrtest'
+      click_button value: 'Create Инстанс'
+      sleep(5)
+      expect(get_database_users_list(ActiveRecord::Base.connection).include?('testmilandrtest')).to be(false)
+      expect(get_database_list(ActiveRecord::Base.connection).include?('dcs4_testmilandrtest')).to be(false)
+      expect(get_database_list(ActiveRecord::Base.connection).include?('mc_testmilandrtest')).to be(false)
+      expect(get_database_list(ActiveRecord::Base.connection).include?('op_testmilandrtest')).to be(false)
+    end
+  end
 end

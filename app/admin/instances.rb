@@ -52,6 +52,8 @@ ActiveAdmin.register Instance do
   end
 
   controller do
+    include ApplicationHelper
+
     def new
       @need_database_create = true
       super
@@ -59,23 +61,25 @@ ActiveAdmin.register Instance do
 
     def create
       @need_database_create = params.try(:[], :need_database_create) || false
+      flash.delete(:error)
       create! { |success, failure|
         success.html do
           begin
-          #  raise StandardError, 'The Message'
             if @need_database_create
               Instance::Factory::build_and_create_db(resource)
             else
               Instance::Factory::build(resource)
             end
-            redirect_to admin_instance_path(id: resource.id), :notice => "Resource created successfully."
+            test_point_exception
+            redirect_to admin_instance_path(id: resource.id), :notice => I18n.t('forms.activeadmin.instance.created_succesfully')
           rescue StandardError => e
-            flash[:alert] = e.message
-            render :new, alert: e.message
+            Instance::Destructor::destroy_and_drop_db(resource) if resource.persisted?
+            flash[:error] = I18n.t('activerecord.errors.messages.unknown_resource_exception', errors: e.message)
+            render :new, error: e.message
           end
         end
         failure.html do
-          flash[:error] = "Error(s) : #{resource.errors.full_messages.join(',')}"
+          flash[:error] = I18n.t('activerecord.errors.messages.unknown_resource_exception', errors: resource.errors.full_messages.join(','))
           render :new
         end
       }
@@ -83,8 +87,10 @@ ActiveAdmin.register Instance do
 
     def destroy
       @page_title = I18n.t('forms.activeadmin.confirm.delete_instance_page_title', instance_name: resource.name)
+      flash.delete(:error)
       begin
         if params[:confirm].present?
+          test_point_exception
           Instance::Destructor::destroy_and_drop_db(resource)
           redirect_to admin_instances_path
         else
@@ -95,7 +101,7 @@ ActiveAdmin.register Instance do
                  }
         end
       rescue StandardError => e
-        redirect_to admin_instance_path(resource), alert: e.message
+        redirect_to admin_instance_path(resource), error: e.message
       end
     end
   end

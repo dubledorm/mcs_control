@@ -10,7 +10,6 @@ describe Instance do
     # Validations
     it { should validate_presence_of(:name) }
     it { should validate_uniqueness_of(:name) }
-    it { should validate_presence_of(:db_user_name) }
     # noinspection RubyResolve
     it { expect(FactoryGirl.build(:instance, name: "")).to be_invalid}
     it { expect(FactoryGirl.build(:instance, name: "thename1234")).to be_valid}

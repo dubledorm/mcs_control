@@ -48,6 +48,7 @@ ru:
     errors:
       messages:
         record_invalid: ошибка при создании записи, вероятнее всего переданы неверные значения полей
+        unknown_resource_exception: 'Произошла ошибка(и) : %{errors}'
       models:
         instance:
           attributes:
@@ -116,6 +117,7 @@ ru:
         attributes: Атрибуты
         create_database_title: Создание базы данных
         need_database_create:  Создать все базы данных
+        created_succesfully: Инстанс успешно создан
       port:
         attributes: Атрибуты
         top_text: Для программы %{program_name} будет выделен новый порт. Использовать его можно будет сразу после создания.
