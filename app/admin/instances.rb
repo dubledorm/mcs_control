@@ -101,6 +101,7 @@ ActiveAdmin.register Instance do
                  }
         end
       rescue StandardError => e
+        flash[:error] = I18n.t('activerecord.errors.messages.unknown_resource_exception', errors: e.message)
         redirect_to admin_instance_path(resource), error: e.message
       end
     end
