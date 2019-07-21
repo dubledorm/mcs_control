@@ -113,7 +113,13 @@ ActiveAdmin.register Instance do
   end
 
   member_action :check, method: :put do
-    Instance::DatabaseControl::CollateWithDbService.new(resource).call
-    redirect_to admin_instance_path(resource), notice: "Checked!"
+    begin
+      test_point_exception
+      Instance::DatabaseControl::CollateWithDbService.new(resource).call
+      redirect_to admin_instance_path(resource), notice: "Checked!"
+    rescue StandardError => e
+      flash[:error] = I18n.t('activerecord.errors.messages.unknown_resource_exception', errors: e.message)
+      redirect_to admin_instance_path(resource), error: e.message
+    end
   end
 end

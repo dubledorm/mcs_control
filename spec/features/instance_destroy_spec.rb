@@ -27,25 +27,20 @@ RSpec.feature '#Destroy', js: true do
   context 'when exception call during destroy' do
     before :each do
       allow_any_instance_of(ApplicationHelper).to receive(:test_point_exception_enable?).and_return( true )
-    end
 
-    it 'should redirect to admin_instance_path' do
       visit admin_instance_path(id: @instance.id)
       page.evaluate_script('window.confirm = function() { return true; }') # Убирает confirm диалог
       click_link 'Удалить Инстанс'
       sleep(3)
       click_link 'Удалить'
       sleep(3)
+    end
+
+    it 'should redirect to admin_instance_path' do
       expect(current_path).to eq(admin_instance_path(id: @instance.id))
     end
 
     it 'should has error message' do
-      visit admin_instance_path(id: @instance.id)
-      page.evaluate_script('window.confirm = function() { return true; }') # Убирает confirm диалог
-      click_link 'Удалить Инстанс'
-      sleep(3)
-      click_link 'Удалить'
-      sleep(3)
       expect(page.has_css?('.flash.flash_error', text: I18n.t('activerecord.errors.messages.unknown_resource_exception', errors: 'Test exception message'))).to be(true)
     end
   end
