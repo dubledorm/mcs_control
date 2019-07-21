@@ -17,21 +17,19 @@ RSpec.feature 'Instance', js: true do
     context 'when login' do
       before :each do
         admin_login
+        visit new_admin_instance_path
       end
 
       it 'should available new_admin_instance_path' do
-       visit new_admin_instance_path
         expect(current_path).to eq(new_admin_instance_path)
       end
 
       context 'when new record' do
         it 'should need_database_create checked for new' do
-          visit new_admin_instance_path
           expect(page.has_checked_field?(id: 'need_database_create')).to be(true)
         end
 
         it 'should field name available for new' do
-          visit new_admin_instance_path
           expect(page.has_field?(id: 'instance_name')).to be(true)
         end
       end
