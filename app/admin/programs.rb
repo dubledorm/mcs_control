@@ -19,19 +19,21 @@ ActiveAdmin.register Program do
       row :updated_at
     end
 
-    panel Program.human_attribute_name(:ports) do
+    panel Program.human_attribute_name(:program) do
       render 'admin/shared/ports_show', ports: program.ports
     end
     active_admin_comments
   end
 
   controller do
+    include ApplicationHelper
     def destroy
       @page_title = I18n.t('forms.activeadmin.confirm.delete_program_page_title', program_name: resource.identification_name)
+      instance_id = resource.instance_id
       begin
         if params[:confirm].present?
-          instance_id = resource.instance_id
           Program::Destructor::destroy_and_drop_db(resource)
+          test_point_exception
           redirect_to admin_instance_path(id: instance_id)
         else
           render 'admin/shared/destroy_confirm', layout: 'active_admin',
@@ -41,7 +43,8 @@ ActiveAdmin.register Program do
                          }
         end
       rescue StandardError => e
-        redirect_to admin_instance_program_path(instance_id: resource.instance_id, id: resource.id), alert: e.message
+        flash[:error] = I18n.t('activerecord.errors.messages.unknown_resource_exception', errors: e.message)
+        redirect_to admin_instance_path(instance_id: instance_id), error: e.message
       end
     end
  end
