@@ -8,6 +8,8 @@
           = Port.human_attribute_name(:port_type)
         %th
           = Port.human_attribute_name(:db_status)
+        %th
+          = I18n.t('words.action')
     %tbody
       - ports.each do |port|
         %tr
@@ -17,5 +19,8 @@
             = port.port_type
           %td
             = port.decorate.collate_base_status
+          %td
+            = link_to(I18n.t('words.delete'), admin_program_port_path(program_id: port.program_id, id: port.id),
+            method: :delete, data: {confirm: 'Are you shure?'})
 
 

@@ -1,10 +1,12 @@
 require 'rails_helper'
 require 'support/shared/application_decorator'
+require 'support/shared/object_base_decorator'
 
 RSpec.describe Port do
-  subject { FactoryGirl.create(:port) }
 
   it_behaves_like 'application_decorator'
+
+  it_behaves_like 'base_decorator'
 
   describe '#program_name' do
     context 'when program_id does not define' do
@@ -15,7 +17,8 @@ RSpec.describe Port do
     end
 
     context 'when program_id exists' do
-      it {expect(subject.decorate.program_name).to eq(subject.program.identification_name)}
+      let!(:port) {FactoryGirl.create :port}
+      it {expect(port.decorate.program_name).to eq(port.program.identification_name)}
     end
   end
 end
