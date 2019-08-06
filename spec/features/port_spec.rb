@@ -66,5 +66,48 @@ RSpec.feature 'Port', js: true do
         end
       end
     end
+
+    describe '#destroy' do
+
+      context 'when all ok' do
+        before :each do
+          visit admin_instance_program_path(instance_id: @instance.id, id: @program.id)
+          page.evaluate_script('window.confirm = function() { return true; }') # Убирает confirm диалог
+          click_link 'Удалить', href: admin_program_port_path(program_id: @program.id, id: @port.id)
+          sleep(3)
+          click_link 'Удалить'
+          sleep(3)
+        end
+
+        it 'should redirect to admin_instance_program_path' do
+          expect(current_path).to eq(admin_instance_program_path(instance_id: @instance.id, id: @program.id))
+        end
+
+        it 'should decrement port.count' do
+          expect(@program.ports.count).to eq(0)
+        end
+      end
+
+      context 'when exception call during destroy' do
+        before :each do
+          allow_any_instance_of(ApplicationHelper).to receive(:test_point_exception_enable?).and_return( true )
+
+          visit admin_instance_program_path(instance_id: @instance.id, id: @program.id)
+          page.evaluate_script('window.confirm = function() { return true; }') # Убирает confirm диалог
+          click_link 'Удалить', href: admin_program_port_path(program_id: @program.id, id: @port.id)
+          sleep(3)
+          click_link 'Удалить'
+          sleep(3)
+        end
+
+        it 'should redirect to admin_instance_program_path' do
+          expect(current_path).to eq(admin_instance_program_path(instance_id: @instance.id, id: @program.id))
+        end
+
+        it 'should has error message' do
+          expect(page.has_css?('.flash.flash_error', text: I18n.t('activerecord.errors.messages.unknown_resource_exception', errors: 'Test exception message'))).to be(true)
+        end
+      end
+    end
   end
 end

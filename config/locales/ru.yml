@@ -124,7 +124,7 @@ ru:
       confirm:
         delete_instance_page_title: 'Удалить инстанс %{instance_name}'
         delete_program_page_title: 'Удалить программу %{program_name}'
-        delete_portpage_title: 'Удалить порт %{port_number}'
+        delete_port_page_title: 'Удалить порт %{port_number}'
         confirm_form_title: Внимание! Операцию будет невозможно отменить!
         delete_instance_message: 'Вы собираетесь удалить инстанс. В ходе выполнения этой операции будут безвозвратно
            удалены базы данных, список которых приведён ниже, также из управляющей базы данных будет удалена информация об
