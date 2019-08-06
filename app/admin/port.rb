@@ -39,7 +39,7 @@ ActiveAdmin.register Port do
       begin
         if params[:confirm].present?
           test_point_exception
-      #    Instance::Destructor::destroy_and_drop_db(resource)
+          Port::Destructor::simple_destroy(resource)
           redirect_to admin_instance_program_path(id: program_id, instance_id: instance_id)
         else
           render 'admin/shared/destroy_confirm', layout: 'active_admin',
@@ -53,6 +53,5 @@ ActiveAdmin.register Port do
         redirect_to admin_instance_program_path(id: program_id, instance_id: instance_id), error: e.message
       end
     end
-
   end
 end
