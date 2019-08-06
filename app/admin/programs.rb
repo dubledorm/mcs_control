@@ -4,7 +4,7 @@ ActiveAdmin.register Program do
   actions :show, :new, :create, :destroy
 
   action_item :add_port do
-    link_to I18n.t('actions.program.add_port'), new_admin_program_port_path(program_id: resource.id)
+    link_to I18n.t('actions.program.add_port'), new_admin_program_port_path(program_id: resource.id) if resource.can_add_port?
   end
 
   show title: :identification_name do

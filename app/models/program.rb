@@ -2,6 +2,7 @@ require 'database_name'
 
 class Program < ApplicationRecord
   include DualStorage
+  include ProgramToolBox
   include ApplicationHelper
 
   belongs_to :instance
