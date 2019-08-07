@@ -1,0 +1,18 @@
+.without_sidebar#active_admin_content
+  #main_content_wrapper
+    #main_content
+      .panel
+        %h3
+          = I18n.t('forms.activeadmin.confirm.confirm_form_title')
+        .panel_contents
+          .attributes_table.instance
+            %table{border: 0, cellspacing: 0, cellpadding: 0}
+              %tr.row
+                %td
+                  = title
+              = render 'admin/shared/show_list', objects: resource.decorate.database_names, list_title: I18n.t('forms.activeadmin.confirm.delete_instance_db_list')
+              = render 'admin/shared/show_list', objects: resource.decorate.program_names, list_title: I18n.t('forms.activeadmin.confirm.delete_instance_program_list')
+              = render 'admin/shared/show_list', objects: resource.decorate.port_names, list_title: I18n.t('forms.activeadmin.confirm.delete_instance_port_list')
+        .buttons
+          = link_to I18n.t('words.back'), back_path, class: :button
+          = link_to I18n.t('words.delete'), delete_path, class: :button, method: :delete

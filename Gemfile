@@ -74,7 +74,7 @@ group :development do
 end
 
 
-
+gem 'haml'
 gem 'activeadmin'
 
 # Plus integrations with:

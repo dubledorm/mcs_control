@@ -1,17 +1,50 @@
+require 'database_tools'
+
 class Instance
   class Factory
+    extend DatabaseTools
 
-    def self.build(name)
-      instance = Instance.new(name: name)
-      Instance::DatabaseControl::DbPrepare.build(instance)
-      instance.save
+    def self.build_and_create_db(instance)
+      begin
+        Instance::DatabaseControl::CreateUser::build(instance)
+        instance.db_status = 'undefined'
+        instance.save!
 
-      Program::Factory::build(instance, 'mc')
-      Program::Factory::build(instance, 'op')
-      Program::Factory::build(instance, 'dcs-dev')
-      Program::Factory::build(instance, 'dcs-cli')
+        Program::Factory::build_and_create_db(instance, 'mc')
+        Program::Factory::build_and_create_db(instance, 'op')
+        Program::Factory::build_and_create_db(instance, 'dcs-dev')
+        Program::Factory::build_and_create_db(instance, 'dcs-cli')
 
-      return instance
+        instance.db_status = 'everywhere_exists'
+        instance.save!
+        return instance
+      rescue StandardError => e
+        restore(instance)
+        raise e
+      end
     end
+
+    def self.build(instance)
+      begin
+        Instance::DatabaseControl::CreateUser::build(instance)
+        instance.db_status = 'undefined'
+        instance.save!
+        return instance
+      rescue StandardError => e
+        restore(instance)
+        raise e
+      end
+    end
+
+    private
+
+      def self.restore(instance)
+        if instance.persisted?
+          Instance::Destructor::destroy_and_drop_db(instance)
+          return
+        end
+
+        drop_user(ActiveRecord::Base.connection, instance.db_user_name) if db_user_exists?(instance.db_user_name)
+      end
   end
 end

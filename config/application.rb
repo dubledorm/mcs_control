@@ -20,5 +20,9 @@ module McsControl
     # the framework and any gems in your application.
 
     config.autoload_paths += %W(#{config.root}/lib)
+    config.logger = ActiveSupport::Logger.new("log/#{Rails.env}.log")
+     config.logger.formatter = proc do | severity, datetime, progname, msg |
+      "#{datetime}, #{severity}: #{msg}\n"
+    end
   end
 end

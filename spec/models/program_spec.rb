@@ -1,6 +1,9 @@
 require 'rails_helper'
+require 'database_name'
 
 describe Program do
+  include DatabaseName
+  
   describe 'factory' do
     let!(:program) {FactoryGirl.create :program}
 
@@ -29,25 +32,24 @@ describe Program do
     # Relationships
     it {should belong_to(:instance)}
     it {should have_many(:ports)}
-
   end
 
   shared_examples 'identification_name right' do
     before :each do
-      program.set_identification_name
+      program.identification_name = make_identification_name(instance.name, program.program_type, program.additional_name)
     end
     it { expect(program).to be_valid }
   end
 
   shared_examples 'identification_name wrong' do
     before :each do
-      program.set_identification_name
+      program.identification_name = make_identification_name(instance.name, program.program_type, program.additional_name)
     end
     # noinspection RubyResolve
     it { expect(program).to be_invalid }
   end
 
-  describe 'identification_name' do
+  describe '#identification_name' do
     it_should_behave_like 'identification_name right' do
       let!(:instance) {FactoryGirl.build :instance, name: 'energizer'}
       let(:program) {FactoryGirl.build :program, instance: instance, program_type: 'mc', additional_name: 'fabric'}

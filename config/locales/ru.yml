@@ -1,32 +1,68 @@
 ru:
   activerecord:
     models:
-      instance: Инстанс
+      instance:
+        one: Инстанс
+        other: Инстансы
       port: Порт
-      program: Программа
+      program:
+        one: Программа
+        other: Программы
     attributes:
       instance:
         name: Название
         owner_name: Владелец
         description: Описание
+        db_user_name: Пользователь БД
+        db_user_password: Пароль пльзователя БД
+        db_status: Статус БД
+        collate_base_status: Статус БД
+        programs: Программы
+        ports: Порты
         created_at: Создан
         updated_at: Изменён
       port:
         number: Номер
         instance: Инстанс
+        program: programma
+        port_type: Тип
+        db_status: Статус БД
+        collate_base_status: Статус БД
+        created_at: Создан
+        updated_at: Изменён
       program:
         name: Название
         program_type: Тип
+        identification_name: Идентифкатор
+        database_name: База данных
+        db_status: Статус БД
+        collate_base_status: Статус БД
+        additional_name: Доп. имя
+        instance: Инстанс
+        created_at: Создан
+        updated_at: Изменён
+        ports: Порты
+    decorate:
+      instance:
+        db_status:
+          undefined: Не определено
+          everywhere_exists: Ок (есть везде)
+          only_here_exists: Только здесь
+          only_there_exists: Только там
     errors:
       messages:
         record_invalid: ошибка при создании записи, вероятнее всего переданы неверные значения полей
+        unknown_resource_exception: 'Произошла ошибка(и) : %{errors}'
       models:
         instance:
           attributes:
+            db_user_name:
+              blank: должен быть заполнен
+              invalid: может содержать буквы латинского алфавита, цифры, знак '_'
             name:
               taken: уже используется
               blank: должно быть заполнено
-              invalid: может содержать буквы латинского алфавита, цифры, знак '-'
+              invalid: может содержать буквы латинского алфавита и цифры
         port:
           attributes:
             number:
@@ -57,6 +93,9 @@ ru:
             argument_error:
               type_and_instance: 'Объект класса Program должен иметь заполненные поля instance и program_type'
             do_not_need_database: 'Для такого типа программы (program.program_type) не требуется база данных'
+          collate_dcs_dev_with_db_service:
+            only_dcs_dev: 'Этот сервис можно испол зовать только для программ типа dcs-dev'
+            not_found_op: Не могу обнаружить программу 'op' (оператор сети). По базе данных этой программы считываются значения сетевых портов для dcs-dev
           create_database_interactor:
             standard_error:
               cause_of_error: "Ошибка при создании базы данных. Причина %{error_message}"
@@ -70,3 +109,43 @@ ru:
           create_db_user_interactor:
             standard_error:
               cause_of_error: "Ошибка при создании пользователя базы данных. Причина %{error_message}"
+  actions:
+    instance:
+      check: Сверить с БД
+    program:
+      add_port: Добавить порт
+
+  forms:
+    activeadmin:
+      instance:
+        attributes: Атрибуты
+        create_database_title: Создание базы данных
+        need_database_create:  Создать все базы данных
+        created_succesfully: Инстанс успешно создан
+      port:
+        attributes: Атрибуты
+        top_text: Для программы %{program_name} будет выделен новый порт. Использовать его можно будет сразу после создания.
+      confirm:
+        delete_instance_page_title: 'Удалить инстанс %{instance_name}'
+        delete_program_page_title: 'Удалить программу %{program_name}'
+        delete_port_page_title: 'Удалить порт %{port_number}'
+        confirm_form_title: Внимание! Операцию будет невозможно отменить!
+        delete_instance_message: 'Вы собираетесь удалить инстанс. В ходе выполнения этой операции будут безвозвратно
+           удалены базы данных, список которых приведён ниже, также из управляющей базы данных будет удалена информация об
+           инстансе, присоединённых программах и портах. Если вы подтверждаете операцию, то нажмите кнопку Удалить
+           иначе - нажмите кнопку Назад'
+        delete_program_message: 'Вы собираетесь удалить программу. В ходе выполнения этой операции будут безвозвратно
+        удалены база данный, указанная ниже, а также информация о портах. Если вы подтверждаете операцию, то нажмите
+        кнопку Удалить, иначе - нажмите кнопку Назад'
+        delete_port_message: 'Вы собираетесь удалить порт. В ходе выполнения этой операции будут безвозвратно
+        удалена информация о портах. Если вы подтверждаете операцию, то нажмите
+        кнопку Удалить, иначе - нажмите кнопку Назад'
+        delete_instance_db_list: 'Будут удалены базы данных:'
+        delete_instance_program_list: 'Будет удалена информация о программах:'
+        delete_instance_port_list: 'Следующие порты будут освобождены и переданы для дальнейшего использования:'
+  words:
+    empty: ПУСТО
+    back: Назад
+    delete: Удалить
+    action: Действия
+    admin: Административная панель

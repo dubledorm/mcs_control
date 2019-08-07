@@ -1,0 +1,30 @@
+.section
+  %table
+    %thead
+      %tr
+        %th
+          = Program.human_attribute_name(:program_type)
+        %th
+          = Program.human_attribute_name(:identification_name)
+        %th
+          = Program.human_attribute_name(:database_name)
+        %th
+          = Program.human_attribute_name(:db_status)
+        %th
+          = Program.human_attribute_name(:ports)
+
+    %tbody
+      - programs.each do |program|
+        %tr
+          %td
+            = program.program_type
+          %td
+            = link_to program.identification_name, admin_instance_program_path(instance_id: resource.id, id: program.id)
+          %td
+            = program.database_name
+          %td
+            = program.decorate.collate_base_status
+          %td
+            = program.decorate.ports_str
+
+
