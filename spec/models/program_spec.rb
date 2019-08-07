@@ -90,4 +90,18 @@ describe Program do
       let(:program) {FactoryGirl.build :program, instance: instance, program_type: 'mc', additional_name: 'super_fabric'}
     end
   end
+
+  describe '#can_add_port?' do
+    it { expect(FactoryGirl.build( :program, program_type: 'dcs-dev').can_add_port?).to eq(true) }
+    it { expect(FactoryGirl.build( :program, program_type: 'dcs-cli').can_add_port?).to eq(false) }
+    it { expect(FactoryGirl.build( :program, program_type: 'op').can_add_port?).to eq(false) }
+    it { expect(FactoryGirl.build( :program, program_type: 'mc').can_add_port?).to eq(false) }
+  end
+
+  describe '#can_collate_with_db?' do
+    it { expect(FactoryGirl.build( :program, program_type: 'dcs-dev').can_collate_with_db?).to eq(true) }
+    it { expect(FactoryGirl.build( :program, program_type: 'dcs-cli').can_collate_with_db?).to eq(false) }
+    it { expect(FactoryGirl.build( :program, program_type: 'op').can_collate_with_db?).to eq(false) }
+    it { expect(FactoryGirl.build( :program, program_type: 'mc').can_collate_with_db?).to eq(false) }
+  end
 end
