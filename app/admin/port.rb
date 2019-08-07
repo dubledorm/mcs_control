@@ -3,6 +3,10 @@ ActiveAdmin.register Port do
   decorate_with PortDecorator
   # actions :show, :new, :create, :destroy
 
+  breadcrumb do
+    []
+  end
+
   form title: Port.model_name.human do |f|
     f.semantic_errors *f.object.errors.keys
     inputs I18n.t('forms.activeadmin.port.attributes') do

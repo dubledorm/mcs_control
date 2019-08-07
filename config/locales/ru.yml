@@ -1,9 +1,13 @@
 ru:
   activerecord:
     models:
-      instance: Инстанс
+      instance:
+        one: Инстанс
+        other: Инстансы
       port: Порт
-      program: Программа
+      program:
+        one: Программа
+        other: Программы
     attributes:
       instance:
         name: Название
@@ -144,3 +148,4 @@ ru:
     back: Назад
     delete: Удалить
     action: Действия
+    admin: Административная панель
