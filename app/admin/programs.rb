@@ -5,7 +5,8 @@ ActiveAdmin.register Program do
 
   breadcrumb do
     [ link_to(I18n.t('words.admin'), admin_root_path()),
-      link_to(I18n.t('activerecord.models.instance.other'), admin_instances_path())
+      link_to(I18n.t('activerecord.models.instance.other'), admin_instances_path()),
+      link_to( resource.instance.name, admin_instance_path(id: resource.instance_id))
     ]
   end
 

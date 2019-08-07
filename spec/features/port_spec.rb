@@ -9,7 +9,7 @@ RSpec.feature 'Port', js: true do
 
   before :each do
     @instance = Instance::Factory::build_and_create_db(Instance.new(name: 'testmilandrchicken'))
-    @program = @instance.programs.first
+    @program = @instance.programs.dcs_dev_only.first
     @port = @program.ports.first
   end
 

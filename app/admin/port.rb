@@ -4,7 +4,12 @@ ActiveAdmin.register Port do
   # actions :show, :new, :create, :destroy
 
   breadcrumb do
-    []
+    [ link_to(I18n.t('words.admin'), admin_root_path()),
+      link_to(I18n.t('activerecord.models.instance.other'), admin_instances_path()),
+      link_to( resource.program.instance.name, admin_instance_path(id: resource.program.instance_id)),
+      link_to( resource.program.identification_name,
+               admin_instance_program_path(id: resource.program_id, instance_id: resource.program.instance_id))
+    ]
   end
 
   form title: Port.model_name.human do |f|

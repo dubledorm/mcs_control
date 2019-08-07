@@ -5,9 +5,10 @@ ActiveAdmin.register Instance do
   permit_params :name, :description, :owner_name
 
   breadcrumb do
-    [ link_to(I18n.t('words.admin'), admin_root_path()),
-      link_to(I18n.t('activerecord.models.instance.other'), admin_instances_path())
-    ]
+    breadcrumbs = [ link_to(I18n.t('words.admin'), admin_root_path())]
+    breadcrumbs += [ link_to(I18n.t('activerecord.models.instance.other'),
+                             admin_instances_path())] unless params[:action] == 'index'
+    breadcrumbs
   end
 
   index do

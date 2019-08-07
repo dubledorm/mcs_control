@@ -14,6 +14,11 @@ class Program < ApplicationRecord
   validates :program_type, presence: true, inclusion: { in: %w(mc op dcs-dev dcs-cli) }
   validates :instance, presence: true
 
+  scope :dcs_dev_only, ->{ where(program_type: 'dcs-dev') }
+  scope :mc_only, ->{ where(program_type: 'mc') }
+  scope :op_only, ->{ where(program_type: 'op') }
+  scope :dcs_cli_only, ->{ where(program_type: 'dcs-cli') }
+
   def sym_program_type
     str_to_sym(program_type)
   end
