@@ -1,6 +1,9 @@
 ru:
   activerecord:
     models:
+      admin_user:
+        one: Пользователь
+        other: Пользователи
       instance:
         one: Инстанс
         other: Инстансы
@@ -9,6 +12,12 @@ ru:
         one: Программа
         other: Программы
     attributes:
+      admin_user:
+        current_sign_in_at: Время текущего входа
+        sign_in_count: Всего раз входил
+        email: Email
+        created_at: Создан
+        updated_at: Изменён
       instance:
         name: Название
         owner_name: Владелец
