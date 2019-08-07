@@ -15,7 +15,7 @@ class Program
 
       def get_there_object_list(parent_object)
         # Находим программу :op
-        program_op = parent_object.instance.programs.where(program_type: :op).first
+        program_op = parent_object.instance.programs.op_only.first
         raise StandardError, I18n.t('activerecord.errors.exceptions.program.' +
                                      'collate_dcs_dev_with_db_service.not_found_op') if program_op.nil?
 
