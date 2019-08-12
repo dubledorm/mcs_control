@@ -9,6 +9,6 @@ module FeatureHelper
   end
 
   def init_admin_defaults
-    @admin ||= FactoryGirl.create(:admin_user, email: 'admin@example.com', password: 'password')
+    @admin ||= FactoryGirl.create(:admin_user, email: 'admin@example.com', password: 'password', admin: true)
   end
 end

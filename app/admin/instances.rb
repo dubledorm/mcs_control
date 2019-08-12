@@ -1,7 +1,7 @@
 ActiveAdmin.register Instance do
   includes :programs
   decorate_with InstanceDecorator
-  scope_to :current_admin_user
+  scope_to :current_admin_user, unless: proc{ current_admin_user.admin? }
 
   permit_params :name, :description, :owner_name
 

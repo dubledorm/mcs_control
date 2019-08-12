@@ -16,6 +16,20 @@ ActiveAdmin.register AdminUser do
   filter :sign_in_count
   filter :created_at
 
+  show do
+    attributes_table do
+      row :email
+      row :created_at
+      row :updated_at
+    end
+
+    panel AdminUser.human_attribute_name(:roles) do
+      render 'admin/admin_user/roles_show', roles: admin_user.roles.instances_only, user: admin_user
+    end
+    active_admin_comments
+  end
+
+
   form do |f|
     f.inputs do
       f.input :email
@@ -25,4 +39,7 @@ ActiveAdmin.register AdminUser do
     f.actions
   end
 
+  action_item :add_role, only: :show do
+    link_to I18n.t('actions.admin_user.add_role'), new_admin_role_path(admin_user_id: resource.id)
+  end
 end
