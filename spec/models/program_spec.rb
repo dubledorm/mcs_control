@@ -6,9 +6,20 @@ describe Program do
   
   describe 'factory' do
     let!(:program) {FactoryGirl.create :program}
+    let!(:mc_program) {FactoryGirl.create :mc_program}
+    let!(:op_program) {FactoryGirl.create :op_program}
+    let!(:cli_program) {FactoryGirl.create :cli_program}
+    let!(:dev_program) {FactoryGirl.create :dev_program}
+
+
 
     # Factories
     it { expect(program).to be_valid }
+    it { expect(mc_program).to be_valid }
+    it { expect(op_program).to be_valid }
+    it { expect(cli_program).to be_valid }
+    it { expect(dev_program).to be_valid }
+
 
     # Validations
     it { should validate_presence_of(:identification_name) }

@@ -1,6 +1,7 @@
 ActiveAdmin.register Program do
   belongs_to :instance
   decorate_with ProgramDecorator
+  scope_to :current_admin_user, unless: proc{ current_admin_user.admin? }
   actions :show, :new, :create, :destroy
 
   breadcrumb do

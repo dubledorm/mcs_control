@@ -8,5 +8,5 @@ class Instance < ApplicationRecord
 
   resourcify
 
-  scope :current_user, ->{ where(id: 1) }
+  scope :available_user, ->(user_id){ joins(:roles).joins(:admin_user_roles).where(admin_user_role: { admin_user_id: user_id }) }
 end

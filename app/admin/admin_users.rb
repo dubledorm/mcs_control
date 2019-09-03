@@ -1,4 +1,5 @@
 ActiveAdmin.register AdminUser do
+  scope_to :current_admin_user, unless: proc{ current_admin_user.admin? }
   permit_params :email, :password, :password_confirmation
 
   index do
@@ -40,6 +41,7 @@ ActiveAdmin.register AdminUser do
   end
 
   action_item :add_role, only: :show do
+    # noinspection RailsI18nInspection
     link_to I18n.t('actions.admin_user.add_role'), new_admin_role_path(admin_user_id: resource.id)
   end
 end

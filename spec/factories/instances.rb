@@ -5,4 +5,13 @@ FactoryGirl.define do
     description 'Описание инстанса'
     owner_name 'владелец инстанса'
   end
+
+  factory :full_instance, parent: :instance do
+    after_create do |instance|
+      instance.programs << FactoryGirl.create(:mc_program)
+      instance.programs << FactoryGirl.create(:op_program)
+      instance.programs << FactoryGirl.create(:cli_program)
+      instance.programs << FactoryGirl.create(:dev_program)
+    end
+  end
 end
