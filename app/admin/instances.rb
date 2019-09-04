@@ -61,13 +61,22 @@ ActiveAdmin.register Instance do
   controller do
     include ApplicationHelper
 
+    def scoped_collection
+      if current_admin_user.admin?
+        Instance.all
+      else
+        Instance.with_role(Role::ROLE_NAMES, current_admin_user)
+      end
+    end
+
     def new
       @need_database_create = true
       super
     end
 
+
     def create
-      @need_database_create = params.try(:[], :need_database_create) || false
+      @need_database_create = str_to_bool(params.try(:[], :need_database_create))
       flash.delete(:error)
       create! { |success, failure|
         success.html do
@@ -78,7 +87,8 @@ ActiveAdmin.register Instance do
               Instance::Factory::build(resource)
             end
             test_point_exception
-            redirect_to admin_instance_path(id: resource.id), :notice => I18n.t('forms.activeadmin.instance.created_succesfully')
+            redirect_to admin_instance_path(id: resource.id),
+                        notice: I18n.t('forms.activeadmin.instance.created_succesfully')
           rescue StandardError => e
             Instance::Destructor::destroy_and_drop_db(resource) if resource.persisted?
             flash[:error] = I18n.t('activerecord.errors.messages.unknown_resource_exception', errors: e.message)
@@ -116,7 +126,7 @@ ActiveAdmin.register Instance do
 
 
   action_item :check, only: :show do
-    link_to I18n.t('actions.instance.check'), check_admin_instance_path(resource), method: :put
+    link_to I18n.t('actions.instance.check'), check_admin_instance_path(resource), method: :put if can_collate_with_db?
   end
 
   member_action :check, method: :put do

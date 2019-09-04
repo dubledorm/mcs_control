@@ -31,6 +31,7 @@ ActiveAdmin.register Port do
       begin
         flash.delete(:alert)
         @resource = Port.new(params.require(:port).permit(:number, :program_id, :port_type))
+        authorize! :extend, @resource.program
         Port::Factory::build(@resource)
         test_point_exception
         redirect_to admin_instance_program_path(id: @resource.program_id, instance_id: @resource.program.instance_id)
@@ -47,6 +48,7 @@ ActiveAdmin.register Port do
       instance_id = resource.program.instance_id
       begin
         if params[:confirm].present?
+          authorize! :extend, resource.program
           test_point_exception
           Port::Destructor::simple_destroy(resource)
           redirect_to admin_instance_program_path(id: program_id, instance_id: instance_id)

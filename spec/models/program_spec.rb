@@ -6,9 +6,20 @@ describe Program do
   
   describe 'factory' do
     let!(:program) {FactoryGirl.create :program}
+    let!(:mc_program) {FactoryGirl.create :mc_program}
+    let!(:op_program) {FactoryGirl.create :op_program}
+    let!(:cli_program) {FactoryGirl.create :cli_program}
+    let!(:dev_program) {FactoryGirl.create :dev_program}
+
+
 
     # Factories
     it { expect(program).to be_valid }
+    it { expect(mc_program).to be_valid }
+    it { expect(op_program).to be_valid }
+    it { expect(cli_program).to be_valid }
+    it { expect(dev_program).to be_valid }
+
 
     # Validations
     it { should validate_presence_of(:identification_name) }
@@ -89,5 +100,19 @@ describe Program do
       let!(:instance) {FactoryGirl.build :instance, name: 'energizer'}
       let(:program) {FactoryGirl.build :program, instance: instance, program_type: 'mc', additional_name: 'super_fabric'}
     end
+  end
+
+  describe '#can_add_port?' do
+    it { expect(FactoryGirl.build( :program, program_type: 'dcs-dev').can_add_port?).to eq(true) }
+    it { expect(FactoryGirl.build( :program, program_type: 'dcs-cli').can_add_port?).to eq(false) }
+    it { expect(FactoryGirl.build( :program, program_type: 'op').can_add_port?).to eq(false) }
+    it { expect(FactoryGirl.build( :program, program_type: 'mc').can_add_port?).to eq(false) }
+  end
+
+  describe '#can_collate_with_db?' do
+    it { expect(FactoryGirl.build( :program, program_type: 'dcs-dev').can_collate_with_db?).to eq(true) }
+    it { expect(FactoryGirl.build( :program, program_type: 'dcs-cli').can_collate_with_db?).to eq(false) }
+    it { expect(FactoryGirl.build( :program, program_type: 'op').can_collate_with_db?).to eq(false) }
+    it { expect(FactoryGirl.build( :program, program_type: 'mc').can_collate_with_db?).to eq(false) }
   end
 end

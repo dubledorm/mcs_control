@@ -1,6 +1,8 @@
+# encoding: UTF-8
 ActiveAdmin.register Program do
   belongs_to :instance
   decorate_with ProgramDecorator
+  scope_to :current_admin_user, unless: proc{ current_admin_user.admin? }
   actions :show, :new, :create, :destroy
 
   breadcrumb do
@@ -11,12 +13,12 @@ ActiveAdmin.register Program do
   end
 
   action_item :add_port do
-    link_to I18n.t('actions.program.add_port'), new_admin_program_port_path(program_id: resource.id) if resource.can_add_port?
+    link_to I18n.t('actions.program.add_port'), new_admin_program_port_path(program_id: resource.id) if can_add_port?
   end
 
   action_item :check, only: :show do
     link_to I18n.t('actions.instance.check'), check_admin_instance_program_path(id: resource.id, instance_id: resource.instance_id),
-            method: :put if resource.can_collate_with_db?
+            method: :put if can_collate_with_db?
   end
 
   show title: :identification_name do

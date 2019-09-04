@@ -9,7 +9,6 @@ describe Port do
 
     # Validations
     it { should validate_presence_of(:number) }
- #   it { should validate_presence_of(:instance) }
     it { should validate_presence_of(:port_type) }
     it { should validate_uniqueness_of(:number) }
 

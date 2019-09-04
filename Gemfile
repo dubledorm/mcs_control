@@ -80,6 +80,7 @@ gem 'activeadmin'
 # Plus integrations with:
 gem 'devise'
 gem 'cancancan'
+gem 'rolify'
 gem 'draper'
 gem 'pundit'
 gem "interactor", "~> 3.0"

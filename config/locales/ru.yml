@@ -1,6 +1,9 @@
 ru:
   activerecord:
     models:
+      admin_user:
+        one: Пользователь
+        other: Пользователи
       instance:
         one: Инстанс
         other: Инстансы
@@ -8,7 +11,17 @@ ru:
       program:
         one: Программа
         other: Программы
+      role:
+        one: Роль
+        other: Роли
     attributes:
+      admin_user:
+        current_sign_in_at: Время текущего входа
+        sign_in_count: Всего раз входил
+        email: Email
+        roles: Роли
+        created_at: Создан
+        updated_at: Изменён
       instance:
         name: Название
         owner_name: Владелец
@@ -42,6 +55,8 @@ ru:
         created_at: Создан
         updated_at: Изменён
         ports: Порты
+      role:
+        name: Роль
     decorate:
       instance:
         db_status:
@@ -114,6 +129,8 @@ ru:
       check: Сверить с БД
     program:
       add_port: Добавить порт
+    admin_user:
+      add_role: Добавить роль
 
   forms:
     activeadmin:
@@ -126,6 +143,7 @@ ru:
         attributes: Атрибуты
         top_text: Для программы %{program_name} будет выделен новый порт. Использовать его можно будет сразу после создания.
       confirm:
+        delete_role_page_title: 'Удалить права %{role_name}'
         delete_instance_page_title: 'Удалить инстанс %{instance_name}'
         delete_program_page_title: 'Удалить программу %{program_name}'
         delete_port_page_title: 'Удалить порт %{port_number}'
@@ -143,9 +161,19 @@ ru:
         delete_instance_db_list: 'Будут удалены базы данных:'
         delete_instance_program_list: 'Будет удалена информация о программах:'
         delete_instance_port_list: 'Следующие порты будут освобождены и переданы для дальнейшего использования:'
+        delete_role_sure: 'Внимание! Вы действительно хотите снять права %{role} у пользователя %{user}'
+        delete_port_sure: 'Внимание! Вы действительно хотите удалить порт %{port} у программы %{program}'
+    errors:
+      access_denied:
+        title: Ограничение доступа
   words:
     empty: ПУСТО
     back: Назад
     delete: Удалить
     action: Действия
     admin: Административная панель
+
+  values:
+    role:
+      manager: Мэнеджер
+      editor: Редактор
