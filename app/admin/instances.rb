@@ -126,7 +126,7 @@ ActiveAdmin.register Instance do
 
 
   action_item :check, only: :show do
-    link_to I18n.t('actions.instance.check'), check_admin_instance_path(resource), method: :put
+    link_to I18n.t('actions.instance.check'), check_admin_instance_path(resource), method: :put if can_collate_with_db?
   end
 
   member_action :check, method: :put do

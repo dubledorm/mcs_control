@@ -13,8 +13,7 @@ class Ability
 
     can [ :edit, :update ], Instance, id: user.instances.where(roles: { name: :editor }).map(&:id)
 
-    can [ :read, :extend ], Program, id: user.programs.where(roles: { name: :editor }).map(&:id)
-    can :crud, Port#, id: user.ports.where(roles: { name: :editor }).map(&:id)
+    can [ :read ], Program, id: user.programs.where(roles: { name: :editor }).map(&:id)
 
     can :read, ActiveAdmin::Page, name: "Dashboard", namespace_name: "admin"
     can :read, :all

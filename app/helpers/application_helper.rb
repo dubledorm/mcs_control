@@ -17,4 +17,8 @@ module ApplicationHelper
   def test_point_exception_enable?
     false
   end
+
+  def current_user
+    current_admin_user
+  end
 end

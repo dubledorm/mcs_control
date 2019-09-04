@@ -21,4 +21,19 @@ RSpec.feature 'Role Manager', js: true do
       expect(page).to have_content('Вы не авторизованы для выполнения данного действия')
     end
   end
+
+  describe '#Programs' do
+    before :each do
+      manager_login
+      @user.add_role :manager, instances[2]
+      @user.add_role :manager, instances[3]
+    end
+
+    it_should_behave_like 'any authorised user for program'
+
+    # it 'should not edit yourself records' do
+    #   visit edit_admin_instance_path(id: instances[2])
+    #   expect(page).to have_content('Вы не авторизованы для выполнения данного действия')
+    # end
+  end
 end

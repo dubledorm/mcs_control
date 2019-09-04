@@ -17,12 +17,14 @@ RSpec.feature 'Role Editor', js: true do
 
     it_should_behave_like 'any authorised user for instance'
 
-    it 'should edit yourself records' do
-      visit edit_admin_instance_path(id: instances[2])
-      fill_in id: 'instance_description', with: 'testmilandrtest'
-      click_button value: 'Update Инстанс'
-      sleep(10)
-      expect(current_path).to eq(admin_instance_path(id: instances[2]))
-    end
+
+    pending "заменить проверку на переход по кнопке Сверить с БД на проверку наличия этой кнопки в файле #{__FILE__}"
+    # it 'should edit yourself records' do
+    #   visit edit_admin_instance_path(id: instances[2])
+    #   fill_in id: 'instance_description', with: 'testmilandrtest'
+    #   click_button value: 'Update Инстанс'
+    #   sleep(10)
+    #   expect(current_path).to eq(admin_instance_path(id: instances[2]))
+    # end
   end
 end
