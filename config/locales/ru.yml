@@ -90,6 +90,14 @@ ru:
               required: должно быть заполнено
         program:
           attributes:
+            database_name:
+              taken: уже используется
+              blank: должно быть заполнено
+              invalid: может содержать буквы латинского алфавита, цифры, знак '-'
+            identification_name:
+              taken: уже используется
+              blank: должно быть заполнено
+              invalid: может содержать буквы латинского алфавита, цифры, знак '-'
             name:
               taken: уже используется
               blank: должно быть заполнено
@@ -127,6 +135,7 @@ ru:
   actions:
     instance:
       check: Сверить с БД
+      add_mc: Добавить УК
     program:
       add_port: Добавить порт
     admin_user:
@@ -139,6 +148,11 @@ ru:
         create_database_title: Создание базы данных
         need_database_create:  Создать все базы данных
         created_succesfully: Инстанс успешно создан
+      program:
+        attributes: Атрибуты
+        create_database_title: Создание базы данных
+        need_database_create:  Создать базу данных для программы
+        created_succesfully: Программа успешно создана
       port:
         attributes: Атрибуты
         top_text: Для программы %{program_name} будет выделен новый порт. Использовать его можно будет сразу после создания.
@@ -177,3 +191,8 @@ ru:
     role:
       manager: Мэнеджер
       editor: Редактор
+    program_type:
+      'dcs-dev': 'Приборный модуль'
+      'dcs-cli': 'Клиентский модуль'
+      'op': 'Оператор сети'
+      'mc': 'Управляющая компания'

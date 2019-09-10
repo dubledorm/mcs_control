@@ -14,7 +14,7 @@ describe Program::Destructor do
       create_database( ActiveRecord::Base.connection, 'dcs4_testmilandrchicken' )
       create_user(ActiveRecord::Base.connection, 'testmilandrchicken')
 
-      @program_tmp =  Program::Factory::build_and_create_db(instance, 'mc', 'temp')
+      @program_tmp =  Program::Factory::build_and_create_db(instance, 'mc', true, 'temp')
     end
 
     it {expect(Program.count).to eq(5)}

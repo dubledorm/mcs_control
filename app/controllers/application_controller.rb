@@ -1,9 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  rescue_from Exception, :with => :render_500 #unless Rails.env.development? || Rails.env.test?
-  rescue_from ActiveRecord::RecordNotFound, :with => :render_404 #unless Rails.env.development? || Rails.env.test?
-  rescue_from AbstractController::ActionNotFound, :with => :render_404 #unless Rails.env.development? || Rails.env.test?
+  rescue_from Exception, :with => :render_500 unless Rails.env.development? #|| Rails.env.test?
+  rescue_from ActiveRecord::RecordNotFound, :with => :render_404 unless Rails.env.development? #|| Rails.env.test?
+  rescue_from AbstractController::ActionNotFound, :with => :render_404 unless Rails.env.development? #|| Rails.env.test?
 
   # страница не найдена
   def render_404

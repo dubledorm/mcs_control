@@ -5,7 +5,7 @@ class Program
     extend DatabaseName
     extend InfospheraTools
 
-    def self.build_and_create_db(instance, program_type, additional_name = nil)
+    def self.build_and_create_db(instance, program_type, need_database_create, additional_name = nil)
       program = Program.new(instance: instance,
                             program_type: program_type,
                             additional_name: additional_name,
@@ -13,7 +13,11 @@ class Program
 
       program.identification_name = make_identification_name(instance.name, program_type, additional_name)
 
-      Program::DatabaseControl::CreateDatabase::build(program) if need_database?(program_type)
+      if need_database_create
+        Program::DatabaseControl::CreateDatabase::build(program) if need_database?(program_type)
+      else
+        # TODO внести сюда проверку на существование базы и изменение статуса
+      end
 
       program.save
 
@@ -24,6 +28,7 @@ class Program
       Rails.logger.info 'Created program ' + program.identification_name
       return program
     end
+
 
     private
     

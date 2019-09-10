@@ -129,6 +129,11 @@ ActiveAdmin.register Instance do
     link_to I18n.t('actions.instance.check'), check_admin_instance_path(resource), method: :put if can_collate_with_db?
   end
 
+  action_item :add_mc, only: :show do
+    link_to I18n.t('actions.instance.add_mc'), new_admin_instance_program_path(instance_id: resource,
+                                                                               program_type: 'mc') if can_add_program?
+  end
+
   member_action :check, method: :put do
     begin
       test_point_exception

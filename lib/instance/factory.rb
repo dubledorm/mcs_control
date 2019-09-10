@@ -10,10 +10,10 @@ class Instance
         instance.db_status = 'undefined'
         instance.save!
 
-        Program::Factory::build_and_create_db(instance, 'mc')
-        Program::Factory::build_and_create_db(instance, 'op')
-        Program::Factory::build_and_create_db(instance, 'dcs-dev')
-        Program::Factory::build_and_create_db(instance, 'dcs-cli')
+        Program::Factory::build_and_create_db(instance, 'mc', true)
+        Program::Factory::build_and_create_db(instance, 'op', true)
+        Program::Factory::build_and_create_db(instance, 'dcs-dev', true)
+        Program::Factory::build_and_create_db(instance, 'dcs-cli', true)
 
         instance.db_status = 'everywhere_exists'
         instance.save!

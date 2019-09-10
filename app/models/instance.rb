@@ -9,4 +9,8 @@ class Instance < ApplicationRecord
   resourcify
 
   scope :available_user, ->(user_id){ joins(:roles).joins(:admin_user_roles).where(admin_user_role: { admin_user_id: user_id }) }
+
+  def attached_program_types
+    self.programs.map(&:program_type).uniq.compact
+  end
 end
