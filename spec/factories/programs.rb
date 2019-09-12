@@ -32,4 +32,11 @@ FactoryGirl.define do
       program.ports << FactoryGirl.create(:port, port_type: 'tcp')
     end
   end
+
+  factory :dev_program_and_one_port, parent: :program do
+    program_type 'dcs-dev'
+    after_create do |program|
+      program.ports << FactoryGirl.create(:port, port_type: 'tcp')
+    end
+  end
 end
