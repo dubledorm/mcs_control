@@ -18,4 +18,12 @@ class ProgramDecorator < ObjectBaseDecorator
     return [] if object.identification_name.blank?
     [object.identification_name]
   end
+
+  def http_prefix
+    { 'mc' => 'mc',
+      'op' => 'operator',
+      'dcs-dev' => '',
+      'dcs-cli' => ''
+    }[object.program_type]
+  end
 end
