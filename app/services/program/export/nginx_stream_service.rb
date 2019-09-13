@@ -1,5 +1,3 @@
-require 'nginx_config'
-
 class Program
   module Export
     class NginxStreamService < Shared::ExportNginxBase
@@ -20,6 +18,15 @@ class Program
       end
 
       private
+
+        def section_upstream(port)
+          result = []
+          result << "upstream #{@program.identification_name}_#{port.number} {"
+          server_address.each do |server_address|
+            result << "  server #{server_address}:#{port.number};"
+          end
+          result << '}'
+        end
 
         def section_server(port)
           result = []

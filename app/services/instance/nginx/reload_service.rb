@@ -1,0 +1,102 @@
+# encoding: UTF-8
+require 'file_tools'
+require 'ssh_tools'
+require 'nginx_config'
+
+class Instance
+  module Nginx
+    class ReloadService
+      extend FileTools
+      extend SshTools
+
+
+      def initialize(instance)
+        @instance = instance
+      end
+
+      def call
+        http_strs = create_body_http_file
+        http_tmp_file = FileTools::create_and_fill_tmp_file(http_strs.join("\n"))
+
+        tcp_strs = create_body_stream_file
+        tcp_tmp_file = FileTools::create_and_fill_tmp_file(tcp_strs.join("\n"))
+
+        send_files(http_tmp_file, tcp_tmp_file)
+
+        reload_nginx
+
+        FileTools::remove_file(http_tmp_file) unless http_tmp_file.nil?
+        FileTools::remove_file(tcp_tmp_file) unless tcp_tmp_file.nil?
+      end
+
+      private
+        attr_accessor :instance
+
+      def create_body_http_file
+        http_strs = []
+        @instance.programs.need_http_port.each do |program|
+          http_strs = Program::Export::NginxHttpService::new(program).call
+        end
+        http_strs
+      end
+
+      def create_body_stream_file
+        tcp_strs = []
+        @instance.programs.need_tcp_port.each do |program|
+          tcp_strs = Program::Export::NginxStreamService::new(program).call
+        end
+        tcp_strs
+      end
+
+
+      def send_files(http_tmp_file, tcp_tmp_file)
+        test_print(http_tmp_file, tcp_tmp_file) if Rails.env.test?
+
+        SshTools::scp_tmp_file(NginxConfig.config[:nginx_server_host],
+                               NginxConfig.config[:nginx_server_login],
+                               NginxConfig.config[:nginx_server_password],
+                               FileTools::create_full_path(NginxConfig.config[:nginx_http_config_path],
+                                                           nginx_http_file_name),
+                               http_tmp_file.path) unless http_tmp_file.nil?
+
+        SshTools::scp_tmp_file(NginxConfig.config[:nginx_server_host],
+                               NginxConfig.config[:nginx_server_login],
+                               NginxConfig.config[:nginx_server_password],
+                               FileTools::create_full_path(NginxConfig.config[:nginx_tcp_config_path],
+                                                           nginx_stream_file_name),
+                               tcp_tmp_file.path) unless tcp_tmp_file.nil?
+
+      end
+
+      def reload_nginx
+
+      end
+
+      def nginx_http_file_name
+        "#{instance.name}.conf"
+      end
+
+      def nginx_stream_file_name
+        "#{instance.name}.conf"
+      end
+
+      def test_print(http_tmp_file, tcp_tmp_file)
+        unless http_tmp_file.nil?
+          puts '-------- http_tmp_file --------'
+          http_tmp_file.open
+          http_tmp_file.rewind
+          puts http_tmp_file.read
+          http_tmp_file.close
+        end
+
+        unless tcp_tmp_file.nil?
+          puts '-------- tcp_tmp_file --------'
+          tcp_tmp_file.open
+          tcp_tmp_file.rewind
+          puts tcp_tmp_file.read
+          tcp_tmp_file.close
+        end
+      end
+    end
+  end
+end

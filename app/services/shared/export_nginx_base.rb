@@ -1,13 +1,10 @@
+require 'nginx_config'
+
 module Shared
   class ExportNginxBase
     protected
       def section_upstream(port)
-        result = []
-        result << "upstream #{@program.identification_name}_#{port.number} {"
-        server_address.each do |server_addres|
-          result << "  server #{server_addres}:#{port.number};"
-        end
-        result << '}'
+        raise NotImplementedError
       end
 
       def section_server(port)

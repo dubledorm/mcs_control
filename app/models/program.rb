@@ -18,6 +18,8 @@ class Program < ApplicationRecord
   scope :mc_only, ->{ where(program_type: 'mc') }
   scope :op_only, ->{ where(program_type: 'op') }
   scope :dcs_cli_only, ->{ where(program_type: 'dcs-cli') }
+  scope :need_http_port, ->{ where(program_type: %w(mc op).freeze) }
+  scope :need_tcp_port, ->{ where(program_type: 'dcs-dev') }
 
   def sym_program_type
     str_to_sym(program_type)
