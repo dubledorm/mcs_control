@@ -47,7 +47,7 @@ ActiveAdmin.register Program do
             selected: params[:program_type],
             label: Program.human_attribute_name(:program_type),
             input_html: { :disabled => true }
-      input :additional_name, required: true
+      input :additional_name, required: params[:program_type] == 'mc' ? true : false
       input :program_type, input_html: { value: params[:program_type] }, as: :hidden
     end
     unless resource.persisted?
@@ -75,10 +75,15 @@ ActiveAdmin.register Program do
       @need_database_create = str_to_bool(params.try(:[], :need_database_create))
       flash.delete(:error)
       begin
+        if params.require(:program).require(:program_type) == 'mc'
+          additional_name = params.require(:program).require(:additional_name)
+        else
+          additional_name = params.require(:program)[:additional_name]
+        end
         resource = Program::Factory::build_and_create_db(Instance.find(params.require(:instance_id)),
                                                          params.require(:program).require(:program_type),
                                                          @need_database_create,
-                                                         params.require(:program).require(:additional_name))
+                                                         additional_name)
         test_point_exception
         redirect_to admin_instance_program_path(instance_id: resource.instance_id, id: resource.id),
                     notice: I18n.t('forms.activeadmin.program.created_succesfully')

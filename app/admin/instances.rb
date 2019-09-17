@@ -134,6 +134,11 @@ ActiveAdmin.register Instance do
                                                                                program_type: 'mc') if can_add_program?
   end
 
+  action_item :add_pf2, only: :show do
+    link_to I18n.t('actions.instance.add_pf2'), new_admin_instance_program_path(instance_id: resource,
+                                                                               program_type: 'pf2') if can_add_program?
+  end
+
   member_action :check, method: :put do
     begin
       test_point_exception

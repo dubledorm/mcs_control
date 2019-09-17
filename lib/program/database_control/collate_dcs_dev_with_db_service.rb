@@ -40,7 +40,8 @@ class Program
 
       def add_object_to_us(object_value, db_status)
         parent_object.ports.create!(number: object_value['input_value'].to_i,
-                                    port_type: get_port_type(parent_object.sym_program_type).to_s,
+                                    port_type: parent_object.port_type.to_s,
+                                    # port_type: get_port_type(parent_object.sym_program_type).to_s,
                                     db_status: db_status
                                    )
       end

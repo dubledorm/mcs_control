@@ -21,24 +21,25 @@ class Program
 
       program.save
 
-      port_type = get_port_type(program.sym_program_type)
-      return program if port_type.blank?
-
-      add_port(port_type, program)
+      add_ports(program)
       Rails.logger.info 'Created program ' + program.identification_name
       return program
     end
 
 
     private
-    
-      def self.add_port(port_type, program)
-        port_number = Port::FindFreeService.new(port_type).call
-        program.ports.create(port_type: port_type,
-                             number: port_number,
-                             db_status: 'undefined')
-      end
 
+      def self.add_ports(program)
+        program.default_ports_create.each do |port_type, quentity|
+          (1..quentity).each do
+            port_number = Port::FindFreeService.new(port_type).call
+            program.ports.create(port_type: port_type,
+                                 number: port_number,
+                                 db_status: 'undefined')
+          end
+        end
+      end
+    
       def self.need_database?(program_type)
         program_type != 'dcs-dev'
       end
