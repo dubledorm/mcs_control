@@ -21,14 +21,6 @@ module ProgramTypes
   end
 
   class Pf2ProgramType < ProgramTypeCharacteristic
-    def can_add_port?
-      false
-    end
-
-    def can_collate_with_db?
-      false
-    end
-
     def port_type
       :tcp
     end
