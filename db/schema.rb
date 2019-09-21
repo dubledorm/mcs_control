@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_21_135819) do
+ActiveRecord::Schema.define(version: 2019_09_21_164645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,15 @@ ActiveRecord::Schema.define(version: 2019_09_21_135819) do
     t.index ["identification_name"], name: "index_programs_on_identification_name", unique: true
     t.index ["instance_id"], name: "index_programs_on_instance_id"
     t.index ["program_type"], name: "index_programs_on_program_type"
+  end
+
+  create_table "retranslators", force: :cascade do |t|
+    t.integer "port_from", null: false
+    t.integer "port_to", null: false
+    t.integer "replacement_port"
+    t.boolean "active"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "roles", force: :cascade do |t|

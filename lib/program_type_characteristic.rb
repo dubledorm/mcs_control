@@ -19,4 +19,9 @@ class ProgramTypeCharacteristic
   def default_ports_create
     {}
   end
+
+  # Действия, которые может быть надо выполнить после создания программы
+  def after_create(program)
+
+  end
 end

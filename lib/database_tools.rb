@@ -51,4 +51,9 @@ module DatabaseTools
   def close_custom_connection
     CustomActiveRecord.connection.disconnect!
   end
+
+  def clear_table(connection, table_name)
+    connection.execute("delete from #{table_name}")
+    Rails.logger.info 'clear table ' + table_name
+  end
 end

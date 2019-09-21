@@ -32,4 +32,9 @@ module ProgramToolBox
     return false if program_type.nil?
     KNOWN_PROGRAM_TYPES[program_type].default_ports_create
   end
+
+  def after_create
+    return false if program_type.nil?
+    KNOWN_PROGRAM_TYPES[program_type].after_create(self)
+  end
 end

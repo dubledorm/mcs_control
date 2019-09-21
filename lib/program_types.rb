@@ -28,6 +28,10 @@ module ProgramTypes
     def default_ports_create
       { tcp: 2 }
     end
+
+    def after_create(program)
+      Pf2::PrepareService::new(program).call
+    end
   end
 
   class DcsCliProgramType < ProgramTypeCharacteristic; end
