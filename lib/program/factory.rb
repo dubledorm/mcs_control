@@ -1,16 +1,19 @@
 require 'database_name'
 require 'infosphera_tools'
+require 'application_helper'
+
 class Program
   class Factory
     extend DatabaseName
     extend InfospheraTools
+    extend ApplicationHelper
 
     def self.build_and_create_db(instance, program_type, need_database_create, additional_name = nil)
       program = Program.new(instance: instance,
                             program_type: program_type,
                             additional_name: additional_name,
                             db_status: 'undefined')
-
+      begin
         program.identification_name = make_identification_name(instance.name, program_type, additional_name)
 
         if need_database_create
@@ -21,9 +24,15 @@ class Program
 
         program.save!
 
+        test_point_exception
+
         add_ports(program)
         Rails.logger.info 'Created program ' + program.identification_name
         return program
+      rescue StandardError => e
+        Program::Destructor::destroy_and_drop_db(program) if program && program.persisted?
+        raise e
+      end
     end
 
 

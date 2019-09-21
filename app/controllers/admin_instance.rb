@@ -26,11 +26,9 @@ module AdminInstance
           else
             Instance::Factory::build(resource)
           end
-          test_point_exception
           redirect_to admin_instance_path(id: resource.id),
                       notice: I18n.t('forms.activeadmin.instance.created_succesfully')
         rescue StandardError => e
-          Instance::Destructor::destroy_and_drop_db(resource) if resource.persisted?
           flash[:error] = I18n.t('activerecord.errors.messages.unknown_resource_exception', errors: e.message)
           render :new, error: e.message
         end

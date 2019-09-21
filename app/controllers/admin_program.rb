@@ -19,11 +19,9 @@ module AdminProgram
                                                        params.require(:program).require(:program_type),
                                                        @need_database_create,
                                                        additional_name)
-      test_point_exception
       redirect_to admin_instance_program_path(instance_id: resource.instance_id, id: resource.id),
                   notice: I18n.t('forms.activeadmin.program.created_succesfully')
     rescue StandardError => e
-      Program::Destructor::destroy_and_drop_db(resource) if resource && resource.persisted?
       flash[:error] = I18n.t('activerecord.errors.messages.unknown_resource_exception', errors: e.message)
       redirect_to new_admin_instance_program_path(instance_id: params[:instance_id],
                                                   program_type: params[:program][:program_type]),

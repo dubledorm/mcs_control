@@ -1,8 +1,10 @@
 require 'database_tools'
+require 'application_helper'
 
 class Instance
   class Factory
     extend DatabaseTools
+    extend ApplicationHelper
 
     def self.build_and_create_db(instance)
       begin
@@ -15,6 +17,7 @@ class Instance
         Program::Factory::build_and_create_db(instance, 'dcs-dev', true)
         Program::Factory::build_and_create_db(instance, 'dcs-cli', true)
 
+        test_point_exception
         instance.db_status = 'everywhere_exists'
         instance.save!
         return instance
