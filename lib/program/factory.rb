@@ -11,19 +11,19 @@ class Program
                             additional_name: additional_name,
                             db_status: 'undefined')
 
-      program.identification_name = make_identification_name(instance.name, program_type, additional_name)
+        program.identification_name = make_identification_name(instance.name, program_type, additional_name)
 
-      if need_database_create
-        Program::DatabaseControl::CreateDatabase::build(program) if need_database?(program_type)
-      else
-        # TODO внести сюда проверку на существование базы и изменение статуса
-      end
+        if need_database_create
+          Program::DatabaseControl::CreateDatabase::build(program) if need_database?(program_type)
+        else
+          # TODO внести сюда проверку на существование базы и изменение статуса
+        end
 
-      program.save
+        program.save!
 
-      add_ports(program)
-      Rails.logger.info 'Created program ' + program.identification_name
-      return program
+        add_ports(program)
+        Rails.logger.info 'Created program ' + program.identification_name
+        return program
     end
 
 
