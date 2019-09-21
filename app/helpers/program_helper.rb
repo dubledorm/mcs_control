@@ -7,6 +7,11 @@ module ProgramHelper
     resource.can_add_port? && can?(:new, Port)
   end
 
+  def program_can_delete_port?
+    resource.can_delete_port? && can?(:delete, Port)
+  end
+
+
   # Определяет программы каких типов ещё можно добавить к инстансу
   # При этом, считаем, что mc можем добавить любое количество
   def program_available_program_types

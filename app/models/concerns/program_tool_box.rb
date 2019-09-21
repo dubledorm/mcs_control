@@ -18,6 +18,12 @@ module ProgramToolBox
     KNOWN_PROGRAM_TYPES[program_type].can_add_port?
   end
 
+  def can_delete_port?
+    return false if program_type.nil?
+    KNOWN_PROGRAM_TYPES[program_type].can_delete_port?
+  end
+
+
   def can_collate_with_db?
     return false if program_type.nil?
     KNOWN_PROGRAM_TYPES[program_type].can_collate_with_db?

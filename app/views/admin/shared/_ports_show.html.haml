@@ -20,8 +20,11 @@
           %td
             = port.decorate.collate_base_status
           %td
-            = link_to(I18n.t('words.delete'), admin_program_port_path(program_id: port.program_id, id: port.id),
-            method: :delete, data: {confirm: I18n.t('forms.activeadmin.confirm.delete_port_sure',
+            - if can_delete_ports
+              = link_to(I18n.t('words.delete'), admin_program_port_path(program_id: port.program_id, id: port.id),
+              method: :delete, data: {confirm: I18n.t('forms.activeadmin.confirm.delete_port_sure',
             port: port.number, program: port.decorate.program_name)})
+            - else
+              = ''
 
 

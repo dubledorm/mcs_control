@@ -7,6 +7,10 @@ module ProgramTypes
       true
     end
 
+    def can_delete_port?
+      true
+    end
+
     def can_collate_with_db?
       true
     end

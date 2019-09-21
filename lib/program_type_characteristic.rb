@@ -4,6 +4,12 @@ class ProgramTypeCharacteristic
     false
   end
 
+  # Разрешать в интерфейсе удалять порты
+  def can_delete_port?
+    false
+  end
+
+
   # Разрешать сверять с БД
   def can_collate_with_db?
     false
