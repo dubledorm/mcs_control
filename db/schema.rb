@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_09_210024) do
+ActiveRecord::Schema.define(version: 2019_09_21_135819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(version: 2019_08_09_210024) do
     t.string "identification_name"
     t.string "db_status"
     t.string "state"
+    t.boolean "created_db_myself", default: false
     t.index ["identification_name"], name: "index_programs_on_identification_name", unique: true
     t.index ["instance_id"], name: "index_programs_on_instance_id"
     t.index ["program_type"], name: "index_programs_on_program_type"

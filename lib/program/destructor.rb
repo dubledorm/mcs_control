@@ -5,7 +5,9 @@ class Program
     extend DatabaseTools
 
     def self.destroy_and_drop_db(program)
-      drop_database(ActiveRecord::Base.connection, program.database_name) if database_exists?(program.database_name)
+      if program.created_db_myself?
+        drop_database(ActiveRecord::Base.connection, program.database_name) if database_exists?(program.database_name)
+      end
       program.destroy
     end
 

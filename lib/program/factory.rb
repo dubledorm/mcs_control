@@ -17,7 +17,10 @@ class Program
         program.identification_name = make_identification_name(instance.name, program_type, additional_name)
 
         if need_database_create
-          Program::DatabaseControl::CreateDatabase::build(program) if need_database?(program_type)
+          if need_database?(program_type)
+            Program::DatabaseControl::CreateDatabase::build(program)
+            program.created_db_myself = true
+          end
         else
           # TODO внести сюда проверку на существование базы и изменение статуса
         end
