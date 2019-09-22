@@ -84,6 +84,7 @@ gem 'rolify'
 gem 'draper'
 gem 'pundit'
 gem "interactor", "~> 3.0"
+gem 'rails-observers'
 
 gem 'net-ssh'
 gem 'net-scp'

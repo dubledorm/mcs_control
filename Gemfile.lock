@@ -278,6 +278,8 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.0.4)
       loofah (~> 2.2, >= 2.2.2)
+    rails-observers (0.1.5)
+      activemodel (>= 4.0)
     railties (6.0.0.rc1)
       actionpack (= 6.0.0.rc1)
       activesupport (= 6.0.0.rc1)
@@ -462,6 +464,7 @@ DEPENDENCIES
   pundit
   rack_session_access
   rails (~> 6.0.0.rc1)
+  rails-observers
   rolify
   rspec-rails (~> 3.8)
   rubocop-rails

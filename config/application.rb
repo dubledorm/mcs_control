@@ -19,7 +19,10 @@ module McsControl
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W(#{config.root}/lib /app/observers)
+
+    config.active_record.observers = [ :program_observer, :port_observer ]
+
     config.logger = ActiveSupport::Logger.new("log/#{Rails.env}.log")
      config.logger.formatter = proc do | severity, datetime, progname, msg |
       "#{datetime}, #{severity}: #{msg}\n"
