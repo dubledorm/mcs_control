@@ -18,4 +18,8 @@ module ProgramHelper
     (ProgramToolBox::KNOWN_PROGRAM_TYPES.keys).
         uniq.map { |program_type| [I18n.t("values.program_type.#{program_type}"), program_type] }
   end
+
+  def program_can_retranslator?
+    resource.can_retranslate_port? && can?(:retranslate, Port) && !Retranslator.active?
+  end
 end

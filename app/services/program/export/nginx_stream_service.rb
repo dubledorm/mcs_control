@@ -2,15 +2,15 @@ class Program
   module Export
     class NginxStreamService < Shared::ExportNginxBase
 
-      def initialize(program, retranslator = false)
+      def initialize(program)
         @program = program
-        @retranslator = retranslator
+        @retranslator_active = retranslator_active?
       end
 
       def call
         result = []
         @program.ports.tcp.each do |port|
-          next if @retranslator && retranslator_port.to_i == port.number
+          next if @retranslator_active && retranslator_replacement_port.to_i == port.number
           result += section_upstream(port)
           result += section_server(port)
         end
@@ -31,7 +31,11 @@ class Program
         def section_server(port)
           result = []
           result << 'server {'
-          result << "  listen #{port.number};"
+          if @retranslator_active && retranslator_port.to_i == port.number
+            result << "  listen #{retranslator_replacement_port.to_i};"
+          else
+            result << "  listen #{port.number};"
+          end
           result << "  proxy_pass #{@program.identification_name}_#{port.number};"
           result << '}'
         end

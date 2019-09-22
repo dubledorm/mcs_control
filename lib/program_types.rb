@@ -11,6 +11,10 @@ module ProgramTypes
       true
     end
 
+    def can_retranslate_port?
+      true
+    end
+
     def can_collate_with_db?
       true
     end

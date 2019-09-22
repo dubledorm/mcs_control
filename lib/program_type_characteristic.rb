@@ -9,6 +9,10 @@ class ProgramTypeCharacteristic
     false
   end
 
+  # Разрешать в интерфейсе переводить порт в режим ретрансляции
+  def can_retranslate_port?
+    false
+  end
 
   # Разрешать сверять с БД
   def can_collate_with_db?

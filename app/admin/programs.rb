@@ -35,7 +35,9 @@ ActiveAdmin.register Program do
     end
 
     panel Program.human_attribute_name(:program) do
-      render 'admin/shared/ports_show', ports: program.ports, can_delete_ports: program_can_delete_port?
+      render 'admin/shared/ports_show', ports: program.ports,
+             can_delete_ports: program_can_delete_port?,
+             can_retranslate_ports: program_can_retranslator?
     end
     active_admin_comments
   end

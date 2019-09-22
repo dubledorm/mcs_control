@@ -1,6 +1,5 @@
 development:
   server_address: ['192.168.100.11', '192.168.100.12', '192.168.100.14', '192.168.100.24']
-  retranslator_port: 31072
   server_name: infsphr.info
   nginx_server_host: 127.0.0.1
   nginx_server_login: user
@@ -10,7 +9,6 @@ development:
 
 test:
   server_address: ['192.168.100.11', '192.168.100.12', '192.168.100.14', '192.168.100.24']
-  retranslator_port: 31072
   server_name: infsphr.info
   nginx_server_host: localhost
   nginx_server_login: azirumga

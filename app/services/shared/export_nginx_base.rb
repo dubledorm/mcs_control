@@ -19,8 +19,17 @@ module Shared
       end
 
       def retranslator_port
-        NginxConfig.config[:retranslator_port]
+        Retranslator.retranslator_port
       end
+
+      def retranslator_active?
+        Retranslator.active?
+      end
+
+      def retranslator_replacement_port
+        Retranslator.retranslator_replacement_port
+      end
+
 
       def server_name
         NginxConfig.config[:server_name]
