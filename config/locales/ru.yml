@@ -32,6 +32,7 @@ ru:
         collate_base_status: Статус БД
         programs: Программы
         ports: Порты
+        state: Состояние
         created_at: Создан
         updated_at: Изменён
       port:
@@ -138,6 +139,7 @@ ru:
       check: Сверить с БД
       add_mc: Добавить УК
       add_pf2: Добавить pf2
+      update_nginx: Обновить Nginx
     program:
       add_port: Добавить порт
     admin_user:

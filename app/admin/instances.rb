@@ -1,6 +1,7 @@
 ActiveAdmin.register Instance do
   includes :programs
   decorate_with InstanceDecorator
+  config.filters = false
 
   permit_params :name, :description, :owner_name
 
@@ -15,6 +16,7 @@ ActiveAdmin.register Instance do
     selectable_column
     id_column
     column :name
+    column :state
     column :description
     column :owner_name
     column :collate_base_status
@@ -26,6 +28,7 @@ ActiveAdmin.register Instance do
   show do
       attributes_table do
         row :name
+        row :state
         row :description
         row :owner_name
         row :db_user_name
@@ -77,11 +80,27 @@ ActiveAdmin.register Instance do
                                                                                program_type: 'pf2') if instance_can_add_pf2?
   end
 
+  action_item :update_nginx, only: :show do
+    link_to I18n.t('actions.instance.update_nginx'), update_nginx_admin_instance_path(resource), method: :put
+  end
+
   member_action :check, method: :put do
     begin
       test_point_exception
       Instance::DatabaseControl::CollateWithDbService.new(resource).call
       redirect_to admin_instance_path(resource), notice: "Checked!"
+    rescue StandardError => e
+      flash[:error] = I18n.t('activerecord.errors.messages.unknown_resource_exception', errors: e.message)
+      redirect_to admin_instance_path(resource), error: e.message
+    end
+  end
+
+  member_action :update_nginx, method: :put do
+    begin
+      test_point_exception
+      resource.state = 'stable'
+      resource.save!
+      redirect_to admin_instance_path(resource), notice: "Updated!"
     rescue StandardError => e
       flash[:error] = I18n.t('activerecord.errors.messages.unknown_resource_exception', errors: e.message)
       redirect_to admin_instance_path(resource), error: e.message

@@ -19,6 +19,7 @@ class Instance
 
         test_point_exception
         instance.db_status = 'everywhere_exists'
+        instance.state = 'changed'
         instance.save!
         return instance
       rescue StandardError => e

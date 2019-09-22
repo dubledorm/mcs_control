@@ -3,7 +3,7 @@ ActiveAdmin.register Program do
   belongs_to :instance
   decorate_with ProgramDecorator
   scope_to :current_admin_user, unless: proc{ current_admin_user.admin? }
-  actions :all, except: [:index]
+  actions :all, except: [:index, :edit, :update]
   permit_params :program_type, :additional_name, :database_name
 
   breadcrumb do
