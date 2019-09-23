@@ -33,19 +33,11 @@ class Instance
         attr_accessor :instance
 
       def create_body_http_file
-        http_strs = []
-        @instance.programs.need_http_port.each do |program|
-          http_strs = Program::Export::NginxHttpService::new(program).call
-        end
-        http_strs
+        Instance::Export::NginxHttpService::new(@instance).call
       end
 
       def create_body_stream_file
-        tcp_strs = []
-        @instance.programs.need_tcp_port.each do |program|
-          tcp_strs = Program::Export::NginxStreamService::new(program).call
-        end
-        tcp_strs
+        Instance::Export::NginxStreamService::new(@instance).call
       end
 
 

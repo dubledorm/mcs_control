@@ -95,4 +95,48 @@ RSpec.describe Instance::Export::NginxHttpService do
                                                                ])
     }
   end
+
+  context 'when instance has two mc program' do
+    let!(:instance) { FactoryGirl::create :instance }
+    let!(:program) { FactoryGirl::create :mc_program, instance: instance }
+    let!(:program1) { FactoryGirl::create :mc_program, instance: instance, additional_name: 'add' }
+
+
+    it {
+      expect(described_class.new(program.instance).call).to eq([ "upstream #{program.identification_name}_mc {",
+                                                                 "  server #{SERVER_ADDRESS[0]}:#{program.ports[0].number};",
+                                                                 "  server #{SERVER_ADDRESS[1]}:#{program.ports[0].number};",
+                                                                 "  server #{SERVER_ADDRESS[2]}:#{program.ports[0].number};",
+                                                                 "  server #{SERVER_ADDRESS[3]}:#{program.ports[0].number};",
+                                                                 '}',
+                                                                 'server {',
+                                                                 "  listen #{program.ports[0].number};",
+                                                                 '  server_name infsphr.info;',
+                                                                 '  location = / {',
+                                                                 '  rewrite ^.+ /mc permanent;',
+                                                                 '  }',
+                                                                 '  location /mc {',
+                                                                 "  proxy_pass http://#{program.identification_name}_mc;",
+                                                                 '  }',
+                                                                 '}',
+                                                                 "upstream #{program1.identification_name}_mc {",
+                                                                 "  server #{SERVER_ADDRESS[0]}:#{program1.ports[0].number};",
+                                                                 "  server #{SERVER_ADDRESS[1]}:#{program1.ports[0].number};",
+                                                                 "  server #{SERVER_ADDRESS[2]}:#{program1.ports[0].number};",
+                                                                 "  server #{SERVER_ADDRESS[3]}:#{program1.ports[0].number};",
+                                                                 '}',
+                                                                 'server {',
+                                                                 "  listen #{program1.ports[0].number};",
+                                                                 '  server_name infsphr.info;',
+                                                                 '  location = / {',
+                                                                 '  rewrite ^.+ /mc permanent;',
+                                                                 '  }',
+                                                                 '  location /mc {',
+                                                                 "  proxy_pass http://#{program1.identification_name}_mc;",
+                                                                 '  }',
+                                                                 '}'
+                                                               ])
+    }
+  end
+
 end

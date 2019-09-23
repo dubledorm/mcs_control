@@ -81,7 +81,7 @@ ActiveAdmin.register Instance do
   end
 
   action_item :update_nginx, only: :show do
-    link_to I18n.t('actions.instance.update_nginx'), update_nginx_admin_instance_path(resource), method: :put
+    link_to I18n.t('actions.instance.update_nginx'), update_nginx_admin_instance_path(resource), method: :put if instance_can_update_nginx?
   end
 
   member_action :check, method: :put do
@@ -97,7 +97,7 @@ ActiveAdmin.register Instance do
 
   member_action :update_nginx, method: :put do
     begin
-      test_point_exception
+      Instance::Nginx::ReloadService::new(resource).call
       resource.state = 'stable'
       resource.save!
       redirect_to admin_instance_path(resource), notice: "Updated!"
