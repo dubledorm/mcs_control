@@ -239,11 +239,16 @@ ActiveAdmin.setup do |config|
   #
   # If you wanted to add a static menu item to the default menu provided:
   #
-  #   config.namespace :admin do |admin|
-  #     admin.build_menu :default do |menu|
-  #       menu.add label: "My Great Website", url: "http://www.mygreatwebsite.com", html_options: { target: :blank }
-  #     end
-  #   end
+    config.namespace :admin do |admin|
+      include ApplicationHelper
+
+      admin.build_menu :default do |menu|
+        menu.add label: I18n.t('menu.retranslate'), html_options: { class: 'red_link' } do |sites|
+          sites.add id: :retranslator_off, label: proc{ retranslator_menu_label },
+                    url: proc { retranslator_switch_off_url }
+        end
+      end
+    end
 
   # == Download Links
   #

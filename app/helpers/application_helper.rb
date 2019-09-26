@@ -21,4 +21,17 @@ module ApplicationHelper
   def current_user
     current_admin_user
   end
+
+  def retranslator_menu_label
+    return '' unless Retranslator::active?
+    "#{Retranslator::retranslator_replacement_port} : выключить"
+  end
+
+  def retranslator_switch_off_url
+    return '' unless Retranslator::active?
+    retranslator_port = Retranslator::retranslator_replacement_port
+    return '' if retranslator_port.blank?
+    port = Port.where(number: retranslator_port).first
+    Rails.application.routes.url_helpers.retranslator_off_admin_program_port_path(program_id: port.program_id, id: port.id)
+  end
 end

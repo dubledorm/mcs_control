@@ -142,6 +142,8 @@ ru:
       update_nginx: Обновить Nginx
     program:
       add_port: Добавить порт
+    port:
+      retranslator: Ретранслятор
     admin_user:
       add_role: Добавить роль
 
@@ -181,6 +183,7 @@ ru:
         delete_instance_port_list: 'Следующие порты будут освобождены и переданы для дальнейшего использования:'
         delete_role_sure: 'Внимание! Вы действительно хотите снять права %{role} у пользователя %{user}'
         delete_port_sure: 'Внимание! Вы действительно хотите удалить порт %{port} у программы %{program}'
+        retranslate_port_sure: 'Внимание! Вы действительно хотите перевести порт %{port} в режим ретрансляции?'
     errors:
       access_denied:
         title: Ограничение доступа
@@ -190,6 +193,9 @@ ru:
     delete: Удалить
     action: Действия
     admin: Административная панель
+
+  menu:
+    retranslate: Ретранслятор
 
   values:
     role:

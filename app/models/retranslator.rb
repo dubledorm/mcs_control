@@ -11,14 +11,14 @@ class Retranslator < ApplicationRecord
 
   def self.retranslator_port
     retranslator = Retranslator.first
-    return null unless retranslator
+    return nil unless retranslator
     retranslator.port_from
   end
 
   def self.retranslator_replacement_port
     retranslator = Retranslator.first
-    return null unless retranslator
-    return null unless retranslator.active?
+    return nil unless retranslator
+    return nil unless retranslator.active?
     retranslator.replacement_port
   end
 end
