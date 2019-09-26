@@ -103,22 +103,7 @@ RSpec.describe Instance::Export::NginxHttpService do
 
 
     it {
-      expect(described_class.new(program.instance).call).to eq([ "upstream #{program.identification_name}_mc {",
-                                                                 "  server #{SERVER_ADDRESS[0]}:#{program.ports[0].number};",
-                                                                 "  server #{SERVER_ADDRESS[1]}:#{program.ports[0].number};",
-                                                                 "  server #{SERVER_ADDRESS[2]}:#{program.ports[0].number};",
-                                                                 "  server #{SERVER_ADDRESS[3]}:#{program.ports[0].number};",
-                                                                 '}',
-                                                                 'server {',
-                                                                 "  listen #{program.ports[0].number};",
-                                                                 '  server_name infsphr.info;',
-                                                                 '  location = / {',
-                                                                 '  rewrite ^.+ /mc permanent;',
-                                                                 '  }',
-                                                                 '  location /mc {',
-                                                                 "  proxy_pass http://#{program.identification_name}_mc;",
-                                                                 '  }',
-                                                                 '}',
+      expect(described_class.new(program.instance).call).to eq([
                                                                  "upstream #{program1.identification_name}_mc {",
                                                                  "  server #{SERVER_ADDRESS[0]}:#{program1.ports[0].number};",
                                                                  "  server #{SERVER_ADDRESS[1]}:#{program1.ports[0].number};",
@@ -134,9 +119,24 @@ RSpec.describe Instance::Export::NginxHttpService do
                                                                  '  location /mc {',
                                                                  "  proxy_pass http://#{program1.identification_name}_mc;",
                                                                  '  }',
+                                                                 '}',
+                                                                 "upstream #{program.identification_name}_mc {",
+                                                                 "  server #{SERVER_ADDRESS[0]}:#{program.ports[0].number};",
+                                                                 "  server #{SERVER_ADDRESS[1]}:#{program.ports[0].number};",
+                                                                 "  server #{SERVER_ADDRESS[2]}:#{program.ports[0].number};",
+                                                                 "  server #{SERVER_ADDRESS[3]}:#{program.ports[0].number};",
+                                                                 '}',
+                                                                 'server {',
+                                                                 "  listen #{program.ports[0].number};",
+                                                                 '  server_name infsphr.info;',
+                                                                 '  location = / {',
+                                                                 '  rewrite ^.+ /mc permanent;',
+                                                                 '  }',
+                                                                 '  location /mc {',
+                                                                 "  proxy_pass http://#{program.identification_name}_mc;",
+                                                                 '  }',
                                                                  '}'
                                                                ])
     }
   end
-
 end
