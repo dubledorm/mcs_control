@@ -3,8 +3,9 @@ FROM ruby:2.6.3-alpine
 
 # Установка часового пояса
 RUN apk add --update tzdata && \
-    cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
-    echo "Europe/London" > /etc/timezone
+    cp /usr/share/zoneinfo/Europe/Moscow /etc/localtime && \
+    echo "Europe/Moscow" > /etc/timezone
+
 
 # Установка в контейнер runtime-зависимостей приложения
 RUN apk add --update --virtual runtime-deps postgresql-client nodejs libffi-dev readline sqlite
@@ -16,6 +17,8 @@ ADD Gemfile* ./
 RUN apk add --virtual build-deps build-base openssl-dev postgresql-dev libc-dev linux-headers libxml2-dev libxslt-dev readline-dev && \
     bundle install --jobs=2 && \
     apk del build-deps
+
+# RAILS_ENV=production bundle exec ./bin/rake assets:precompile && \
 
 # Копирование кода приложения в контейнер
 ENV APP_HOME /app

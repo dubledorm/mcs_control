@@ -3,6 +3,7 @@ class AddAdminToAdminUser < ActiveRecord::Migration[6.0]
     add_column :admin_users, :admin, :boolean, default: false
 
     admin_user = AdminUser.where(email: 'admin@example.com').first
+    return unless admin_user
     admin_user.admin = true
     admin_user.save
   end
