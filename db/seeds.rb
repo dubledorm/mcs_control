@@ -7,4 +7,4 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 AdminUser.create!(email: 'admin@example.com',
                   password: 'password', password_confirmation: 'password',
-                  admin: true) if Rails.env.development?
+                  admin: true)

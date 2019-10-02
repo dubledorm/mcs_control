@@ -27,7 +27,8 @@ WORKDIR $APP_HOME
 
 # Настройка переменных окружения для production
 ENV RAILS_ENV=production \
-    RACK_ENV=production
+    RACK_ENV=production \
+    RAILS_SERVE_STATIC_FILES=true
 
 # Проброс порта 3000
 EXPOSE 3000
