@@ -53,10 +53,11 @@ describe Instance::DatabaseControl::CollateWithDbService do
       Instance::DatabaseControl::CollateWithDbService.new(instance).call
     end
 
-    it { expect(instance.programs.count).to eq(3) }
-    it { expect(instance.programs[0].sym_db_status).to eq(:only_there_exists) }
+    it { expect(instance.programs.count).to eq(4) }
+    it { expect(instance.programs[0].sym_db_status).to eq(:undefined) }
     it { expect(instance.programs[1].sym_db_status).to eq(:only_there_exists) }
     it { expect(instance.programs[2].sym_db_status).to eq(:only_there_exists) }
+    it { expect(instance.programs[3].sym_db_status).to eq(:only_there_exists) }
   end
 
   context 'when one database name looks like another' do # Закрываем ошибку по нахождению базы

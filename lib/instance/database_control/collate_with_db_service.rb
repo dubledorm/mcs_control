@@ -11,6 +11,13 @@ class Instance
       include DatabaseName
       include InfospheraTools
 
+      def call
+        super
+        return if parent_object.programs.dcs_dev_only.count > 0
+        Program::Factory::build_and_create_db(parent_object, 'dcs-dev', false)
+        parent_object.reload
+      end
+
       private
         def get_there_object_list(parent_object)
           get_database_list(ActiveRecord::Base.connection).

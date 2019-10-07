@@ -34,7 +34,7 @@ ActiveAdmin.register Program do
       row :updated_at
     end
 
-    panel Program.human_attribute_name(:program) do
+    panel Program.human_attribute_name(:ports) do
       render 'admin/shared/ports_show', ports: program.ports,
              can_delete_ports: program_can_delete_port?,
              can_retranslate_ports: program_can_retranslator?

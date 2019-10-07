@@ -29,7 +29,7 @@ class Program
 
         test_point_exception
 
-        add_ports(program)
+        add_ports(program) if need_database_create
         program.after_create
         Rails.logger.info 'Created program ' + program.identification_name
         return program
