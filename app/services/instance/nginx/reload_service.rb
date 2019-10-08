@@ -2,12 +2,14 @@
 require 'file_tools'
 require 'ssh_tools'
 require 'nginx_config'
+require 'nginx_tools'
 
 class Instance
   module Nginx
     class ReloadService
       extend FileTools
       extend SshTools
+      extend NginxTools
 
 
       def initialize(instance)
@@ -65,11 +67,11 @@ class Instance
       end
 
       def nginx_http_file_name
-        "#{instance.name}.conf"
+        NginxTools::nginx_http_file_name(instance)
       end
 
       def nginx_stream_file_name
-        "#{instance.name}.conf"
+        NginxTools::nginx_stream_file_name(instance)
       end
 
       def test_print(http_tmp_file, tcp_tmp_file)

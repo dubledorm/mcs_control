@@ -10,4 +10,12 @@ module SshTools
 
     Rails.logger.info 'Sent file ' + src_file_name + ' to destination host ' + dest_host
   end
+
+  def self.scp_download_to_tmp_file(src_host, src_host_user, src_host_password, dest_file_path, src_file_path)
+    Net::SCP.start(src_host, src_host_user, { password: src_host_password } ) do |scp|
+      scp.download!( src_file_path, dest_file_path )
+    end
+
+    Rails.logger.info 'Receive file ' + src_file_path + ' to destination file ' + dest_file_path
+  end
 end

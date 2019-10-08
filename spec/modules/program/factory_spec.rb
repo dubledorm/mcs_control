@@ -18,6 +18,12 @@ describe Program::Factory do
       expect(get_database_list(ActiveRecord::Base.connection).include?(database_name)).to be(true)
     end
 
+    it 'should not create database' do
+      expect {
+        Program::Factory::build_and_create_db(instance, program_type, false, additional_name)
+      }.to change(get_database_list(ActiveRecord::Base.connection), :count).by(0)
+    end
+
     it 'should grant access to user' do
       program = Program::Factory::build_and_create_db(instance, program_type, true, additional_name)
       cmd = "psql -h #{Rails.configuration.database_configuration[Rails.env]["host"]}" +
@@ -39,6 +45,10 @@ describe Program::Factory do
       expect{Program::Factory::build_and_create_db(instance, program_type, true, additional_name)}.to change(Port, :count).by(1)
     end
 
+    it 'should not create port' do
+      expect{Program::Factory::build_and_create_db(instance, program_type, false, additional_name)}.to change(Port, :count).by(0)
+    end
+
     it 'should http port' do
       Program::Factory::build_and_create_db(instance, program_type, additional_name)
       port = Port.first
@@ -50,6 +60,10 @@ describe Program::Factory do
 
     it 'should create port' do
       expect{Program::Factory::build_and_create_db(instance, program_type, true, additional_name)}.to change(Port, :count).by(1)
+    end
+
+    it 'should not create port' do
+      expect{Program::Factory::build_and_create_db(instance, program_type, false, additional_name)}.to change(Port, :count).by(0)
     end
 
     it 'should tcp port' do
