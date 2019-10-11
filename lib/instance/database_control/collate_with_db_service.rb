@@ -12,9 +12,12 @@ class Instance
       include InfospheraTools
 
       def call
+        Rails.logger.debug 'CollateWithDbService call'
         super
+        Rails.logger.debug 'CollateWithDbService call dcs_dev_only.count = ' + parent_object.programs.dcs_dev_only.count.to_s
         return if parent_object.programs.dcs_dev_only.count > 0
         Program::Factory::build_and_create_db(parent_object, 'dcs-dev', false)
+        Rails.logger.debug 'CollateWithDbService created dcs-dev'
         parent_object.reload
       end
 
@@ -29,11 +32,19 @@ class Instance
         end
 
         def add_object_to_us(object_value, db_status)
-          parent_object.programs.create!(program_type: get_program_type_to_s(object_value),
+          identification_name = get_identification_name(parent_object, object_value)
+          program = parent_object.programs.create!(program_type: get_program_type_to_s(object_value),
                                          database_name: object_value,
-                                         identification_name: get_identification_name(parent_object, object_value),
+                                         identification_name: identification_name,
                                          db_status: db_status.to_s)
+          return unless program.port_type == :http
+          # Пробуем получить для программы порт
+          program_port = Program::Nginx::GetPortFromHttpConfService::new(program).call
+          return if program_port == 0
 
+          program.ports.create!(port_type: 'http',
+                                number: program_port,
+                                db_status: 'everywhere_exists')
         end
 
         def set_object_db_status(object_value, db_status)

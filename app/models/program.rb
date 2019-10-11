@@ -30,6 +30,7 @@ class Program < ApplicationRecord
   scope :pf2_only, ->{ where(program_type: 'pf2') }
   scope :need_http_port, ->{ where(program_type: %w(mc op).freeze) }
   scope :need_tcp_port, ->{ where(program_type: 'dcs-dev') }
+  scope :by_identification_name, ->(identification_name){ where(identification_name: identification_name) }
 
   def sym_program_type
     str_to_sym(program_type)

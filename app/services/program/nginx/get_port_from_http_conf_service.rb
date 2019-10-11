@@ -11,27 +11,40 @@ class Program
       extend SshTools
       extend NginxTools
 
-      REGEXP_LISTEN = 'server\s*\{\s*listen\s*(?<port_number>\d+);([\w.;=\/{}+^\s]*)proxy_pass http:\/\/\w*<program_name>\w*;\s*\}'.freeze
+      REGEXP_LISTEN = 'server\s*\{[\w\s#]*listen\s*(?<port_number>\d+);([\w.;=\/{}+^\s#]*)proxy_pass http:\/\/\w*<program_name>\w*;\s*\}'.freeze
 
       def initialize(program)
         @program = program
       end
 
       def call
+        Rails.logger.debug 'GetPortFromHttpConfService start identification_name = ' + program.identification_name
         http_tmp_file = FileTools::create_tmp_file
+        Rails.logger.debug "GetPortFromHttpConfService download: host: #{NginxConfig.config[:nginx_server_host]}" +
+                               " login: #{NginxConfig.config[:nginx_server_login]}" +
+                               " password: #{NginxConfig.config[:nginx_server_password]}" +
+                               " src_file: #{FileTools::create_full_path(NginxConfig.config[:nginx_http_config_path],
+                                                                         nginx_http_file_name)}"+
+                               " dest_file: #{http_tmp_file.path}"
         SshTools::scp_download_to_tmp_file(NginxConfig.config[:nginx_server_host],
                                            NginxConfig.config[:nginx_server_login],
                                            NginxConfig.config[:nginx_server_password],
                                            http_tmp_file.path,
                                            FileTools::create_full_path(NginxConfig.config[:nginx_http_config_path],
                                                                        nginx_http_file_name))
+        Rails.logger.debug 'GetPortFromHttpConfService after download'
         # Прочитать файл в строку
         file_content = FileTools::read_file(http_tmp_file)
         http_tmp_file.unlink
-        regexp = Regexp.new(REGEXP_LISTEN.gsub('<program_name>', "#{program.instance.name}_#{program.program_type}"))
+
+        Rails.logger.debug 'GetPortFromHttpConfService file_content'
+        regexp = Regexp.new(REGEXP_LISTEN.gsub('<program_name>', "#{program.identification_name.gsub('-','_')}"))
+
+        Rails.logger.debug 'GetPortFromHttpConfService regexp = ' + regexp.to_s
         result = 0
         begin
           result = regexp.match(file_content)[:port_number]
+          Rails.logger.debug 'GetPortFromHttpConfService result = ' + result.to_s
         rescue StandardError => e
           Rails.logger.error 'Do not finde port_number for program ' +
                                  "#{program.instance.name}_#{program.program_type}" +

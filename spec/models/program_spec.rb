@@ -115,4 +115,16 @@ describe Program do
     it { expect(FactoryGirl.build( :program, program_type: 'op').can_collate_with_db?).to eq(false) }
     it { expect(FactoryGirl.build( :program, program_type: 'mc').can_collate_with_db?).to eq(false) }
   end
+
+  describe '#create' do
+    let!(:instance) {FactoryGirl.build :instance, name: 'testmilandrchicken'}
+
+    # noinspection RubyResolve
+    it { expect(FactoryGirl.build(:program, program_type: 'mc',
+                                  database_name: 'mc_testmilandrchicken_2',
+                                  identification_name: make_identification_name(instance.name,
+                                                                                'mc',
+                                                                                '2'))).to be_valid}
+
+  end
 end

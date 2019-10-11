@@ -27,7 +27,14 @@ module DatabaseName
   end
 
   def make_identification_name(instance_name, program_type, additional_name)
-    "#{ instance_name }-#{ program_type.to_s.gsub('_','-') }#{ additional_name.blank? ? '' : '-' + additional_name }"
+    name = "#{ instance_name }-#{ program_type.to_s.gsub('_','-') }#{ additional_name.blank? ? '' : '-' + additional_name }"
+    number = 1
+    result_name = name
+    while (Program.by_identification_name(result_name).count > 0) do
+      result_name = name + "-#{number}"
+      number += 1
+    end
+    result_name
   end
 
   def database_prefix(instance_name)
