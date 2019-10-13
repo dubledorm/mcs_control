@@ -26,42 +26,168 @@ server {
   }
 }'.freeze
 
-  before :all do
-    dest_file_name = File.join(NginxConfig.config[:nginx_http_config_path], 'testmilandrchicken.conf')
-    file = File.open(dest_file_name, 'w')
-    file.write(FILE_CONTENT)
-    file.close
-  end
 
-  context 'when instance has mc program' do
-    it { expect{ described_class.new(program_mc).call }.to_not raise_exception }
-    it { expect(described_class.new(program_mc).call).to eq('462') }
-  end
+  FILE_OLD_CONTENT = 'server {
 
-  context 'when src directory does not exists' do
-    before :each do
-      bad_config = NginxConfig.config
-      bad_config[:nginx_tcp_config_path] = ''
-      bad_config[:nginx_http_config_path] = ''
-      allow(NginxConfig).to receive(:config).
-          and_return( bad_config )
+    # management company block
+
+    listen 30003;
+
+    server_name infsphr.info;
+
+
+
+    # permanent redirect / to /mc
+
+    location = / {
+
+        rewrite ^.+ /mc permanent;
+
+    }
+
+
+
+    location /mc {
+
+        proxy_pass http://inf_chicken_gallery_mc_backend;
+
+    }
+
+}
+
+
+
+
+
+server {
+
+    # management company block
+
+    listen 30004;
+
+    server_name infsphr.info;
+
+
+
+    # permanent redirect / to /mc
+
+    location = / {
+
+        rewrite ^.+ /mc permanent;
+
+    }
+
+
+
+    location /mc {
+
+        proxy_pass http://inf_chicken_klen_mc_backend;
+
+    }
+
+}
+
+
+
+
+
+server {
+
+    # management company block
+
+    listen 30005;
+
+    server_name infsphr.info;
+
+
+
+    # permanent redirect / to /mc
+
+    location = / {
+
+        rewrite ^.+ /mc permanent;
+
+    }
+
+
+
+    location /mc {
+
+        proxy_pass http://inf_chicken_scec_mc_backend;
+    }
+}'.freeze
+
+
+  context 'when config file has new format' do
+
+    before :all do
+      dest_file_name = File.join(NginxConfig.config[:nginx_http_config_path], 'testmilandrchicken.conf')
+      File.open(dest_file_name, 'w') { |file|
+        file.write(FILE_CONTENT)
+      }
     end
 
-    it {
-      expect{ described_class.new(program_mc).call }.to raise_exception(Net::SCP::Error)
-    }
-  end
-
-  context 'when src host does not exists' do
-    before :each do
-      bad_config = NginxConfig.config
-      bad_config[:nginx_server_host] = 'ewrterwtwert'
-      allow(NginxConfig).to receive(:config).
-          and_return( bad_config )
+    after :all do
+      dest_file_name = File.join(NginxConfig.config[:nginx_http_config_path], 'testmilandrchicken.conf')
+      File.delete(dest_file_name)
     end
 
-    it {
-      expect{ described_class.new(program_mc).call }.to raise_exception(SocketError)
-    }
+    context 'when instance has mc program' do
+      it { expect{ described_class.new(program_mc).call }.to_not raise_exception }
+      it { expect(described_class.new(program_mc).call).to eq('462') }
+    end
+
+    context 'when src directory does not exists' do
+      before :each do
+        bad_config = NginxConfig.config.clone
+        bad_config[:nginx_tcp_config_path] = ''
+        bad_config[:nginx_http_config_path] = ''
+        allow(NginxConfig).to receive(:config).
+            and_return( bad_config )
+      end
+
+      it {
+        expect{ described_class.new(program_mc).call }.to raise_exception(Net::SCP::Error)
+      }
+    end
+
+    context 'when src host does not exists' do
+      before :each do
+        bad_config = NginxConfig.config.clone
+        bad_config[:nginx_server_host] = 'ewrterwtwert'
+        allow(NginxConfig).to receive(:config).
+            and_return( bad_config )
+      end
+
+      it {
+        expect{ described_class.new(program_mc).call }.to raise_exception(SocketError)
+      }
+    end
+  end
+
+
+  context 'when config file has old format' do
+    let!(:program_gallery_mc) {FactoryGirl.create :program, instance: instance, program_type: 'mc',
+                                          database_name: 'mc_testmilandrchicken_gallery',
+                                          identification_name: 'testmilandrchicken-mc-gallery', additional_name: 'gallery',
+                                                  db_status: 'undefined'}
+
+
+    before :all do
+      dest_file_name = File.join(NginxConfig.config[:nginx_http_config_path], 'testmilandrchicken.conf')
+      File.open(dest_file_name, 'w') { |file|
+        file.write(FILE_OLD_CONTENT)
+      }
+    end
+
+    after :all do
+      dest_file_name = File.join(NginxConfig.config[:nginx_http_config_path], 'testmilandrchicken.conf')
+      File.delete(dest_file_name)
+    end
+
+    context 'when instance has mc program' do
+      it { expect{ described_class.new(program_gallery_mc).call }.to_not raise_exception }
+      it { expect(described_class.new(program_gallery_mc).call).to eq('30003') }
+    end
   end
 end

@@ -11,7 +11,7 @@ class Program
       extend SshTools
       extend NginxTools
 
-      REGEXP_LISTEN = 'server\s*\{[\w\s#]*listen\s*(?<port_number>\d+);([\w.;=\/{}+^\s#]*)proxy_pass http:\/\/\w*<program_name>\w*;\s*\}'.freeze
+      REGEXP_LISTEN = 'server\s*\{[\w\s#]*listen\s*(?<port_number>\d+);([\w.;=\/{}+^\s#]*)proxy_pass http:\/\/\w*[<program_name>|<program1_name>]\w*;\s*\}'.freeze
 
       def initialize(program)
         @program = program
@@ -38,7 +38,7 @@ class Program
         http_tmp_file.unlink
 
         Rails.logger.debug 'GetPortFromHttpConfService file_content'
-        regexp = Regexp.new(REGEXP_LISTEN.gsub('<program_name>', "#{program.identification_name.gsub('-','_')}"))
+        regexp = Regexp.new(regexp_listen_prepare)
 
         Rails.logger.debug 'GetPortFromHttpConfService regexp = ' + regexp.to_s
         result = 0
@@ -58,6 +58,15 @@ class Program
 
       def nginx_http_file_name
         NginxTools::nginx_http_file_name(program.instance)
+      end
+
+      def regexp_listen_prepare
+        result = REGEXP_LISTEN.gsub('<program_name>', "#{program.identification_name.gsub('-','_')}")
+        result.gsub('<program1_name>', "#{old_program_identification_name.gsub('-','_')}")
+      end
+
+      def old_program_identification_name
+        "#{ program.instance.name }#{ program.additional_name.blank? ? '' : '-' + program.additional_name }-#{ program.program_type.to_s.gsub('_','-') }"
       end
     end
   end
