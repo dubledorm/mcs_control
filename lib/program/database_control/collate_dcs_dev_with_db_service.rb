@@ -21,6 +21,9 @@ class Program
 
         # Получаем список портов в Инфосфера
         config   = Rails.configuration.database_configuration
+        Rails.logger.debug "get_there_object_list host = #{config[Rails.env]['host']} port = #{config[Rails.env]['port']}" +
+                               " database_name = #{program_op.database_name}" +
+                               " user_name = #{config[Rails.env]["admin_username"]} password = #{config[Rails.env]["admin_password"]}"
         connection = get_custom_connection('temporary',
                                            config[Rails.env]['host'],
                                            config[Rails.env]['port'],

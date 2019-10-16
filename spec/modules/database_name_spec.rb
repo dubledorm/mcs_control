@@ -44,6 +44,7 @@ describe DatabaseName do
     it { expect(get_additional_name('mc_chicken_23')).to eq('') }
     it { expect(get_additional_name('op_chicken_234')).to eq('') }
     it { expect(get_additional_name('dcs4_chicken_5435')).to eq('') }
+    it { expect(get_additional_name('dcs4_chicken_2_3')).to eq('2') }
 
     it { expect(get_additional_name('mc_chicken_a_d_d')).to eq('a_d_d') }
     it { expect(get_additional_name('op_chicken_a_d_d')).to eq('a_d_d') }
@@ -67,5 +68,19 @@ describe DatabaseName do
 
   describe 'regexp_for_prefix' do
     it { expect(regexp_for_prefix('archenergo')).to eq(/^(?<program_type>mc|op|dcs4)_(?<prefix>archenergo)(?:_(?<add_name>[a-zA-Z_\d]+?))??(?:_(?<digit>\d*))??$/) }
+  end
+
+  describe '#parse_database_url' do
+    context 'when parse right sentence' do
+      before :all do
+        @parse_result = parse_database_url('postgres://mcs_prod_username:iselPodij@192.168.100.10/mcs_control_production')
+      end
+
+      it { expect(@parse_result[:adapter]).to eq('postgres') }
+      it { expect(@parse_result[:user_name]).to eq('mcs_prod_username') }
+      it { expect(@parse_result[:host]).to eq('192.168.100.10') }
+      it { expect(@parse_result[:database_name]).to eq('mcs_control_production') }
+      it { expect(@parse_result[:password]).to eq('iselPodij') }
+    end
   end
 end

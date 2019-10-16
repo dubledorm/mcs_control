@@ -44,7 +44,7 @@ class Program
         end
 
         def uniq_section_name
-          "#{@program.identification_name}_#{program.program_type}"
+          "#{@program.identification_name.gsub('-','_')}_#{program.program_type}"
         end
     end
   end

@@ -49,7 +49,7 @@ server {
 
     location /mc {
 
-        proxy_pass http://inf_chicken_gallery_mc_backend;
+        proxy_pass http://inf_testmilandrchicken_gallery_mc_backend;
 
     }
 
@@ -81,7 +81,7 @@ server {
 
     location /mc {
 
-        proxy_pass http://inf_chicken_klen_mc_backend;
+        proxy_pass http://inf_testmilandrchicken_klen_mc_backend;
 
     }
 
@@ -113,7 +113,7 @@ server {
 
     location /mc {
 
-        proxy_pass http://inf_chicken_scec_mc_backend;
+        proxy_pass http://inf_testmilandrchicken_scec_mc_backend;
     }
 }'.freeze
 
@@ -147,7 +147,7 @@ server {
       end
 
       it {
-        expect{ described_class.new(program_mc).call }.to raise_exception(Net::SCP::Error)
+        expect( described_class.new(program_mc).call ).to eq(0)
       }
     end
 
@@ -160,7 +160,7 @@ server {
       end
 
       it {
-        expect{ described_class.new(program_mc).call }.to raise_exception(SocketError)
+        expect( described_class.new(program_mc).call ).to eq(0)
       }
     end
   end
@@ -171,6 +171,15 @@ server {
                                           database_name: 'mc_testmilandrchicken_gallery',
                                           identification_name: 'testmilandrchicken-mc-gallery', additional_name: 'gallery',
                                                   db_status: 'undefined'}
+    let!(:program_klen_mc) {FactoryGirl.create :program, instance: instance, program_type: 'mc',
+                                                  database_name: 'mc_testmilandrchicken_klen',
+                                                  identification_name: 'testmilandrchicken-mc-klen', additional_name: 'klen',
+                                                  db_status: 'undefined'}
+    let!(:program_xxx_mc) {FactoryGirl.create :program, instance: instance, program_type: 'mc',
+                                               database_name: 'mc_testmilandrchicken_xxx',
+                                               identification_name: 'testmilandrchicken-mc-xxx', additional_name: 'xxx',
+                                               db_status: 'undefined'}
+
 
 
     before :all do
@@ -188,6 +197,8 @@ server {
     context 'when instance has mc program' do
       it { expect{ described_class.new(program_gallery_mc).call }.to_not raise_exception }
       it { expect(described_class.new(program_gallery_mc).call).to eq('30003') }
+      it { expect(described_class.new(program_klen_mc).call).to eq('30004') }
+      it { expect(described_class.new(program_xxx_mc).call).to eq(0) }
     end
   end
 end

@@ -89,4 +89,7 @@ test:
 production:
   <<: *default
   database: mcs_control_production
+  admin_username: mcs_prod_username
+  admin_password: iselPodij
+
 

@@ -18,7 +18,7 @@ RSpec.describe Program::Export::NginxHttpService do
     let!(:program) { FactoryGirl::create :mc_program }
 
     it {
-      expect(described_class.new(program).call).to eq([ "upstream #{program.identification_name}_mc {",
+      expect(described_class.new(program).call).to eq([ "upstream #{program.identification_name.gsub('-','_')}_mc {",
                                                         "  server #{SERVER_ADDRESS[0]}:#{program.ports[0].number};",
                                                         "  server #{SERVER_ADDRESS[1]}:#{program.ports[0].number};",
                                                         "  server #{SERVER_ADDRESS[2]}:#{program.ports[0].number};",
@@ -31,7 +31,7 @@ RSpec.describe Program::Export::NginxHttpService do
                                                         '  rewrite ^.+ /mc permanent;',
                                                         '  }',
                                                         '  location /mc {',
-                                                        "  proxy_pass http://#{program.identification_name}_mc;",
+                                                        "  proxy_pass http://#{program.identification_name.gsub('-','_')}_mc;",
                                                         '  }',
                                                         '}'
                                                       ])
@@ -52,7 +52,7 @@ RSpec.describe Instance::Export::NginxHttpService do
     let!(:program) { FactoryGirl::create :mc_program }
 
     it {
-      expect(described_class.new(program.instance).call).to eq([ "upstream #{program.identification_name}_mc {",
+      expect(described_class.new(program.instance).call).to eq([ "upstream #{program.identification_name.gsub('-','_')}_mc {",
                                                                  "  server #{SERVER_ADDRESS[0]}:#{program.ports[0].number};",
                                                                  "  server #{SERVER_ADDRESS[1]}:#{program.ports[0].number};",
                                                                  "  server #{SERVER_ADDRESS[2]}:#{program.ports[0].number};",
@@ -65,7 +65,7 @@ RSpec.describe Instance::Export::NginxHttpService do
                                                                  '  rewrite ^.+ /mc permanent;',
                                                                  '  }',
                                                                  '  location /mc {',
-                                                                 "  proxy_pass http://#{program.identification_name}_mc;",
+                                                                 "  proxy_pass http://#{program.identification_name.gsub('-','_')}_mc;",
                                                                  '  }',
                                                                  '}'
                                                                ])
@@ -76,7 +76,7 @@ RSpec.describe Instance::Export::NginxHttpService do
     let!(:program) { FactoryGirl::create :op_program }
 
     it {
-      expect(described_class.new(program.instance).call).to eq([ "upstream #{program.identification_name}_op {",
+      expect(described_class.new(program.instance).call).to eq([ "upstream #{program.identification_name.gsub('-','_')}_op {",
                                                                  "  server #{SERVER_ADDRESS[0]}:#{program.ports[0].number};",
                                                                  "  server #{SERVER_ADDRESS[1]}:#{program.ports[0].number};",
                                                                  "  server #{SERVER_ADDRESS[2]}:#{program.ports[0].number};",
@@ -89,7 +89,7 @@ RSpec.describe Instance::Export::NginxHttpService do
                                                                  '  rewrite ^.+ /operator permanent;',
                                                                  '  }',
                                                                  '  location /operator {',
-                                                                 "  proxy_pass http://#{program.identification_name}_op;",
+                                                                 "  proxy_pass http://#{program.identification_name.gsub('-','_')}_op;",
                                                                  '  }',
                                                                  '}'
                                                                ])
@@ -104,7 +104,7 @@ RSpec.describe Instance::Export::NginxHttpService do
 
     it {
       expect(described_class.new(program.instance).call).to eq([
-                                                                 "upstream #{program1.identification_name}_mc {",
+                                                                 "upstream #{program1.identification_name.gsub('-','_')}_mc {",
                                                                  "  server #{SERVER_ADDRESS[0]}:#{program1.ports[0].number};",
                                                                  "  server #{SERVER_ADDRESS[1]}:#{program1.ports[0].number};",
                                                                  "  server #{SERVER_ADDRESS[2]}:#{program1.ports[0].number};",
@@ -117,10 +117,10 @@ RSpec.describe Instance::Export::NginxHttpService do
                                                                  '  rewrite ^.+ /mc permanent;',
                                                                  '  }',
                                                                  '  location /mc {',
-                                                                 "  proxy_pass http://#{program1.identification_name}_mc;",
+                                                                 "  proxy_pass http://#{program1.identification_name.gsub('-','_')}_mc;",
                                                                  '  }',
                                                                  '}',
-                                                                 "upstream #{program.identification_name}_mc {",
+                                                                 "upstream #{program.identification_name.gsub('-','_')}_mc {",
                                                                  "  server #{SERVER_ADDRESS[0]}:#{program.ports[0].number};",
                                                                  "  server #{SERVER_ADDRESS[1]}:#{program.ports[0].number};",
                                                                  "  server #{SERVER_ADDRESS[2]}:#{program.ports[0].number};",
@@ -133,7 +133,7 @@ RSpec.describe Instance::Export::NginxHttpService do
                                                                  '  rewrite ^.+ /mc permanent;',
                                                                  '  }',
                                                                  '  location /mc {',
-                                                                 "  proxy_pass http://#{program.identification_name}_mc;",
+                                                                 "  proxy_pass http://#{program.identification_name.gsub('-','_')}_mc;",
                                                                  '  }',
                                                                  '}'
                                                                ])

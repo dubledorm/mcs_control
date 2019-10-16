@@ -32,15 +32,32 @@ class Instance
         end
 
         def add_object_to_us(object_value, db_status)
-          identification_name = get_identification_name(parent_object, object_value)
+          Rails.logger.debug "CollateWithDbService 11111111 object_value = #{object_value}"
+
+          if (object_value == 'mc_chicken_2')
+            additional_name = '2'
+            identification_name = make_identification_name(parent_object.name,
+                                                           get_program_type_to_s(object_value),
+                                                           additional_name)
+          else
+            identification_name = get_identification_name(parent_object, object_value)
+            additional_name = get_additional_name(object_value)
+            additional_name = additional_name.nil? ? '' : additional_name
+          end
+
+          Rails.logger.debug "CollateWithDbService 11111111 additional_name = #{additional_name}"
           program = parent_object.programs.create!(program_type: get_program_type_to_s(object_value),
                                          database_name: object_value,
                                          identification_name: identification_name,
+                                         additional_name: additional_name,
                                          db_status: db_status.to_s)
           return unless program.port_type == :http
+          Rails.logger.debug "CollateWithDbService 11111111 before getPort"
+
           # Пробуем получить для программы порт
           program_port = Program::Nginx::GetPortFromHttpConfService::new(program).call
           return if program_port == 0
+          Rails.logger.debug "CollateWithDbService 11111111 program_port = #{program_port}"
 
           program.ports.create!(port_type: 'http',
                                 number: program_port,

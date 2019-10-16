@@ -21,7 +21,7 @@ class Program
 
         def section_upstream(port)
           result = []
-          result << "upstream #{@program.identification_name}_#{port.number} {"
+          result << "upstream #{uniq_section_name(port)} {"
           server_address.each do |server_address|
             result << "  server #{server_address}:#{port.number};"
           end
@@ -36,8 +36,12 @@ class Program
           else
             result << "  listen #{port.number};"
           end
-          result << "  proxy_pass #{@program.identification_name}_#{port.number};"
+          result << "  proxy_pass #{uniq_section_name(port)};"
           result << '}'
+        end
+
+        def uniq_section_name(port)
+          "#{@program.identification_name.gsub('-','_')}_#{port.number}"
         end
     end
   end

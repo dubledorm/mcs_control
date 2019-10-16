@@ -11,7 +11,7 @@ class Program
       extend SshTools
       extend NginxTools
 
-      REGEXP_LISTEN = 'server\s*\{[\w\s#]*listen\s*(?<port_number>\d+);([\w.;=\/{}+^\s#]*)proxy_pass http:\/\/\w*[<program_name>|<program1_name>]\w*;\s*\}'.freeze
+      REGEXP_LISTEN = 'server\s*\{[\w\s#]*listen\s*(?<port_number>\d+);([\w.;=\/{}+^\s#]*)proxy_pass http:\/\/\w*(<program_name>|<program1_name>)\w*;\s*\}'.freeze
 
       def initialize(program)
         @program = program
@@ -26,12 +26,19 @@ class Program
                                " src_file: #{FileTools::create_full_path(NginxConfig.config[:nginx_http_config_path],
                                                                          nginx_http_file_name)}"+
                                " dest_file: #{http_tmp_file.path}"
-        SshTools::scp_download_to_tmp_file(NginxConfig.config[:nginx_server_host],
-                                           NginxConfig.config[:nginx_server_login],
-                                           NginxConfig.config[:nginx_server_password],
-                                           http_tmp_file.path,
-                                           FileTools::create_full_path(NginxConfig.config[:nginx_http_config_path],
-                                                                       nginx_http_file_name))
+        begin
+          SshTools::scp_download_to_tmp_file(NginxConfig.config[:nginx_server_host],
+                                             NginxConfig.config[:nginx_server_login],
+                                             NginxConfig.config[:nginx_server_password],
+                                             http_tmp_file.path,
+                                             FileTools::create_full_path(NginxConfig.config[:nginx_http_config_path],
+                                                                         nginx_http_file_name))
+        rescue StandardError => e
+          Rails.logger.error 'Error during download file ' + http_tmp_file.path + ' error_code ' + e.message
+          return 0
+        end
+
+
         Rails.logger.debug 'GetPortFromHttpConfService after download'
         # Прочитать файл в строку
         file_content = FileTools::read_file(http_tmp_file)
@@ -46,7 +53,7 @@ class Program
           result = regexp.match(file_content)[:port_number]
           Rails.logger.debug 'GetPortFromHttpConfService result = ' + result.to_s
         rescue StandardError => e
-          Rails.logger.error 'Do not finde port_number for program ' +
+          Rails.logger.error 'Do not find port_number for program ' +
                                  "#{program.instance.name}_#{program.program_type}" +
                                  ' error_code ' + e.message
         end

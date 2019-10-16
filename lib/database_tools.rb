@@ -1,5 +1,7 @@
 require 'custom_active_record'
+require 'database_name'
 module DatabaseTools
+  include DatabaseName
 
   def get_database_list( connection ) # Вернуть список существующих баз данных
     # noinspection SpellCheckingInspection
@@ -43,6 +45,12 @@ module DatabaseTools
   end
 
   def get_custom_connection(identifier, host, port, dbname, dbuser, password)
+    unless ENV["DATABASE_URL"].nil?
+      parse_url_result = parse_database_url(ENV["DATABASE_URL"])
+      host = parse_url_result[:host] if host.blank?
+      dbname = parse_url_result[:database_name] if dbname.blank?
+      port = '5432' if port.blank?
+    end
     CustomActiveRecord.establish_connection(:adapter=>'postgresql', :host=>host, :port=>port, :database=>dbname,
                                             :username=>dbuser, :password=>password)
     return CustomActiveRecord.connection
