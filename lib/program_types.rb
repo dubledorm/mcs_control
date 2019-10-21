@@ -63,4 +63,34 @@ module ProgramTypes
       { http: 1 }
     end
   end
+
+  class PpRouterType < ProgramTypeCharacteristic
+    def port_type
+      :http
+    end
+
+    def default_ports_create
+      { http: 1 }
+    end
+  end
+
+  class PpAdminType < ProgramTypeCharacteristic
+    def port_type
+      :http
+    end
+
+    def default_ports_create
+      { http: 1 }
+    end
+  end
+
+  class PpWebType < ProgramTypeCharacteristic
+    def port_type
+      :http
+    end
+
+    def default_ports_create
+      { http: 1 }
+    end
+  end
 end

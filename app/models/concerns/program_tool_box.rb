@@ -10,7 +10,10 @@ module ProgramToolBox
                           'dcs-cli' => ProgramTypes::DcsCliProgramType.new,
                           'op' => ProgramTypes::OpProgramType.new,
                           'mc' => ProgramTypes::McProgramType.new,
-                          'pf2' => ProgramTypes::Pf2ProgramType.new }.freeze
+                          'pf2' => ProgramTypes::Pf2ProgramType.new,
+                          'pp-router' => ProgramTypes::PpRouterType.new,
+                          'pp-web' => ProgramTypes::PpWebType.new,
+                          'pp-admin' => ProgramTypes::PpAdminType.new}.freeze
 
 
   def can_add_port?

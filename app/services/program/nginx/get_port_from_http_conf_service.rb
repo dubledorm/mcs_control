@@ -11,7 +11,7 @@ class Program
       extend SshTools
       extend NginxTools
 
-      REGEXP_LISTEN = 'server\s*\{[\w\s#]*listen\s*(?<port_number>\d+);([\w.;=\/{}+^\s#]*)proxy_pass http:\/\/\w*(<program_name>|<program1_name>)\w*;\s*\}'.freeze
+      REGEXP_LISTEN = 'server\s*\{[\w\s#]*listen\s*(?<port_number>\d+);([\w.;=\/{}+^\s#]*)proxy_pass http:\/\/\w*(<program_name>|<program1_name>)\w*;[.\-$;\w\s]*\}'.freeze
 
       def initialize(program)
         @program = program

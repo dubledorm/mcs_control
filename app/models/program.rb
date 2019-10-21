@@ -28,6 +28,9 @@ class Program < ApplicationRecord
   scope :op_only, ->{ where(program_type: 'op') }
   scope :dcs_cli_only, ->{ where(program_type: 'dcs-cli') }
   scope :pf2_only, ->{ where(program_type: 'pf2') }
+  scope :pp_router_only, ->{ where(program_type: 'pp-router') }
+  scope :pp_admin_only, ->{ where(program_type: 'pp-admin') }
+  scope :pp_web_only, ->{ where(program_type: 'pp-web') }
   scope :need_http_port, ->{ where(program_type: %w(mc op).freeze) }
   scope :need_tcp_port, ->{ where(program_type: 'dcs-dev') }
   scope :by_identification_name, ->(identification_name){ where(identification_name: identification_name) }

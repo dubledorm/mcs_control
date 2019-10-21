@@ -4,6 +4,9 @@ module InfospheraTools
     { mc: 'mc',
       op: 'op',
       dcs_dev: 'dcs-dev',
-      dcs_cli: 'dcs-cli' }[program_type_sym]
+      pp_router: 'pp-router',
+      pp_admin: 'pp-admin',
+      pp_web: 'pp-web'
+    }[program_type_sym]
   end
 end

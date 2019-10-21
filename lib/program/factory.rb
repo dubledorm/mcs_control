@@ -29,8 +29,10 @@ class Program
 
         test_point_exception
 
-        add_ports(program) if need_database_create
-        program.after_create
+        if need_database_create
+          add_ports(program)
+          program.after_create
+        end
         Rails.logger.info 'Created program ' + program.identification_name
         return program
       rescue StandardError => e
@@ -54,7 +56,7 @@ class Program
       end
     
       def self.need_database?(program_type)
-        program_type != 'dcs-dev'
+        !%w(dcs-dev pf2 pp-web).include?(program_type)
       end
   end
 end

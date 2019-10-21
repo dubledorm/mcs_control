@@ -158,6 +158,24 @@ describe Program::Factory do
       end
     end
 
+    context 'when create pf2' do
+      it 'should not create database and create two tcp ports' do
+        expect{ Program::Factory::build_and_create_db(@instance, 'pf2',
+                                                      true, '')}.to change(Program, :count).by(1)
+      end
+
+      it 'should create 2 ports' do
+        expect{Program::Factory::build_and_create_db(@instance, 'pf2',
+                                                     true, '')}.to change(Port, :count).by(2)
+      end
+
+      it 'should not create any port' do
+        expect{Program::Factory::build_and_create_db(@instance, 'pf2',
+                                                     false, '')}.to change(Port, :count).by(0)
+      end
+
+    end
+
     context 'when database already exists' do
       let(:instance) {@instance}
       let(:program_type) {'mc'}
