@@ -45,13 +45,19 @@ ActiveAdmin.register Program do
   form title: Program.model_name.human do |f|
     f.semantic_errors *f.object.errors.keys
     inputs I18n.t('forms.activeadmin.program.attributes') do
-      input :program_type_show_only, as: :select, collection: program_available_program_types,
-            selected: params[:program_type],
-            label: Program.human_attribute_name(:program_type),
-            input_html: { :disabled => true }
+      if (params[:program_type].blank?)
+        input :program_type, as: :select, collection: options_for_select(program_available_program_types),
+              label: Program.human_attribute_name(:program_type)
+      else
+        input :program_type, as: :select,
+              collection: options_for_select(program_available_program_types, params[:program_type]),
+              label: Program.human_attribute_name(:program_type),
+              input_html: { disabled: true }
+        input :program_type, input_html: { value: params[:program_type] }, as: :hidden
+      end
       input :additional_name, required: params[:program_type] == 'mc' ? true : false
-      input :program_type, input_html: { value: params[:program_type] }, as: :hidden
     end
+
     unless resource.persisted?
       inputs I18n.t('forms.activeadmin.instance.create_database_title') do
         render 'admin/shared/cb_and_label', variable_name: :need_database_create,

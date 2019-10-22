@@ -138,6 +138,7 @@ ru:
     instance:
       check: Сверить с БД
       add_mc: Добавить УК
+      add_program: Добавить программу
       add_pf2: Добавить pf2
       update_nginx: Обновить Nginx
     program:
@@ -207,3 +208,6 @@ ru:
       'op': 'Оператор сети'
       'mc': 'Управляющая компания'
       'pf2': 'Ретраслятор'
+      'pp-admin': 'ЛК админка'
+      'pp-router': 'ЛК маршрутизатор'
+      'pp-web': 'ЛК web'

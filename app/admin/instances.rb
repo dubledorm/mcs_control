@@ -70,14 +70,8 @@ ActiveAdmin.register Instance do
     link_to I18n.t('actions.instance.check'), check_admin_instance_path(resource), method: :put if instance_can_collate_with_db?
   end
 
-  action_item :add_mc, only: :show do
-    link_to I18n.t('actions.instance.add_mc'), new_admin_instance_program_path(instance_id: resource,
-                                                                               program_type: 'mc') if instance_can_add_program?
-  end
-
-  action_item :add_pf2, only: :show do
-    link_to I18n.t('actions.instance.add_pf2'), new_admin_instance_program_path(instance_id: resource,
-                                                                               program_type: 'pf2') if instance_can_add_pf2?
+  action_item :add_program, only: :show do
+    link_to I18n.t('actions.instance.add_program'), new_admin_instance_program_path(instance_id: resource) if instance_can_add_program?
   end
 
   action_item :update_nginx, only: :show do
