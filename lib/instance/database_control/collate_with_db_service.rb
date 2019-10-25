@@ -1,6 +1,5 @@
 require 'database_tools'
 require 'database_name'
-require 'infosphera_tools'
 
 # Сравнить записи в управляющей БД с реальными БД, проставить db_status.
 # При необходимости, создавать объекты в управляющей БД

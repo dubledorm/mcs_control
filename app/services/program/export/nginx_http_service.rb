@@ -33,9 +33,11 @@ class Program
           result << 'server {'
           result << "  listen #{port.number};"
           result << "  server_name #{server_name};"
-          result << '  location = / {'
-          result << "  rewrite ^.+ /#{@program.decorate.http_prefix} permanent;"
-          result << '  }'
+          if need_location_section?
+            result << '  location = / {'
+            result << "  rewrite ^.+ /#{@program.decorate.http_prefix} permanent;"
+            result << '  }'
+          end
           result << "  location /#{@program.decorate.http_prefix} {"
           result << "  proxy_pass http://#{uniq_section_name};"
           result << '  }'
@@ -45,6 +47,10 @@ class Program
 
         def uniq_section_name
           "#{@program.identification_name.gsub('-','_')}_#{program.program_type}"
+        end
+
+        def need_location_section?
+          %w( mc op ).include?(program.program_type)
         end
     end
   end

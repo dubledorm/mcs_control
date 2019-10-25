@@ -1,6 +1,5 @@
 require 'database_tools'
 require 'infosphera_sql'
-require 'infosphera_tools'
 
 # Класс, для заполнения программы dcs-dev списком портов.
 # Порты, используемые dcs-dev лежат в базе программы op.
@@ -37,14 +36,13 @@ class Program
 
       def get_here_object_list(parent_object)
         raise ArgumentError, message: I18n.t('activerecord.errors.exceptions.program.' +
-                                             'collate_dcs_dev_with_db_service.only_dcs_dev') if parent_object.program_type != program_type_to_s(:dcs_dev)
+                                             'collate_dcs_dev_with_db_service.only_dcs_dev') if parent_object.program_type != 'dcs-dev'
         parent_object.ports.map{ |port| port.number }
       end
 
       def add_object_to_us(object_value, db_status)
         parent_object.ports.create!(number: object_value['input_value'].to_i,
                                     port_type: parent_object.port_type.to_s,
-                                    # port_type: get_port_type(parent_object.sym_program_type).to_s,
                                     db_status: db_status
                                    )
       end

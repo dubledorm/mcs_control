@@ -9,6 +9,8 @@
         %th
           = Port.human_attribute_name(:db_status)
         %th
+          = Port.human_attribute_name(:updated_at)
+        %th
           = I18n.t('words.action')
     %tbody
       - ports.each do |port|
@@ -19,6 +21,8 @@
             = port.port_type
           %td
             = port.decorate.collate_base_status
+          %td
+            = port.updated_at
           %td
             - if can_delete_ports
               = link_to(I18n.t('words.delete'), admin_program_port_path(program_id: port.program_id, id: port.id),

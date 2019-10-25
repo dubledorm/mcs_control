@@ -39,7 +39,11 @@ class Instance
       end
 
       def create_body_stream_file
-        Instance::Export::NginxStreamService::new(@instance).call
+        result = Instance::Export::NginxStreamService::new(@instance).call
+        if result == []
+          return ['#Empty, because the file is in the retranslator mode']
+        end
+        result
       end
 
 

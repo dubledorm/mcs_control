@@ -20,7 +20,7 @@ RSpec.describe Program::Export::NginxStreamService do
       let!(:retranslator) { FactoryGirl::create :retranslator, active: false }
 
       it {
-        expect(described_class.new(program).call).to eq([ "upstream #{program.identification_name}_#{program.ports[0].number} {",
+        expect(described_class.new(program).call).to eq([ "upstream #{program.identification_name.gsub('-','_')}_#{program.ports[0].number} {",
                                                           "  server #{SERVER_ADDRESS[0]}:#{program.ports[0].number};",
                                                           "  server #{SERVER_ADDRESS[1]}:#{program.ports[0].number};",
                                                           "  server #{SERVER_ADDRESS[2]}:#{program.ports[0].number};",
@@ -28,9 +28,9 @@ RSpec.describe Program::Export::NginxStreamService do
                                                           '}',
                                                           'server {',
                                                           "  listen #{program.ports[0].number};",
-                                                          "  proxy_pass #{program.identification_name}_#{program.ports[0].number};",
+                                                          "  proxy_pass #{program.identification_name.gsub('-','_')}_#{program.ports[0].number};",
                                                           '}',
-                                                          "upstream #{program.identification_name}_#{program.ports[1].number} {",
+                                                          "upstream #{program.identification_name.gsub('-','_')}_#{program.ports[1].number} {",
                                                           "  server #{SERVER_ADDRESS[0]}:#{program.ports[1].number};",
                                                           "  server #{SERVER_ADDRESS[1]}:#{program.ports[1].number};",
                                                           "  server #{SERVER_ADDRESS[2]}:#{program.ports[1].number};",
@@ -38,9 +38,9 @@ RSpec.describe Program::Export::NginxStreamService do
                                                           '}',
                                                           'server {',
                                                           "  listen #{program.ports[1].number};",
-                                                          "  proxy_pass #{program.identification_name}_#{program.ports[1].number};",
+                                                          "  proxy_pass #{program.identification_name.gsub('-','_')}_#{program.ports[1].number};",
                                                           '}',
-                                                          "upstream #{program.identification_name}_#{program.ports[2].number} {",
+                                                          "upstream #{program.identification_name.gsub('-','_')}_#{program.ports[2].number} {",
                                                           "  server #{SERVER_ADDRESS[0]}:#{program.ports[2].number};",
                                                           "  server #{SERVER_ADDRESS[1]}:#{program.ports[2].number};",
                                                           "  server #{SERVER_ADDRESS[2]}:#{program.ports[2].number};",
@@ -48,7 +48,7 @@ RSpec.describe Program::Export::NginxStreamService do
                                                           '}',
                                                           'server {',
                                                           "  listen #{program.ports[2].number};",
-                                                          "  proxy_pass #{program.identification_name}_#{program.ports[2].number};",
+                                                          "  proxy_pass #{program.identification_name.gsub('-','_')}_#{program.ports[2].number};",
                                                           '}'
                                                         ])
       }
@@ -70,7 +70,7 @@ RSpec.describe Program::Export::NginxStreamService do
 
 
       it {
-        expect(described_class.new(program).call).to eq([ "upstream #{program.identification_name}_#{program.ports[0].number} {",
+        expect(described_class.new(program).call).to eq([ "upstream #{program.identification_name.gsub('-','_')}_#{program.ports[0].number} {",
                                                           "  server #{SERVER_ADDRESS[0]}:#{program.ports[0].number};",
                                                           "  server #{SERVER_ADDRESS[1]}:#{program.ports[0].number};",
                                                           "  server #{SERVER_ADDRESS[2]}:#{program.ports[0].number};",
@@ -78,9 +78,9 @@ RSpec.describe Program::Export::NginxStreamService do
                                                           '}',
                                                           'server {',
                                                           "  listen #{program.ports[0].number};",
-                                                          "  proxy_pass #{program.identification_name}_#{program.ports[0].number};",
+                                                          "  proxy_pass #{program.identification_name.gsub('-','_')}_#{program.ports[0].number};",
                                                           '}',
-                                                          "upstream #{program.identification_name}_#{program.ports[1].number} {",
+                                                          "upstream #{program.identification_name.gsub('-','_')}_#{program.ports[1].number} {",
                                                           "  server #{SERVER_ADDRESS[0]}:#{program.ports[1].number};",
                                                           "  server #{SERVER_ADDRESS[1]}:#{program.ports[1].number};",
                                                           "  server #{SERVER_ADDRESS[2]}:#{program.ports[1].number};",
@@ -88,7 +88,7 @@ RSpec.describe Program::Export::NginxStreamService do
                                                           '}',
                                                           'server {',
                                                           "  listen #{program.ports[1].number};",
-                                                          "  proxy_pass #{program.identification_name}_#{program.ports[1].number};",
+                                                          "  proxy_pass #{program.identification_name.gsub('-','_')}_#{program.ports[1].number};",
                                                           '}'
                                                         ])
       }
@@ -121,7 +121,7 @@ RSpec.describe Program::Export::NginxStreamService do
 
 
       it {
-        expect(described_class.new(program).call).to eq([ "upstream #{program.identification_name}_#{program.ports[0].number} {",
+        expect(described_class.new(program).call).to eq([ "upstream #{program.identification_name.gsub('-','_')}_#{program.ports[0].number} {",
                                                           "  server #{SERVER_ADDRESS[0]}:#{program.ports[0].number};",
                                                           "  server #{SERVER_ADDRESS[1]}:#{program.ports[0].number};",
                                                           "  server #{SERVER_ADDRESS[2]}:#{program.ports[0].number};",
@@ -129,9 +129,9 @@ RSpec.describe Program::Export::NginxStreamService do
                                                           '}',
                                                           'server {',
                                                           "  listen #{program.ports[0].number};",
-                                                          "  proxy_pass #{program.identification_name}_#{program.ports[0].number};",
+                                                          "  proxy_pass #{program.identification_name.gsub('-','_')}_#{program.ports[0].number};",
                                                           '}',
-                                                          "upstream #{program.identification_name}_#{program.ports[2].number} {",
+                                                          "upstream #{program.identification_name.gsub('-','_')}_#{program.ports[2].number} {",
                                                           "  server #{SERVER_ADDRESS[0]}:#{program.ports[2].number};",
                                                           "  server #{SERVER_ADDRESS[1]}:#{program.ports[2].number};",
                                                           "  server #{SERVER_ADDRESS[2]}:#{program.ports[2].number};",
@@ -139,7 +139,7 @@ RSpec.describe Program::Export::NginxStreamService do
                                                           '}',
                                                           'server {',
                                                           "  listen #{program.ports[2].number};",
-                                                          "  proxy_pass #{program.identification_name}_#{program.ports[2].number};",
+                                                          "  proxy_pass #{program.identification_name.gsub('-','_')}_#{program.ports[2].number};",
                                                           '}'
                                                         ])
       }
@@ -160,7 +160,7 @@ RSpec.describe Program::Export::NginxStreamService do
 
 
       it {
-        expect(described_class.new(program).call).to eq([ "upstream #{program.identification_name}_#{program.ports[0].number} {",
+        expect(described_class.new(program).call).to eq([ "upstream #{program.identification_name.gsub('-','_')}_#{program.ports[0].number} {",
                                                           "  server #{SERVER_ADDRESS[0]}:#{program.ports[0].number};",
                                                           "  server #{SERVER_ADDRESS[1]}:#{program.ports[0].number};",
                                                           "  server #{SERVER_ADDRESS[2]}:#{program.ports[0].number};",
@@ -168,9 +168,9 @@ RSpec.describe Program::Export::NginxStreamService do
                                                           '}',
                                                           'server {',
                                                           "  listen 38000;",
-                                                          "  proxy_pass #{program.identification_name}_#{program.ports[0].number};",
+                                                          "  proxy_pass #{program.identification_name.gsub('-','_')}_#{program.ports[0].number};",
                                                           '}',
-                                                          "upstream #{program.identification_name}_#{program.ports[1].number} {",
+                                                          "upstream #{program.identification_name.gsub('-','_')}_#{program.ports[1].number} {",
                                                           "  server #{SERVER_ADDRESS[0]}:#{program.ports[1].number};",
                                                           "  server #{SERVER_ADDRESS[1]}:#{program.ports[1].number};",
                                                           "  server #{SERVER_ADDRESS[2]}:#{program.ports[1].number};",
@@ -178,14 +178,14 @@ RSpec.describe Program::Export::NginxStreamService do
                                                           '}',
                                                           'server {',
                                                           "  listen #{program.ports[1].number};",
-                                                          "  proxy_pass #{program.identification_name}_#{program.ports[1].number};",
+                                                          "  proxy_pass #{program.identification_name.gsub('-','_')}_#{program.ports[1].number};",
                                                           '}'
                                                         ])
       }
 
     end
 
-  end
+   end
 end
 
 
@@ -195,7 +195,7 @@ RSpec.describe Instance::Export::NginxStreamService do
     let!(:program) { FactoryGirl::create :dev_program_and_one_port }
 
     it {
-      expect(described_class.new(program.instance).call).to eq([ "upstream #{program.identification_name}_#{program.ports.first.number} {",
+      expect(described_class.new(program.instance).call).to eq([ "upstream #{program.identification_name.gsub('-','_')}_#{program.ports.first.number} {",
                                                         "  server #{SERVER_ADDRESS[0]}:#{program.ports.first.number};",
                                                         "  server #{SERVER_ADDRESS[1]}:#{program.ports.first.number};",
                                                         "  server #{SERVER_ADDRESS[2]}:#{program.ports.first.number};",
@@ -203,7 +203,7 @@ RSpec.describe Instance::Export::NginxStreamService do
                                                         '}',
                                                         'server {',
                                                         "  listen #{program.ports.first.number};",
-                                                        "  proxy_pass #{program.identification_name}_#{program.ports.first.number};",
+                                                        "  proxy_pass #{program.identification_name.gsub('-','_')}_#{program.ports.first.number};",
                                                         '}'
                                                       ])
     }

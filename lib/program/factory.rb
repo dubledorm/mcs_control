@@ -1,5 +1,4 @@
 require 'database_name'
-require 'infosphera_tools'
 require 'application_helper'
 
 class Program
