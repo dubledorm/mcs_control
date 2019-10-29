@@ -14,6 +14,9 @@ ru:
       role:
         one: Роль
         other: Роли
+      nginx_template:
+        one: Шаблон Nginx
+        other: Шаблоны Nginx
     attributes:
       admin_user:
         current_sign_in_at: Время текущего входа
@@ -33,6 +36,15 @@ ru:
         programs: Программы
         ports: Порты
         state: Состояние
+        created_at: Создан
+        updated_at: Изменён
+      nginx_template:
+        program_type: Программа
+        content_http: Шаблон для http
+        content_tcp: Шаблон для tcp
+        use_for_http: Применить для http
+        use_for_tcp: Применить для tcp
+        description: Описание
         created_at: Создан
         updated_at: Изменён
       port:
@@ -79,6 +91,12 @@ ru:
               taken: уже используется
               blank: должно быть заполнено
               invalid: может содержать буквы латинского алфавита и цифры
+        nginx_template:
+          attributes:
+            program_type:
+              taken: уже есть шаблон для такого типа программы
+              blank: должен быть заполнен
+              inclusion: иметь значение из списка возможных типов программ
         port:
           attributes:
             number:

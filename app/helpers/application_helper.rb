@@ -34,4 +34,8 @@ module ApplicationHelper
     port = Port.where(number: retranslator_port).first
     Rails.application.routes.url_helpers.retranslator_off_admin_program_port_path(program_id: port.program_id, id: port.id)
   end
+
+  def program_types_with_translate
+    ProgramToolBox::KNOWN_PROGRAM_TYPES.keys.map { |program_type| [I18n.t("values.program_type.#{program_type}"), program_type] }
+  end
 end
