@@ -67,7 +67,10 @@ class Instance
       end
 
       def reload_nginx
-
+        SshTools::remote_exec(NginxConfig.config[:nginx_server_host],
+                              NginxConfig.config[:nginx_server_login],
+                              NginxConfig.config[:nginx_server_password],
+                              'sudo systemctl reload nginx')
       end
 
       def nginx_http_file_name

@@ -8,7 +8,6 @@ class Instance
     class CollateWithDbService < CollateBaseService
       include DatabaseTools
       include DatabaseName
-      include InfospheraTools
 
       def call
         Rails.logger.debug 'CollateWithDbService call'

@@ -21,4 +21,15 @@ module SshTools
 
     Rails.logger.info 'Receive file ' + src_file_path + ' to destination file ' + dest_file_path
   end
+
+  def self.remote_exec(host, host_user, host_password, command)
+    Rails.logger.info 'SSH_TOOLS Remote_Exec' + ' host ' + host + ' host_password = ' +
+                          host_password + ' command = ' + command
+    result = nil
+    Net::SSH.start( host, host_user, { password: host_password }  ) do| ssh |
+      result = ssh.exec! command
+    end
+    Rails.logger.info "SSH_TOOLS result #{result}"
+    result
+  end
 end

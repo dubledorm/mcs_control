@@ -17,7 +17,7 @@ test:
   nginx_http_config_path: /Users/azirumga/Test/http
 
 production:
-  server_address: ['192.168.100.11', '192.168.100.12', '192.168.100.14', '192.168.100.24', '192.168.100.20']
+  server_address: ['192.168.100.11', '192.168.100.12', '192.168.100.14', '192.168.100.24', '192.168.100.20', '192.168.100.23']
   server_name: infsphr.info
   nginx_server_host: 192.168.100.6
   nginx_server_login: configurator

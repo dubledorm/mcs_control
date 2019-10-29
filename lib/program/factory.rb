@@ -4,7 +4,6 @@ require 'application_helper'
 class Program
   class Factory
     extend DatabaseName
-    extend InfospheraTools
     extend ApplicationHelper
 
     def self.build_and_create_db(instance, program_type, need_database_create, additional_name = nil)

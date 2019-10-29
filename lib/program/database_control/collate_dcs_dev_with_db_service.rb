@@ -10,7 +10,6 @@ class Program
     class CollateDcsDevWithDbService < CollateBaseService
       include DatabaseTools
       include InfospheraSql
-      include InfospheraTools
 
       def get_there_object_list(parent_object)
         # Находим программу :op

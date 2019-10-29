@@ -18,8 +18,8 @@ module ProgramHelper
     instance = resource.instance
     except_list = instance.programs.map(&:program_type).uniq - [ 'mc' ]
     except_list = except_list + [ 'pf2' ] unless can_add_retranslator?
-    except_list = except_list + [ 'pp-router' ] unless can_add_pp_router?
-    except_list = except_list + [ 'pp-web' ] unless can_add_pp_web?
+  #  except_list = except_list + [ 'pp-router' ] unless can_add_pp_router?
+  #  except_list = except_list + [ 'pp-web' ] unless can_add_pp_web?
     except_list = except_list.uniq
 
     (ProgramToolBox::KNOWN_PROGRAM_TYPES.keys - except_list).
