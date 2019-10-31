@@ -65,7 +65,7 @@ RSpec.describe Program::Export::NginxStreamService do
 
       before :each do
         allow(NginxConfig).to receive(:config).
-            and_return( { server_address: SERVER_ADDRESS } )
+            and_return( { server_address: SERVER_ADDRESS, server_name: 'infspr.info' } )
       end
 
 
@@ -116,7 +116,7 @@ RSpec.describe Program::Export::NginxStreamService do
 
       before :each do
         allow(NginxConfig).to receive(:config).
-            and_return( { server_address: SERVER_ADDRESS } )
+            and_return( { server_address: SERVER_ADDRESS, server_name: 'infspr.info' } )
       end
 
 
@@ -155,20 +155,20 @@ RSpec.describe Program::Export::NginxStreamService do
 
       before :each do
         allow(NginxConfig).to receive(:config).
-            and_return( { server_address: SERVER_ADDRESS } )
+            and_return( { server_address: SERVER_ADDRESS, server_name: 'infspr.info' } )
       end
 
 
       it {
-        expect(described_class.new(program).call).to eq([ "upstream #{program.identification_name.gsub('-','_')}_#{program.ports[0].number} {",
-                                                          "  server #{SERVER_ADDRESS[0]}:#{program.ports[0].number};",
-                                                          "  server #{SERVER_ADDRESS[1]}:#{program.ports[0].number};",
-                                                          "  server #{SERVER_ADDRESS[2]}:#{program.ports[0].number};",
-                                                          "  server #{SERVER_ADDRESS[3]}:#{program.ports[0].number};",
+        expect(described_class.new(program).call).to eq([ "upstream #{program.identification_name.gsub('-','_')}_38000 {",
+                                                          "  server #{SERVER_ADDRESS[0]}:38000;",
+                                                          "  server #{SERVER_ADDRESS[1]}:38000;",
+                                                          "  server #{SERVER_ADDRESS[2]}:38000;",
+                                                          "  server #{SERVER_ADDRESS[3]}:38000;",
                                                           '}',
                                                           'server {',
                                                           "  listen 38000;",
-                                                          "  proxy_pass #{program.identification_name.gsub('-','_')}_#{program.ports[0].number};",
+                                                          "  proxy_pass #{program.identification_name.gsub('-','_')}_38000;",
                                                           '}',
                                                           "upstream #{program.identification_name.gsub('-','_')}_#{program.ports[1].number} {",
                                                           "  server #{SERVER_ADDRESS[0]}:#{program.ports[1].number};",

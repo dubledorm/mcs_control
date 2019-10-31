@@ -34,4 +34,11 @@ class ProgramTypeCharacteristic
   def after_create(program)
 
   end
+
+  # Префикс в адресной строке для данного типа программы, после имени хоста и порта.
+  # Например http://infsphr.info:30013/mc
+  # В даннос случае это mc
+  def http_prefix
+    ''
+  end
 end

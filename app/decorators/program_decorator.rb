@@ -20,10 +20,6 @@ class ProgramDecorator < ObjectBaseDecorator
   end
 
   def http_prefix
-    { 'mc' => 'mc',
-      'op' => 'operator',
-      'dcs-dev' => '',
-      'dcs-cli' => ''
-    }[object.program_type]
-  end
+    object.http_prefix
+   end
 end

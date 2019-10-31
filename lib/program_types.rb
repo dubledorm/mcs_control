@@ -52,6 +52,10 @@ module ProgramTypes
     def default_ports_create
       { http: 1 }
     end
+
+    def http_prefix
+      'operator'
+    end
   end
 
   class McProgramType < ProgramTypeCharacteristic
@@ -61,6 +65,10 @@ module ProgramTypes
 
     def default_ports_create
       { http: 1 }
+    end
+
+    def http_prefix
+      'mc'
     end
   end
 

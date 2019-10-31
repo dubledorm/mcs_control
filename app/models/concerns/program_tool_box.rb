@@ -50,4 +50,9 @@ module ProgramToolBox
     return false if program_type.nil?
     KNOWN_PROGRAM_TYPES[program_type].after_create(self)
   end
+
+  def http_prefix
+    return '' if program_type.nil?
+    KNOWN_PROGRAM_TYPES[program_type].http_prefix
+  end
 end
