@@ -8,8 +8,12 @@ class Program
 
       def call
         result = []
-        template = NginxTemplateConst::DEFAULT_SIMPLE_HTTP_TEMPLATE
-        template = NginxTemplateConst::DEFAULT_HTTP_TEMPLATE if need_location_section?
+        template = NginxTemplate.get_by_http_and_program_type(@program.program_type)
+        if template.blank?
+          template = NginxTemplateConst::DEFAULT_SIMPLE_HTTP_TEMPLATE
+          template = NginxTemplateConst::DEFAULT_HTTP_TEMPLATE if need_location_section?
+        end
+
         @program.ports.http.each do |port|
           # result += section_upstream(port)
           # result += section_server(port)

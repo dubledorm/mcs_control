@@ -13,7 +13,9 @@ class Program
       def call
         Rails.logger.debug "NginxStreamService call"
         result = []
-        template = NginxTemplateConst::DEFAULT_TCP_TEMPLATE
+
+        template = NginxTemplate.get_by_tcp_and_program_type(@program.program_type)
+        template = NginxTemplateConst::DEFAULT_TCP_TEMPLATE if template.blank?
 
         @program.ports.tcp.each do |port|
           next unless port_in_range?(port)
