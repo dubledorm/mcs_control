@@ -8,7 +8,7 @@ class Program
 
       def call
         result = []
-        template = NginxTemplate.get_by_http_and_program_type(@program.program_type)
+        template = NginxTemplate.get_by_http_and_program_type(@program)
         if template.blank?
           template = NginxTemplateConst::DEFAULT_SIMPLE_HTTP_TEMPLATE
           template = NginxTemplateConst::DEFAULT_HTTP_TEMPLATE if need_location_section?
