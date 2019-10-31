@@ -24,5 +24,6 @@ describe Instance do
 
     # Relationships
     it {should have_many(:programs)}
+    it {should have_many(:nginx_templates)}
   end
 end

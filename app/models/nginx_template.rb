@@ -1,7 +1,11 @@
 class NginxTemplate < ApplicationRecord
   include ProgramToolBox
 
-  validates :program_type, presence: true, uniqueness: true, inclusion: { in: KNOWN_PROGRAM_TYPES.keys }
+  belongs_to :instance, optional: true
+  validates :program_type, presence: true,
+            uniqueness: { scope: :instance },
+            inclusion: { in: KNOWN_PROGRAM_TYPES.keys }
+
 
   scope :by_http_and_program_type, ->(program_type){ where(program_type: program_type, use_for_http: true) }
   scope :by_tcp_and_program_type, ->(program_type){ where(program_type: program_type, use_for_tcp: true) }

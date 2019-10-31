@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_29_134513) do
+ActiveRecord::Schema.define(version: 2019_10_31_191629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,9 @@ ActiveRecord::Schema.define(version: 2019_10_29_134513) do
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "instance_id"
+    t.boolean "for_instance_only", default: false
+    t.index ["instance_id"], name: "index_nginx_templates_on_instance_id"
   end
 
   create_table "ports", force: :cascade do |t|
