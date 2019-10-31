@@ -132,7 +132,7 @@ describe Instance::DatabaseControl::CollateWithDbService do
 
   context 'when programs do not exist while databases exist and http config exists' do
     let!(:instance) {FactoryGirl.create :instance, name: 'testmilandrchicken', db_user_name: 'testmilandrchicken', db_status: 'undefined'}
-    FILE_CONTENT = 'upstream identification_testmilandrchicken_mc_backend {
+    FILE_CONTENT_1 = 'upstream identification_testmilandrchicken_mc_backend {
   server 192.168.100.11:462;
   server 192.168.100.12:462;
   server 192.168.100.14:462;
@@ -174,7 +174,7 @@ server {
 
       dest_file_name = File.join(NginxConfig.config[:nginx_http_config_path], 'testmilandrchicken.conf')
       file = File.open(dest_file_name, 'w')
-      file.write(FILE_CONTENT)
+      file.write(FILE_CONTENT_1)
       file.close
       Instance::DatabaseControl::CollateWithDbService.new(instance).call
     end
@@ -197,7 +197,7 @@ server {
 
   context 'when database has name mc_chicken_2' do
     let!(:instance) {FactoryGirl.create :instance, name: 'chicken', db_user_name: 'chicken', db_status: 'undefined'}
-    FILE_CONTENT = 'upstream identification_chicken_mc_backend {
+    FILE_CONTENT_2 = 'upstream identification_chicken_mc_backend {
   server 192.168.100.11:462;
   server 192.168.100.12:462;
   server 192.168.100.14:462;
@@ -249,7 +249,7 @@ server {
 
       dest_file_name = File.join(NginxConfig.config[:nginx_http_config_path], 'chicken.conf')
       file = File.open(dest_file_name, 'w')
-      file.write(FILE_CONTENT)
+      file.write(FILE_CONTENT_2)
       file.close
       Instance::DatabaseControl::CollateWithDbService.new(instance).call
     end
@@ -274,7 +274,7 @@ server {
 
   context 'when pp_xxx exists' do
     let!(:instance) {FactoryGirl.create :instance, name: 'chicken', db_user_name: 'chicken', db_status: 'undefined'}
-    FILE_CONTENT = 'upstream identification_chicken_mc_backend {
+    FILE_CONTENT_3 = 'upstream identification_chicken_mc_backend {
   server 192.168.100.11:462;
   server 192.168.100.12:462;
   server 192.168.100.14:462;
@@ -456,7 +456,7 @@ server {
 
       dest_file_name = File.join(NginxConfig.config[:nginx_http_config_path], 'chicken.conf')
       file = File.open(dest_file_name, 'w')
-      file.write(FILE_CONTENT)
+      file.write(FILE_CONTENT_3)
       file.close
       Instance::DatabaseControl::CollateWithDbService.new(instance).call
     end

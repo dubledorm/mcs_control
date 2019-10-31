@@ -14,9 +14,9 @@ ActiveAdmin.register NginxTemplate do
     inputs I18n.t('forms.activeadmin.program.attributes') do
       input :program_type, as: :select, collection: options_for_select(program_types_with_translate, resource.program_type),
             label: NginxTemplate.human_attribute_name(:program_type)
-      input :content_http #, placeholder: NginxTemplateConst::DEFAULT_SIMPLE_HTTP_TEMPLATE
+      input :content_http
       input :use_for_http
-      input :content_tcp #, placeholder: NginxTemplateConst::DEFAULT_TCP_TEMPLATE
+      input :content_tcp 
       input :use_for_tcp
 
       input :description

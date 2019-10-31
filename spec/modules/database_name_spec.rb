@@ -67,7 +67,7 @@ describe DatabaseName do
 
 
   describe 'regexp_for_prefix' do
-    it { expect(regexp_for_prefix('archenergo')).to eq(/^(?<program_type>mc|op|dcs4)_(?<prefix>archenergo)(?:_(?<add_name>[a-zA-Z_\d]+?))??(?:_(?<digit>\d*))??$/) }
+    it { expect(regexp_for_prefix('archenergo')).to eq(/^(?<program_type>pp_router|pp_web|pp_admin|mc|op|dcs4)_(?<prefix>archenergo)(?:_(?<add_name>[a-zA-Z_\d]+?))??(?:_(?<digit>\d*))??$/) }
   end
 
   describe '#parse_database_url' do
