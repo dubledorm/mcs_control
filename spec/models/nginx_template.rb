@@ -39,4 +39,11 @@ describe NginxTemplate do
       it { expect((FactoryGirl.build :nginx_template, program_type: 'mc').valid?).to be(true) }
     end
   end
+
+  describe 'validation for_instance_only' do
+    it { expect((FactoryGirl.build :nginx_template, for_instance_only: true).valid?).to be(false) }
+    it { expect((FactoryGirl.build :nginx_template_with_instance, for_instance_only: true).valid?).to be(true) }
+    it { expect((FactoryGirl.build :nginx_template, for_instance_only: false).valid?).to be(true) }
+    it { expect((FactoryGirl.build :nginx_template_with_instance, for_instance_only: false).valid?).to be(true) }
+  end
 end

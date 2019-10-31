@@ -45,6 +45,8 @@ ru:
         use_for_http: Применить для http
         use_for_tcp: Применить для tcp
         description: Описание
+        instance: Инстанс
+        for_instance_only: Только для инстанса
         created_at: Создан
         updated_at: Изменён
       port:
@@ -93,6 +95,8 @@ ru:
               invalid: может содержать буквы латинского алфавита и цифры
         nginx_template:
           attributes:
+            instance:
+              blank: должен быть заполнен
             program_type:
               taken: уже есть шаблон для такого типа программы
               blank: должен быть заполнен
