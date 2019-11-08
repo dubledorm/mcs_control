@@ -1,0 +1,38 @@
+.paginated_collection.paginated_collection_contents.index_content.index_as_table
+  %table.index_table.index
+    %thead
+      %tr
+        %th.sortable.col.col_number
+          = Port.human_attribute_name(:number)
+        %th.sortable.col.col_number
+          = Port.human_attribute_name(:port_type)
+        %th.sortable.col.col_number
+          = Port.human_attribute_name(:instance)
+        %th.sortable.col.col_number
+          = Port.human_attribute_name(:program)
+        %th.sortable.col.col_number
+          = Port.human_attribute_name(:db_status)
+        %th.sortable.col.col_number
+          = Port.human_attribute_name(:updated_at)
+        %th
+          = I18n.t('words.action')
+    %tbody
+      - row_switch = true
+      - @list_port.each do |port|
+        %tr{class: "#{ {true => 'odd', false => 'even'}[row_switch]}"}
+          %td.col
+            = port.number
+          %td.col
+            = port.port_type
+          %td.col
+            = link_to(port.decorate.instance_name, admin_instance_path(id: port.instance))
+          %td.col
+            = link_to(port.decorate.program_name, admin_instance_program_path(instance_id: port.instance, id: port.program))
+          %td.col
+            = port.decorate.collate_base_status
+          %td.col
+            = port.updated_at
+          %td.col
+            = link_to(I18n.t('actions.port.retranslator'), retranslator_admin_program_port_path(program_id: port.program_id, id: port.id),
+              method: :put, data: {confirm: I18n.t('forms.activeadmin.confirm.retranslate_port_sure', port: port.number)})
+          - row_switch = !row_switch

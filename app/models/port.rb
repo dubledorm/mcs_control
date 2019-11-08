@@ -3,6 +3,7 @@ class Port < ApplicationRecord
   include ApplicationHelper
 
   belongs_to :program
+  has_one :instance, through: :program
 
   validates :number, :port_type, presence: true
   validates :number, uniqueness: true

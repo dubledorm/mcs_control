@@ -52,7 +52,7 @@ ru:
       port:
         number: Номер
         instance: Инстанс
-        program: programma
+        program: Программа
         port_type: Тип
         db_status: Статус БД
         collate_base_status: Статус БД
