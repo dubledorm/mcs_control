@@ -1,5 +1,6 @@
 # encoding: UTF-8
 ActiveAdmin.register NginxTemplate do
+  menu parent: :configure
   scope_to :current_admin_user, unless: proc{ current_admin_user.admin? }
   permit_params :program_type, :content_tcp, :content_http, :use_for_tcp, :use_for_http, :description,
                 :instance_id, :for_instance_only

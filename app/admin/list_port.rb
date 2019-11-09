@@ -1,5 +1,5 @@
 ActiveAdmin.register_page "ListPort" do
-  menu priority: 1, label: proc { I18n.t("active_admin.list_port") }
+  menu label: proc { I18n.t("active_admin.list_port") }, parent: :resources
 
   breadcrumb do
     breadcrumbs = [ link_to(I18n.t('words.admin'), admin_root_path())]

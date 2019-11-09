@@ -243,10 +243,13 @@ ActiveAdmin.setup do |config|
       include ApplicationHelper
 
       admin.build_menu :default do |menu|
-        menu.add label: I18n.t('menu.retranslate'), html_options: { class: 'red_link' } do |sites|
+        menu.add label: I18n.t('menu.retranslate'), priority: 20 do |sites|
           sites.add id: :retranslator_off, label: proc{ retranslator_menu_label },
-                    url: proc { retranslator_switch_off_url }
+                     url: proc { retranslator_switch_off_url }
         end
+
+        menu.add label: I18n.t('menu.resources'), id: :resources, priority: 10
+        menu.add label: I18n.t('menu.configure'), id: :configure, priority: 30
       end
     end
 

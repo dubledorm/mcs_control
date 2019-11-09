@@ -1,4 +1,5 @@
 ActiveAdmin.register AdminUser do
+  menu parent: :configure
   scope_to :current_admin_user, unless: proc{ current_admin_user.admin? }
   permit_params :email, :password, :password_confirmation
 

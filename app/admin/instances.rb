@@ -1,5 +1,6 @@
 ActiveAdmin.register Instance do
   includes :programs
+  menu parent: :resources
   decorate_with InstanceDecorator
   config.filters = false
 

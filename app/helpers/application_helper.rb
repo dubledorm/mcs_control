@@ -23,14 +23,17 @@ module ApplicationHelper
   end
 
   def retranslator_menu_label
-    return '' unless Retranslator::active?
-    "#{Retranslator::retranslator_replacement_port} : выключить"
+    return I18n.t('menu.retranslate_dont_work') unless Retranslator::active?
+    I18n.t('menu.retranslate_off', port_number: Retranslator::retranslator_replacement_port)
   end
 
   def retranslator_switch_off_url
-    return '' unless Retranslator::active?
+    default_url = Rails.application.routes.url_helpers.admin_listport_path
+    return default_url unless Retranslator::active?
+
     retranslator_port = Retranslator::retranslator_replacement_port
-    return '' if retranslator_port.blank?
+    return default_url if retranslator_port.blank?
+
     port = Port.where(number: retranslator_port).first
     Rails.application.routes.url_helpers.retranslator_off_admin_program_port_path(program_id: port.program_id, id: port.id)
   end

@@ -1,4 +1,5 @@
 ActiveAdmin.register Role do
+  menu parent: :configure
   permit_params :name, :resource_type, :resource_id
 
   form do |f|

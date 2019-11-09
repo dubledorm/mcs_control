@@ -219,7 +219,10 @@ ru:
 
   menu:
     retranslate: Ретранслятор
-
+    resources: Ресурсы
+    configure: Настройки
+    retranslate_off: 'Порт %{port_number} выключить'
+    retranslate_dont_work: 'Нет портов в ретрансляции'
   values:
     role:
       manager: Мэнеджер
