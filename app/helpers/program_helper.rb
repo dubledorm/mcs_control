@@ -16,7 +16,7 @@ module ProgramHelper
   # При этом, считаем, что mc можем добавить любое количество
   def program_available_program_types
     instance = resource.instance
-    except_list = instance.programs.map(&:program_type).uniq - [ 'mc' ]
+    except_list = instance.programs.map(&:program_type).uniq - %w(mc pp-admin)
     except_list = except_list + [ 'pf2' ] unless can_add_retranslator?
     except_list = except_list + [ 'pp-router' ] unless can_add_pp_router?
     except_list = except_list + [ 'pp-web' ] unless can_add_pp_web?
