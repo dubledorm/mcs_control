@@ -5,6 +5,7 @@ class Program
       IP_ADDRESSES_REGEXP = /<ip_addresses>\.each\s*{(?<value>((\\\})|[^\}])*)}/
       IP_ADDRESS_REGEXP = /<ip_address>/
       IP_PORT = /<ip_port>/
+      LISTEN_IP_PORT = /<listen_ip_port>/
       SECTION_NAME_REGEXP = /<uniq_section_name>/
       PROGRAM_TYPE_REGEXEP = /<program_type>/
       SERVER_NAME_REGEXP = /<server_name>/
@@ -12,17 +13,19 @@ class Program
       IDENT_NAME_REGEXP = /<ident_name>/
 
 
-      def initialize(server_name, ip_addresses, ip_port, program)
+      def initialize(server_name, ip_addresses, ip_port, listen_ip_port, program)
         @ip_addresses = ip_addresses
         @ip_port = ip_port
         @program = program
         @server_name = server_name
+        @listen_ip_port = listen_ip_port
       end
 
       def convert(src_str)
         result = convert_ip_addresses(src_str)
         result = convert_uniq_section_name(result)
         result = convert_ip_port(result)
+        result = convert_listen_ip_port(result)
         result = convert_program_type(result)
         result = convert_server_name(result)
         result = convert_http_prefix(result)
@@ -57,6 +60,10 @@ class Program
         src_str.gsub(IP_PORT, @ip_port)
       end
 
+      def convert_listen_ip_port(src_str)
+        src_str.gsub(LISTEN_IP_PORT, @listen_ip_port)
+      end
+
       def convert_ip_addresses(src_str)
         src_str =~ IP_ADDRESSES_REGEXP
         while Regexp.last_match do
@@ -72,7 +79,7 @@ class Program
       end
 
       private
-        attr_accessor :server_name, :ip_addresses, :ip_port, :program
+        attr_accessor :server_name, :ip_addresses, :ip_port, :listen_ip_port, :program
 
         def convert_address_and_port(src_str, ip_address)
           src_str = convert_ip_address(src_str, ip_address)

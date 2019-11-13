@@ -160,25 +160,25 @@ RSpec.describe Program::Export::NginxStreamService do
 
 
       it {
-        expect(described_class.new(program).call).to eq([ "upstream #{program.identification_name.gsub('-','_')}_38000 {",
-                                                          "  server #{SERVER_ADDRESS[0]}:38000;",
-                                                          "  server #{SERVER_ADDRESS[1]}:38000;",
-                                                          "  server #{SERVER_ADDRESS[2]}:38000;",
-                                                          "  server #{SERVER_ADDRESS[3]}:38000;",
+        expect(described_class.new(program).call).to eq([ "upstream #{program.identification_name.gsub('-','_')}_#{retranslator.port_from} {",
+                                                          "  server #{SERVER_ADDRESS[0]}:#{retranslator.port_from};",
+                                                          "  server #{SERVER_ADDRESS[1]}:#{retranslator.port_from};",
+                                                          "  server #{SERVER_ADDRESS[2]}:#{retranslator.port_from};",
+                                                          "  server #{SERVER_ADDRESS[3]}:#{retranslator.port_from};",
                                                           '}',
                                                           'server {',
                                                           "  listen 38000;",
-                                                          "  proxy_pass #{program.identification_name.gsub('-','_')}_38000;",
+                                                          "  proxy_pass #{program.identification_name.gsub('-','_')}_#{retranslator.port_from};",
                                                           '}',
-                                                          "upstream #{program.identification_name.gsub('-','_')}_#{program.ports[1].number} {",
-                                                          "  server #{SERVER_ADDRESS[0]}:#{program.ports[1].number};",
-                                                          "  server #{SERVER_ADDRESS[1]}:#{program.ports[1].number};",
-                                                          "  server #{SERVER_ADDRESS[2]}:#{program.ports[1].number};",
-                                                          "  server #{SERVER_ADDRESS[3]}:#{program.ports[1].number};",
+                                                          "upstream #{program.identification_name.gsub('-','_')}_#{retranslator.port_to} {",
+                                                          "  server #{SERVER_ADDRESS[0]}:#{retranslator.port_to};",
+                                                          "  server #{SERVER_ADDRESS[1]}:#{retranslator.port_to};",
+                                                          "  server #{SERVER_ADDRESS[2]}:#{retranslator.port_to};",
+                                                          "  server #{SERVER_ADDRESS[3]}:#{retranslator.port_to};",
                                                           '}',
                                                           'server {',
-                                                          "  listen #{program.ports[1].number};",
-                                                          "  proxy_pass #{program.identification_name.gsub('-','_')}_#{program.ports[1].number};",
+                                                          "  listen #{retranslator.port_to};",
+                                                          "  proxy_pass #{program.identification_name.gsub('-','_')}_#{retranslator.port_to};",
                                                           '}'
                                                         ])
       }

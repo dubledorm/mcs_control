@@ -29,7 +29,7 @@ server {
 <ip_addresses>.each{  server <ip_address>:<ip_port>;
 }}
 server {
-  listen <ip_port>;
+  listen <listen_ip_port>;
   proxy_pass <ident_name>_<ip_port>;
 }'
 

@@ -14,7 +14,11 @@ ActiveAdmin.register_page "ListPort" do
     def index
       flash.delete(:alert)
       @page_title = I18n.t("active_admin.list_port")
-      @list_port = Port.all.order(:number)
+      if current_admin_user.admin?
+        @list_port = Port.all.order(:number)
+      else
+        @list_port = current_admin_user.ports.order(:number)
+      end
     end
   end
 end

@@ -18,6 +18,7 @@ class Program
           result += Program::Export::NginxTemplateConverter.new(server_name,
                                                                 server_address,
                                                                 port.number.to_s,
+                                                                port.number.to_s,
                                                                 @program).convert(template).split("\n")
         end
         result

@@ -20,19 +20,20 @@ class Program
 
         @program.ports.tcp.each do |port|
           next unless port_in_range?(port)
-          Rails.logger.debug "NginxStreamService call port = #{port}"
+          Rails.logger.debug "NginxStreamService call port = #{port.number}"
 
           next if @retranslator_active && retranslator_replacement_port.to_i == port.number
           Rails.logger.debug "NginxStreamService call before section create"
 
           if @retranslator_active && @retranslator_port == port.number
-            port_number = retranslator_replacement_port.to_i
+            listen_port_number = retranslator_replacement_port.to_i
           else
-            port_number = port.number.to_s
+            listen_port_number = port.number.to_s
           end
           result += Program::Export::NginxTemplateConverter.new(server_name,
                                                                 server_address,
-                                                                port_number.to_s,
+                                                                port.number.to_s,
+                                                                listen_port_number.to_s,
                                                                 @program).convert(template).split("\n")
         end
         result
