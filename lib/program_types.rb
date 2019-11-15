@@ -72,6 +72,20 @@ module ProgramTypes
     end
   end
 
+  class DispProgramType < ProgramTypeCharacteristic
+    def port_type
+      :http
+    end
+
+    def default_ports_create
+      { http: 1 }
+    end
+
+    def http_prefix
+      'disp'
+    end
+  end
+
   class PpRouterType < ProgramTypeCharacteristic
     def port_type
       :http

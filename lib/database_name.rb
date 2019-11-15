@@ -1,7 +1,7 @@
 module DatabaseName
   REGEXP_DATABASE_NAME = /^(?<program_type>pp_router|pp_web|pp_admin|mc|op|dcs4)_(?<prefix>[a-zA-Z\d]+)(?:_(?<add_name>[a-zA-Z_\d]+?))??(?:_(?<digit>\d*))??$/.freeze
   REGEXP_DATABASE_NAME_PREFIX = '^(?<program_type>pp_router|pp_web|pp_admin|mc|op|dcs4)_(?<prefix>PREFIX_NAME)(?:_(?<add_name>[a-zA-Z_\d]+?))??(?:_(?<digit>\d*))??$'.freeze
-  DATABASE_NAMES = { pp_router: 'pp_router', pp_web: 'pp_web', pp_admin: 'pp_admin', mc: 'mc', op: 'op', dcs_cli: 'dcs4'}.freeze
+  DATABASE_NAMES = { pp_router: 'pp_router', pp_web: 'pp_web', pp_admin: 'pp_admin', mc: 'mc', op: 'op', dcs_cli: 'dcs4', disp: 'disp'}.freeze
   REGEXP_DATABASEURL = /^(?<adapter>postgres):\/\/(?<user_name>\w+):(?<password>\w+)@(?<host>[\w.]+)\/(?<database_name>\w+)$/.freeze
 
   def create_database_name(instance_name, program_type, additional_name)

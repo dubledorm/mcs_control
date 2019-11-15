@@ -13,7 +13,8 @@ module ProgramToolBox
                           'pf2' => ProgramTypes::Pf2ProgramType.new,
                           'pp-router' => ProgramTypes::PpRouterType.new,
                           'pp-web' => ProgramTypes::PpWebType.new,
-                          'pp-admin' => ProgramTypes::PpAdminType.new}.freeze
+                          'pp-admin' => ProgramTypes::PpAdminType.new,
+                          'disp' => ProgramTypes::DispProgramType.new}.freeze
 
 
   def can_add_port?
