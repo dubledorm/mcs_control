@@ -27,7 +27,7 @@ module ProgramHelper
   end
 
   def program_can_retranslator?
-    resource.can_retranslate_port? && can?(:retranslate, Port) && !Retranslator.active?
+    resource.can_retranslate_port? && can?(:retranslator, Port) && !Retranslator.active?
   end
 
   def can_add_retranslator?

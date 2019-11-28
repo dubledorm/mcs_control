@@ -3,6 +3,7 @@ ActiveAdmin.register Instance do
   menu parent: :resources
   decorate_with InstanceDecorator
   config.filters = false
+  actions :all, :check
 
   permit_params :name, :description, :owner_name
 

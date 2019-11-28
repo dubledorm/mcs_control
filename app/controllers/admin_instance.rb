@@ -1,14 +1,6 @@
 module AdminInstance
   include ApplicationHelper
 
-  def scoped_collection
-    if current_admin_user.admin?
-      Instance.all
-    else
-      Instance.with_role(Role::ROLE_NAMES, current_admin_user)
-    end
-  end
-
   def new
     @need_database_create = true
     super
@@ -60,5 +52,4 @@ module AdminInstance
       redirect_to admin_instance_path(resource), error: e.message
     end
   end
-
 end

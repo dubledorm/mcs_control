@@ -12,6 +12,7 @@ module Pf2
     def call
       # записать в таблицу
       if mode
+        raise 'Retranslator already switched on' if Retranslator.first&.active
         set_active_and_port
       else
         set_active_off

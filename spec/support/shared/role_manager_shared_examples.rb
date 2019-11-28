@@ -16,7 +16,7 @@ RSpec.shared_examples 'any authorised user for instance' do
 
     it 'should not read another records' do
       visit admin_instance_path(id: instances[0])
-      expect(page).to have_content('The page you were looking for doesn\'t exist. You may have mistyped the address or the page may have moved. If you are the application owner check the logs for more information.')
+      expect(page).to have_content(I18n.t('active_admin.access_denied.message'))
     end
   end
 
@@ -24,7 +24,7 @@ RSpec.shared_examples 'any authorised user for instance' do
 
     it 'should not edit another records' do
       visit edit_admin_instance_path(id: instances[0])
-      expect(page).to have_content('The page you were looking for doesn\'t exist. You may have mistyped the address or the page may have moved. If you are the application owner check the logs for more information.')
+      expect(page).to have_content(I18n.t('active_admin.access_denied.message'))
     end
   end
 

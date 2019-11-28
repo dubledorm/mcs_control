@@ -16,11 +16,11 @@ RSpec.shared_examples 'any authorised user for instance' do
     subject { post(admin_instances_path(params)) }
   end
 
-  it_should_behave_like 'get response 404' do
+  it_should_behave_like 'get response 403' do
     subject { put(admin_instance_path({ id: editable_instance.id, instance: { description: '12344566' } } )) }
   end
 
-  it_should_behave_like 'get response 404' do
+  it_should_behave_like 'get response 403' do
     subject { delete(admin_instance_path({ id: editable_instance.id } )) }
   end
 
