@@ -22,16 +22,16 @@ module ApplicationHelper
     current_admin_user
   end
 
-  def retranslator_menu_label
-    return I18n.t('menu.retranslate_dont_work') unless Retranslator::active?
-    I18n.t('menu.retranslate_off', port_number: Retranslator::retranslator_replacement_port)
+  def retranslator_menu_label(retranslator)
+    return I18n.t('menu.retranslate_dont_work', port_number: retranslator.port_to) unless retranslator.active?
+    I18n.t('menu.retranslate_off', port_number: retranslator.replacement_port)
   end
 
-  def retranslator_switch_off_url
+  def retranslator_switch_off_url(retranslator)
     default_url = Rails.application.routes.url_helpers.admin_listport_path
-    return default_url unless Retranslator::active?
+    return default_url unless retranslator&.active?
 
-    retranslator_port = Retranslator::retranslator_replacement_port
+    retranslator_port = retranslator.replacement_port
     return default_url if retranslator_port.blank?
 
     port = Port.where(number: retranslator_port).first

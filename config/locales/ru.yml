@@ -223,7 +223,7 @@ ru:
     resources: Ресурсы
     configure: Настройки
     retranslate_off: 'Порт %{port_number} выключить'
-    retranslate_dont_work: 'Нет портов в ретрансляции'
+    retranslate_dont_work: 'Порт %{port_number} не включена ретрансляция'
   values:
     role:
       manager: Мэнеджер

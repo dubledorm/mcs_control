@@ -7,7 +7,6 @@ ActiveAdmin.register_page "ListPort" do
     breadcrumbs
   end
 
-
   controller do
     layout 'active_admin'
 

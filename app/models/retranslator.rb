@@ -1,24 +1,11 @@
 
 class Retranslator < ApplicationRecord
+  include RetranslatorToolBox
 
   validates :port_from, :port_to, presence: true
 
-  def self.active?
-    retranslator = Retranslator.first
-    return false unless retranslator
-    retranslator.active
-  end
-
-  def self.retranslator_port
-    retranslator = Retranslator.first
-    return nil unless retranslator
-    retranslator.port_from
-  end
-
-  def self.retranslator_replacement_port
-    retranslator = Retranslator.first
-    return nil unless retranslator
-    return nil unless retranslator.active?
-    retranslator.replacement_port
-  end
+  scope :active_by_replacement_port, ->(replacement_port){ where(replacement_port: replacement_port, active: true) }
+  scope :active_by_port_to, ->(port_to){ where(port_to: port_to, active: true) }
+  scope :active_by_port_from, ->(port_from){ where(port_from: port_from, active: true) }
+  scope :passive, ->{ where(active: false) }
 end
