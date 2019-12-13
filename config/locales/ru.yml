@@ -190,6 +190,7 @@ ru:
         top_text: Для программы %{program_name} будет выделен новый порт. Использовать его можно будет сразу после создания.
         retranslator_warning: Внимание! Порт находится в режиме ретрансляции!
         retranslator_port: Порт ретрансляции
+        retranslator_on_port: 'Ретрансляция на порт %{port_to}'
       confirm:
         delete_role_page_title: 'Удалить права %{role_name}'
         delete_instance_page_title: 'Удалить инстанс %{instance_name}'

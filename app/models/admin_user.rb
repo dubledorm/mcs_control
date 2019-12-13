@@ -11,4 +11,6 @@ class AdminUser < ApplicationRecord
   has_many :programs, through: :instances
   has_many :ports, through: :programs
   has_many :admin_users, through: :roles, source: :resource, source_type: 'AdminUser'
+
+  has_many :retranslators
 end

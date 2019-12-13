@@ -8,4 +8,4 @@
           %th
             = I18n.t('forms.activeadmin.port.retranslator_port')
           %td
-            = Retranslator::port_to(port.number)&.to_s
+            = Retranslator::port_to(port&.number)&.to_s

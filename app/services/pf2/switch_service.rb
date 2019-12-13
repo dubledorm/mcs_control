@@ -4,9 +4,10 @@ module Pf2
   class SwitchService
     include DatabaseTools
 
-    def initialize(port, mode)
+    def initialize(port, mode, user = nil)
       @port = port
       @mode = mode
+      @user = user
     end
 
     def call
@@ -29,13 +30,14 @@ module Pf2
     end
 
     private
-      attr_accessor :port, :mode
+      attr_accessor :port, :mode, :user
 
       def set_active_and_port
         retranslator = Retranslator.get_free_port
         raise StandardError, 'Do not find free retranslator port' if retranslator.nil?
         retranslator.active = true
         retranslator.replacement_port = port.number
+        retranslator.admin_user = user
         retranslator.save
       end
 
@@ -43,6 +45,7 @@ module Pf2
         retranslator = Retranslator.all.active_by_replacement_port(port.number).first
         raise StandardError, 'Do not find record in Retranslator for port ' + port.number.to_s if retranslator.nil?
         retranslator.active = false
+        retranslator.admin_user = nil
         retranslator.save
       end
   end

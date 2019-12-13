@@ -46,7 +46,7 @@ ActiveAdmin.register Port do
   member_action :retranslator, method: :put do
     begin
       test_point_exception
-      Pf2::SwitchService::new(resource,true).call
+      Pf2::SwitchService::new(resource,true, current_user).call
       redirect_to admin_program_port_path(program_id: resource.program_id, id: resource.id), notice: "Switch On!"
     rescue StandardError => e
       flash[:error] = I18n.t('activerecord.errors.messages.unknown_resource_exception', errors: e.message)
@@ -57,7 +57,7 @@ ActiveAdmin.register Port do
   member_action :retranslator_off do
     begin
       test_point_exception
-      Pf2::SwitchService::new(resource, false).call
+      Pf2::SwitchService::new(resource, false, current_user).call
       redirect_to admin_program_port_path(program_id: resource.program_id, id: resource.id), notice: "Switch Off!"
     rescue StandardError => e
       flash[:error] = I18n.t('activerecord.errors.messages.unknown_resource_exception', errors: e.message)

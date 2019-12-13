@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_31_191629) do
+ActiveRecord::Schema.define(version: 2019_12_13_133659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,6 +112,8 @@ ActiveRecord::Schema.define(version: 2019_10_31_191629) do
     t.boolean "active"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "admin_user_id"
+    t.index ["admin_user_id"], name: "index_retranslators_on_admin_user_id"
   end
 
   create_table "roles", force: :cascade do |t|

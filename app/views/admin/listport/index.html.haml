@@ -21,7 +21,7 @@
       - @list_port.each do |port|
         %tr{class: "#{ {true => 'odd', false => 'even'}[row_switch]}"}
           %td.col
-            = port.number
+            = link_to(port.number, admin_program_port_path(program_id: port.program_id, id: port.id))
           %td.col
             = port.port_type
           %td.col
@@ -35,13 +35,10 @@
           %td.col
             - if can?(:retranslator, Port)
               - if Retranslator::is_active?(port.number)
-                = link_to(I18n.t('menu.retranslate_off', port_number: port.number),
-                  retranslator_switch_off_url(Retranslator.all.active_by_replacement_port(port.number).first),
-                  data: {confirm: I18n.t('forms.activeadmin.confirm.retranslate_port_off', port: port.number)})
+                = user_port_retranslator(port)
               - else
                 - if Retranslator::has_free_port?
-                  = link_to(I18n.t('actions.port.retranslator'), retranslator_admin_program_port_path(program_id: port.program_id, id: port.id),
-                    method: :put, data: {confirm: I18n.t('forms.activeadmin.confirm.retranslate_port_sure', port: port.number)})
+                  = switch_on_retranslator(port)
                 - else
                   = ''
 

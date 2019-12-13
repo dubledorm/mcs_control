@@ -45,5 +45,9 @@ module RetranslatorToolBox
     def port_to(replacement_port)
       Retranslator.all.active_by_replacement_port(replacement_port).first&.port_to
     end
+
+    def user(replacement_port)
+      Retranslator.all.active_by_replacement_port(replacement_port).first&.admin_user&.email
+    end
   end
 end
