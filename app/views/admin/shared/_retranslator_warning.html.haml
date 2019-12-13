@@ -1,0 +1,11 @@
+%h3
+  = I18n.t('forms.activeadmin.port.retranslator_warning')
+.panel_contents
+  .attribute_table
+    %table{ border: 0, cellspacing: 0, cellpadding: 0}
+      %tbody
+        %tr.row
+          %th
+            = I18n.t('forms.activeadmin.port.retranslator_port')
+          %td
+            = Retranslator::port_to(port.number)&.to_s

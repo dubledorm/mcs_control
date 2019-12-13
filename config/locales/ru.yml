@@ -17,6 +17,9 @@ ru:
       nginx_template:
         one: Шаблон Nginx
         other: Шаблоны Nginx
+      retranslator:
+        one: Ретранслятор
+        other: Ретрасляторы
     attributes:
       admin_user:
         current_sign_in_at: Время текущего входа
@@ -185,6 +188,8 @@ ru:
       port:
         attributes: Атрибуты
         top_text: Для программы %{program_name} будет выделен новый порт. Использовать его можно будет сразу после создания.
+        retranslator_warning: Внимание! Порт находится в режиме ретрансляции!
+        retranslator_port: Порт ретрансляции
       confirm:
         delete_role_page_title: 'Удалить права %{role_name}'
         delete_instance_page_title: 'Удалить инстанс %{instance_name}'

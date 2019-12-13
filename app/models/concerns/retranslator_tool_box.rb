@@ -37,12 +37,13 @@ module RetranslatorToolBox
     # end
 
     # Найти replacement_port по полю port_from
-    def replacement_port(port_from = nil)
+    def replacement_port(port_from)
       Retranslator.all.active_by_port_from(port_from).first&.replacement_port
-      # retranslator = Retranslator.first
-      # return nil unless retranslator
-      # return nil unless retranslator.active?
-      # retranslator.replacement_port
+    end
+
+    # Найти port_to по replacement_port
+    def port_to(replacement_port)
+      Retranslator.all.active_by_replacement_port(replacement_port).first&.port_to
     end
   end
 end

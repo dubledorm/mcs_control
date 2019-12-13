@@ -12,6 +12,25 @@ ActiveAdmin.register Port do
     ]
   end
 
+  show do
+    if Retranslator::is_active?(resource.number)
+      panel I18n.t('activerecord.models.retranslator.one') do
+        render 'admin/shared/retranslator_warning', port: resource
+      end
+    end
+    attributes_table do
+      row :number
+      row :program
+      row :port_type
+      row :db_status
+      row :state
+      row :created_at
+      row :updated_at
+    end
+    active_admin_comments
+  end
+
+
   form title: Port.model_name.human do |f|
     f.semantic_errors *f.object.errors.keys
     inputs I18n.t('forms.activeadmin.port.attributes') do
