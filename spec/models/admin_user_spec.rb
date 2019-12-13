@@ -11,6 +11,7 @@ describe AdminUser do
     it {should have_and_belong_to_many(:roles)}
     it {should have_many(:instances)}
     it {should have_many(:programs)}
+    it {should have_many(:retranslators)}
   end
 
   describe '#instances' do

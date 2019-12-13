@@ -133,6 +133,10 @@ ru:
               blank: должно быть заполнено
               inclusion: 'может содержать одно из следующих значений: mc op dcs-dev dcs-cli'
               only_one_pf2: 'только одна программа pf2 может присутствовать в системе.'
+        retranslator:
+          attributes:
+            port_to:
+              taken: уже используется
       services:
         find_free_service:
           bad_argument: В конструктор сервиса передаётся один аргумент - port_type_arg, который может принимать значения :http, :tcp

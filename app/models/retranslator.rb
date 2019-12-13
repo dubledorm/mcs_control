@@ -2,7 +2,7 @@
 class Retranslator < ApplicationRecord
   include RetranslatorToolBox
 
-  validates :port_from, :port_to, presence: true
+  validates :port_from, :port_to, presence: true, uniqueness: true
 
   belongs_to :admin_user, optional: true
 
