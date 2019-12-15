@@ -16,4 +16,29 @@ describe Retranslator do
     # Relationships
     it {should belong_to(:admin_user)}
   end
+
+  describe 'has_free_port' do
+    context 'when nothing retranslators exist' do
+      it { expect(Retranslator::has_free_port?).to eq(false) }
+    end
+
+    context 'when one retranslator is free' do
+      let!(:retranslator) { FactoryGirl.create(:retranslator, active: false) }
+
+      it { expect(Retranslator::has_free_port?).to eq(true) }
+    end
+
+    context 'when one retranslator is busy' do
+      let!(:retranslator) { FactoryGirl.create(:retranslator, active: true) }
+
+      it { expect(Retranslator::has_free_port?).to eq(false) }
+    end
+
+    context 'when two retranslator exist and one of them is free' do
+      let!(:retranslator1) { FactoryGirl.create(:retranslator, active: true) }
+      let!(:retranslator2) { FactoryGirl.create(:retranslator) }
+
+      it { expect(Retranslator::has_free_port?).to eq(true) }
+    end
+  end
 end

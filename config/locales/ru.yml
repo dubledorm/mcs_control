@@ -73,6 +73,14 @@ ru:
         created_at: Создан
         updated_at: Изменён
         ports: Порты
+      retranslator:
+        active: Активно
+        port_from: Порт from
+        port_to: Порт to
+        replacement_port: Переназначенный порт
+        admin_user: Кто использует
+        created_at: Создан
+        updated_at: Изменён
       role:
         name: Роль
     decorate:
@@ -136,6 +144,8 @@ ru:
         retranslator:
           attributes:
             port_to:
+              taken: уже используется
+            port_from:
               taken: уже используется
       services:
         find_free_service:
@@ -218,6 +228,8 @@ ru:
         delete_port_sure: 'Внимание! Вы действительно хотите удалить порт %{port} у программы %{program}'
         retranslate_port_sure: 'Внимание! Вы действительно хотите перевести порт %{port} в режим ретрансляции?'
         retranslate_port_off: 'Внимание! Вы действительно хотите выключить режим ретрансляции на порту %{port}?'
+      retranslator:
+        attributes: Атрибуты
     errors:
       access_denied:
         title: Ограничение доступа

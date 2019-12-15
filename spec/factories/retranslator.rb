@@ -1,8 +1,6 @@
 FactoryGirl.define do
   factory :retranslator, class: Retranslator do
-    port_from 31072
-    port_to   31073
-    replacement_port  31074
-    active  true
+    sequence(:port_from) { |n| n }
+    sequence(:port_to) { |n| n }
   end
 end
