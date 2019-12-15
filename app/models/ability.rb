@@ -29,7 +29,7 @@ class Ability
     can [ :retranslator, :retranslator_off, :read ], PortDecorator, id: user.ports.where(roles: { name: :editor }).map(&:id)
     can [ :retranslator, :retranslator_off, :read ], PortDecorator, id: user.ports.where(roles: { name: :manager }).map(&:id)
 
-    can [ :crud ], Retranslator
+    can [ :read ], Retranslator
 
     can :read, ActiveAdmin::Page, name: "Dashboard", namespace_name: "admin"
     can :read, ActiveAdmin::Page, name: "ListPort", namespace_name: "admin"
