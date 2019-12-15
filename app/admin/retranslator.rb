@@ -1,6 +1,5 @@
 # encoding: UTF-8
 ActiveAdmin.register Retranslator do
-  menu parent: :configure
   permit_params :port_from, :port_to
   config.filters = false
 

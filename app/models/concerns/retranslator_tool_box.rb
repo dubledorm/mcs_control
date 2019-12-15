@@ -15,6 +15,10 @@ module RetranslatorToolBox
       Retranslator.all.passive.first
     end
 
+    def find_by_replacement_port(replacement_port)
+      Retranslator.all.active_by_replacement_port(replacement_port).first
+    end
+
     # Проверить, что порт уже в режиме ретрансляции
     def is_active?(port)
       Retranslator.all.active_by_replacement_port(port).count > 0

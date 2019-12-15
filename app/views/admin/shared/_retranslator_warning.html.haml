@@ -1,11 +1,14 @@
 %h3
   = I18n.t('forms.activeadmin.port.retranslator_warning')
-.panel_contents
-  .attribute_table
+.panel_contents.retranslator
+  .attributes_table
     %table{ border: 0, cellspacing: 0, cellpadding: 0}
       %tbody
         %tr.row
           %th
             = I18n.t('forms.activeadmin.port.retranslator_port')
           %td
-            = Retranslator::port_to(port&.number)&.to_s
+            = retranslator_port(port)
+  .footer
+    = link_to('Выключить', retranslator_switch_off_url(Retranslator::find_by_replacement_port(port.number)),
+    data: {confirm: I18n.t('forms.activeadmin.confirm.retranslate_port_off', port: port.number)}, class: 'button' )

@@ -9,7 +9,7 @@ module ListPortHelper
           concat(content_tag(:i, Retranslator::user(port.number)))
         end,
         content_tag(:div, link_to('Выключить',
-                                  retranslator_switch_off_url(Retranslator.all.active_by_replacement_port(port.number).first),
+                                  retranslator_switch_off_url(Retranslator::find_by_replacement_port(port.number)),
                                   data: {confirm: I18n.t('forms.activeadmin.confirm.retranslate_port_off', port: port.number)}))
     ].join.html_safe
   end

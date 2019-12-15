@@ -240,6 +240,9 @@ ru:
     action: Действия
     admin: Административная панель
 
+  messages:
+    retranslator_port: На этот порт надо настраивать MilurMeterTool и пр.
+
   menu:
     retranslate: Ретранслятор
     resources: Ресурсы
