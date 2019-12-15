@@ -19,12 +19,11 @@ module Pf2
         set_active_off
       end
 
-      # Переписать pf2
-      pf2 = Program.pf2_only.first
-      raise StandardError, 'Program Pf2 does not finded' unless pf2
-      Instance::Nginx::ReloadService::new(pf2.instance).call
+      # Переписать nginx для ретранслятор
+      program_retr = find_retranslator_program
+      Instance::Nginx::ReloadService::new(program_retr.instance).call
 
-      # Переписать Instanse порта
+      # Переписать nginx для Instanse порта
       program = port.program
       Instance::Nginx::ReloadService::new(program.instance).call
     end
@@ -47,6 +46,12 @@ module Pf2
         retranslator.active = false
         retranslator.admin_user = nil
         retranslator.save
+      end
+
+      def find_retranslator_program
+        program = Program.pf2_only.first
+        raise StandardError, 'Program Pf2 does not finded' unless program
+        program
       end
   end
 end
