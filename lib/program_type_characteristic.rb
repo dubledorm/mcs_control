@@ -41,4 +41,8 @@ class ProgramTypeCharacteristic
   def http_prefix
     ''
   end
+
+  def need_database?
+    true
+  end
 end

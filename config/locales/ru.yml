@@ -263,3 +263,4 @@ ru:
       'pp-router': 'ЛК маршрутизатор'
       'pp-web': 'ЛК web'
       'disp': 'Диспетчерская'
+      'tcp-server': 'Ретранслятор (tcp_server)'

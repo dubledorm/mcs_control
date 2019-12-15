@@ -26,6 +26,10 @@ module ProgramTypes
     def default_ports_create
       { tcp: 1 }
     end
+
+    def need_database?
+      false
+    end
   end
 
   class Pf2ProgramType < ProgramTypeCharacteristic
@@ -40,7 +44,26 @@ module ProgramTypes
     def after_create(program)
       Pf2::PrepareService::new(program).call
     end
+
+    def need_database?
+      false
+    end
   end
+
+  class TcpServerProgramType < ProgramTypeCharacteristic
+    def port_type
+      :tcp
+    end
+
+    def default_ports_create
+      { tcp: 2 }
+    end
+
+    def need_database?
+      false
+    end
+  end
+
 
   class DcsCliProgramType < ProgramTypeCharacteristic; end
 
@@ -113,6 +136,10 @@ module ProgramTypes
 
     def default_ports_create
       { http: 1 }
+    end
+
+    def need_database?
+      false
     end
   end
 end

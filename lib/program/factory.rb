@@ -15,7 +15,7 @@ class Program
         program.identification_name = make_identification_name(instance.name, program_type, additional_name)
 
         if need_database_create
-          if need_database?(program_type)
+          if program.need_database?
             Program::DatabaseControl::CreateDatabase::build(program)
             program.created_db_myself = true
           end
@@ -53,8 +53,8 @@ class Program
         end
       end
     
-      def self.need_database?(program_type)
-        !%w(dcs-dev pf2 pp-web).include?(program_type)
-      end
+      # def self.need_database?(program_type)
+      #   !%w(dcs-dev pf2 pp-web).include?(program_type)
+      # end
   end
 end
