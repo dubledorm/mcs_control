@@ -1,6 +1,20 @@
 #encoding: UTF-8
 module ListPortHelper
 
+  def show_retranslator_switcher(port)
+    if (can?(:retranslator_on, Port) || can?(:retranslator_off, Port)) && port.program.can_retranslate_port?
+      if Retranslator::is_active?(port.number)
+         user_port_retranslator(port)
+      else
+        if Retranslator::has_free_port?
+          switch_on_retranslator(port)
+        else
+          ''
+        end
+      end
+    end
+  end
+
   def user_port_retranslator(port)
     [
         content_tag(:div, I18n.t('forms.activeadmin.port.retranslator_on_port', port_to: Retranslator::port_to(port.number))),
@@ -15,7 +29,7 @@ module ListPortHelper
   end
 
   def switch_on_retranslator(port)
-    link_to(I18n.t('actions.port.retranslator'), retranslator_admin_program_port_path(program_id: port.program_id, id: port.id),
+    link_to(I18n.t('actions.port.retranslator'), retranslator_on_admin_program_port_path(program_id: port.program_id, id: port.id),
             method: :put, data: {confirm: I18n.t('forms.activeadmin.confirm.retranslate_port_sure', port: port.number)})
   end
 end

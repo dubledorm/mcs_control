@@ -43,7 +43,7 @@ ActiveAdmin.register Port do
     end
   end
 
-  member_action :retranslator, method: :put do
+  member_action :retranslator_on, method: :put do
     begin
       test_point_exception
       Pf2::SwitchService::new(resource,true, current_user).call

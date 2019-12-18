@@ -31,10 +31,4 @@
             - else
               = ''
 
-            - if can_retranslate_ports
-              = link_to(I18n.t('actions.port.retranslator'), retranslator_admin_program_port_path(program_id: port.program_id, id: port.id),
-              method: :put, data: {confirm: I18n.t('forms.activeadmin.confirm.retranslate_port_sure', port: port.number)})
-            - else
-              = ''
-
-
+            = show_retranslator_switcher(port)

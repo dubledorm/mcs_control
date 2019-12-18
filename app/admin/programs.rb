@@ -73,6 +73,7 @@ ActiveAdmin.register Program do
 
   controller do
     include AdminProgram
+    include ListPortHelper
   end
 
 

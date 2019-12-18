@@ -23,13 +23,13 @@ class Ability
     can [ :read ], ProgramDecorator, id: user.programs.where(roles: { name: :editor }).map(&:id)
     can [ :read ], ProgramDecorator, id: user.programs.where(roles: { name: :manager }).map(&:id)
 
-    can [ :retranslator, :retranslator_off, :read ], Port, id: user.ports.where(roles: { name: :editor }).map(&:id)
-    can [ :retranslator, :retranslator_off, :read ], Port, id: user.ports.where(roles: { name: :manager }).map(&:id)
+    can [:retranslator_on, :retranslator_off, :read ], Port, id: user.ports.where(roles: {name: :editor }).map(&:id)
+    can [:retranslator_on, :retranslator_off, :read ], Port, id: user.ports.where(roles: {name: :manager }).map(&:id)
 
-    can [ :retranslator, :retranslator_off, :read ], PortDecorator, id: user.ports.where(roles: { name: :editor }).map(&:id)
-    can [ :retranslator, :retranslator_off, :read ], PortDecorator, id: user.ports.where(roles: { name: :manager }).map(&:id)
+    can [:retranslator_on, :retranslator_off, :read ], PortDecorator, id: user.ports.where(roles: {name: :editor }).map(&:id)
+    can [:retranslator_on, :retranslator_off, :read ], PortDecorator, id: user.ports.where(roles: {name: :manager }).map(&:id)
 
-    can [ :read ], Retranslator
+    can [ :read, :show ], Retranslator
 
     can :read, ActiveAdmin::Page, name: "Dashboard", namespace_name: "admin"
     can :read, ActiveAdmin::Page, name: "ListPort", namespace_name: "admin"

@@ -33,13 +33,6 @@
           %td.col
             = port.updated_at
           %td.col
-            - if can?(:retranslator, Port)
-              - if Retranslator::is_active?(port.number)
-                = user_port_retranslator(port)
-              - else
-                - if Retranslator::has_free_port?
-                  = switch_on_retranslator(port)
-                - else
-                  = ''
+            = show_retranslator_switcher(port)
 
           - row_switch = !row_switch

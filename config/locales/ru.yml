@@ -173,6 +173,8 @@ ru:
           create_db_user_interactor:
             standard_error:
               cause_of_error: "Ошибка при создании пользователя базы данных. Причина %{error_message}"
+        retranslator:
+          need_env_retranslator_program: "Не могу определить тип программы ретранслятора. Должна быть установлена переменная окружения RETRANSLATOR_PROGRAM. Возможные значения: %{values}"
   actions:
     instance:
       check: Сверить с БД
