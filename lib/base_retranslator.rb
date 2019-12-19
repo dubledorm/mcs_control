@@ -3,11 +3,11 @@ class BaseRetranslator
     raise NotImplementedError
   end
 
-  def self.switch_retranslator_on(retranslator)
+  def switch_retranslator_on(retranslator)
 
   end
 
-  def self.switch_retranslator_off(retranslator)
+  def switch_retranslator_off(retranslator)
 
   end
 end

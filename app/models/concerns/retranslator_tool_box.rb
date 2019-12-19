@@ -16,7 +16,7 @@ module RetranslatorToolBox
     end
 
     def find_by_replacement_port(replacement_port)
-      Retranslator.all.active_by_replacement_port(replacement_port).first
+      Retranslator.all.by_replacement_port(replacement_port).first
     end
 
     # Проверить, что порт уже в режиме ретрансляции

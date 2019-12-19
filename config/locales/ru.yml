@@ -174,7 +174,12 @@ ru:
             standard_error:
               cause_of_error: "Ошибка при создании пользователя базы данных. Причина %{error_message}"
         retranslator:
+          error_send_message: "Не могу отправить сообщение программе ретранслятора. host: %{host}, port: %{port}, path: %{path}. Ошибка: %{error}"
+          do_not_find_retranslator: "Не могу найти ретранслятор для порта %{port}"
+          wrong_env_retranslator_program: "Не могу определить тип программы ретранслятора. Не верное значение переменной окружения RETRANSLATOR_PROGRAM. Допустимые значения: %{values}. Установлено: %{value} "
           need_env_retranslator_program: "Не могу определить тип программы ретранслятора. Должна быть установлена переменная окружения RETRANSLATOR_PROGRAM. Возможные значения: %{values}"
+          need_env_retranslator_host: "Не могу найти host программы ретранслятора. Должна быть установлена переменная окружения RETRANSLATOR_HOST"
+          need_env_retranslator_port: "Не могу найти порт программы ретранслятора. Должна быть установлена переменная окружения RETRANSLATOR_PORT"
   actions:
     instance:
       check: Сверить с БД
