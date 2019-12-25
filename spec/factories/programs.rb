@@ -41,6 +41,14 @@ FactoryGirl.define do
     end
   end
 
+  factory :tcp_server_program, parent: :program do
+    program_type 'tcp-server'
+    after_create do |program|
+      program.ports << FactoryGirl.create(:tcp_port)
+      program.ports << FactoryGirl.create(:tcp_port)
+    end
+  end
+
   factory :dev_program_and_one_port, parent: :program do
     program_type 'dcs-dev'
     after_create do |program|

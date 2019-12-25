@@ -7,6 +7,7 @@ module AssistantSoft
 
 
     def self.find_retranslator_program
+      Rails.logger.info("Retranslator type = #{retranslator_class.class}")
       retranslator_class.find_program
     end
 

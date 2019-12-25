@@ -12,6 +12,8 @@ module Pf2
 
     def call
       ActiveRecord::Base.transaction do
+        Rails.logger.info("RETRANSLATOR = #{ENV['RETRANSLATOR_PROGRAM']}")
+
         # записать в таблицу
         retranslator = write_to_retranslator_table
 
@@ -66,6 +68,7 @@ module Pf2
       end
 
       def send_command_to_retranslator(retranslator)
+        Rails.logger.info("RETRANSLATOR = #{ENV['RETRANSLATOR_PROGRAM']}")
         if mode
           AssistantSoft::Control::switch_retranslator_on(retranslator)
         else

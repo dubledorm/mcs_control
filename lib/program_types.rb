@@ -56,11 +56,19 @@ module ProgramTypes
     end
 
     def default_ports_create
-      { tcp: 2 }
+      { http: 1 }
     end
 
     def need_database?
       false
+    end
+
+    def can_add_port?
+      true
+    end
+
+    def can_delete_port?
+      true
     end
   end
 
