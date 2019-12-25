@@ -20,4 +20,19 @@ ActiveAdmin.register Retranslator do
 
     actions
   end
+
+  index do
+    column :id
+    column :port_from
+    column :port_to
+    column :replacement_port
+    column :created_at
+    column :updated_at
+
+    actions defaults: true do |retranslator|
+      if retranslator.replacement_port && retranslator.active?
+        item 'Выключить', retranslator_switch_off_url(Retranslator::find_by_replacement_port(retranslator.replacement_port))
+      end
+    end
+  end
 end
