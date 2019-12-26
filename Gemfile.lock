@@ -453,6 +453,7 @@ DEPENDENCIES
   draper
   factory_girl_rails (~> 1.7.0)
   haml
+  has_scope
   interactor (~> 3.0)
   jbuilder (~> 2.5)
   launchy

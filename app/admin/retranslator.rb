@@ -26,6 +26,7 @@ ActiveAdmin.register Retranslator do
     column :port_from
     column :port_to
     column :replacement_port
+    column :active
     column :created_at
     column :updated_at
 

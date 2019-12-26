@@ -11,6 +11,11 @@ class Port < ApplicationRecord
 
   scope :http, ->{ where(port_type: 'http') }
   scope :tcp, ->{ where(port_type: 'tcp') }
+  scope :port_type, -> (port_type){ where(port_type: port_type) }
+  scope :port_number, -> (number){ where(number: number) }
+  scope :instance, -> (instance_id){ joins(:program).where(programs: { instance_id: instance_id }) }
+  scope :program_type, -> (program_type){ joins(:program).where(programs: { program_type: program_type } ) }
+
 
   RANGE_OF_NUMBER = { http: { left_range: 30000, right_range: 31000 },
                       tcp: { left_range: 31001, right_range: 64000 }

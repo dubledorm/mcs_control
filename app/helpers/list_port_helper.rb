@@ -32,4 +32,23 @@ module ListPortHelper
     link_to(I18n.t('actions.port.retranslator'), retranslator_on_admin_program_port_path(program_id: port.program_id, id: port.id),
             method: :put, data: {confirm: I18n.t('forms.activeadmin.confirm.retranslate_port_sure', port: port.number)})
   end
+
+  def form_selected_field(label, name, values, width = 200)
+    [
+        content_tag(:div, class: 'gorizontal_field_group') do
+          concat(label_tag(name, label, class: 'label'))
+          concat(select_tag(name, options_for_select(values, params[name]), include_blank: true, style: "width:#{width}px"))
+        end
+    ].join.html_safe
+  end
+
+  def form_input_field(label, name, width = 200)
+    [
+        content_tag(:div, class: 'gorizontal_field_group') do
+          concat(label_tag(name, label, class: 'label'))
+          concat(text_field_tag(name, params[name], style: "width:#{width}px"))
+        end
+    ].join.html_safe
+  end
+
 end

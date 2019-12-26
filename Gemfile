@@ -86,6 +86,7 @@ gem 'draper'
 gem 'pundit'
 gem "interactor", "~> 3.0"
 gem 'rails-observers'
+gem 'has_scope'
 
 gem 'net-ssh'
 gem 'net-scp'

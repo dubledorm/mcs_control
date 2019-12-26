@@ -1,0 +1,16 @@
+.panel
+  %h3
+    Фильтры
+  .panel_contents
+    = form_tag(admin_listport_path, method: :get, class: 'filter_form') do
+      .sidebar_section
+        = form_input_field(Port.human_attribute_name(:number), :port_number, 100)
+        = form_selected_field(Port.human_attribute_name(:port_type), :port_type, [['http', 'http'], ['tcp', 'tcp']], 100)
+        = form_selected_field(Port.human_attribute_name(:instance), :instance, Instance.all.map{ |instance| [instance.name, instance.id]})
+        = form_selected_field(Program.human_attribute_name(:program_type),
+        :program_type,
+        ProgramToolBox::KNOWN_PROGRAM_TYPES.keys.map{ |program_type| [program_type, program_type]})
+
+      .buttons
+        = submit_tag(I18n.t('active_admin.filters.buttons.filter'))
+        = link_to(I18n.t('active_admin.filters.buttons.clear'), admin_listport_path, class: 'light-button')

@@ -8,16 +8,22 @@ ActiveAdmin.register_page "ListPort" do
   end
 
   controller do
+    include ProgramToolBox
     layout 'active_admin'
+    has_scope :port_type
+    has_scope :port_number
+    has_scope :instance
+    has_scope :program_type
 
     def index
       flash.delete(:alert)
       @page_title = I18n.t("active_admin.list_port")
       if current_admin_user.admin?
-        @list_port = Port.all.order(:number)
+        @list_port = apply_scopes(Port).all.order(:number)
       else
-        @list_port = current_admin_user.ports.order(:number)
+        @list_port = apply_scopes(current_admin_user.ports).order(:number)
       end
+      render 'index'
     end
   end
 end
