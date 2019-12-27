@@ -1,42 +1,64 @@
+require 'net/http'
+require 'json'
+
 module HealthCheck
   class CheckOneServerService
 
     HEALTH_CHECK_PATH = '/mc/api/v1/health_check'
-    AUTORITHATION_DATA = 'Basic aGVhbHRoX2NoZWNrOk1vbml0b3JpbmdAMjAxOQ=='
+    HOST_NAME = 'infsphr.info'
+    AUTORITHATION_PASSWORD = 'health_check'
+    AUTORITHATION_LOGIN = 'Monitoring@2019'
+    NUMBER_OF_HOURS = 24
 
     class CommandPostError < StandardError; end
+    class ProgramTypeError < StandardError; end
 
-    def initialize(program)
+    def initialize(program, hc_logger)
       @program = program
+      @hc_logger = hc_logger
+      Raise ProgramTypeError, i18n.t('activerecord.errors.exceptions.health_check.program_type_error') unless program.program_type == 'mc'
     end
 
     def call
       Rails.logger.debug "HealthCheck::CheckOneServerService"
-      response = post_request(HEALTH_CHECK_PATH)
+      begin
+        response = post_request(HEALTH_CHECK_PATH)
 
-      ap(response)
+        number_of_null_ti = JSON.parse(response.body, symbolize_names: true)[:number_of_null_ti]
+        hc_logger.info("#{program.identification_name} number_of_null_ti: #{number_of_null_ti}")
+      rescue CommandPostError => e
+        hc_logger.error("#{program.identification_name} #{e.message}")
+      end
     end
 
     private
-    attr_accessor :program
+    attr_accessor :program, :hc_logger
+
 
     def get_program_host_port
-      { host: 'http://infsphr.info',
-        port: '30002'
+      { host: HOST_NAME,
+        port: program.ports.http.first&.number
       }
     end
 
     def post_request(path)
-      Rails.logger.info('Post request to mc.')
+      Rails.logger.info('HealthCheck request to mc.')
       connection_params = get_program_host_port
-      req = Net::HTTP::Put.new(path, initheader = { 'Content-Type' => 'application/json', 'Autorisation' => AUTORITHATION_DATA })
-      response = Net::HTTP.new(connection_params[:host], connection_params[:port]).start {|http| http.request(req) }
+
+      http = Net::HTTP.new(connection_params[:host], connection_params[:port])
+      request = Net::HTTP::Post.new(HEALTH_CHECK_PATH)
+
+      request.basic_auth(AUTORITHATION_PASSWORD, AUTORITHATION_LOGIN)
+      request.body = {number_of_hours: NUMBER_OF_HOURS}.to_json
+      request["Content-Type"] = "application/json"
+
+      response = http.request(request)
       Rails.logger.info("HealthCheck response code = #{response.code}")
-      raise CommandPostError, I18n.t('activerecord.errors.exceptions.retranslator.error_send_message',
-                                    host: connection_params[:host],
-                                    port: connection_params[:port],
-                                    path: path,
-                                    error: response.message) unless response.code == '200'
+      raise CommandPostError, I18n.t('activerecord.errors.exceptions.health_check.post_error',
+                                                                     host: connection_params[:host],
+                                                                     port: connection_params[:port],
+                                                                     path: path,
+                                                                     error: "#{response.code} - #{response.message}") unless response.code == '200'
       response
     end
 

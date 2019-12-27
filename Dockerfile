@@ -25,6 +25,8 @@ ENV APP_HOME /app
 COPY . $APP_HOME
 WORKDIR $APP_HOME
 
+RUN whenever --update-crontab
+
 # Настройка переменных окружения для production
 ENV RAILS_ENV=production \
     RACK_ENV=production \

@@ -152,6 +152,9 @@ ru:
           bad_argument: В конструктор сервиса передаётся один аргумент - port_type_arg, который может принимать значения :http, :tcp
           bring_range_of_diapason: Исчерпан диапазон номеров портов
       exceptions:
+        health_check:
+          post_error: "Не могу отправить сообщение программе MC. host: %{host}, port: %{port}, path: %{path}. Ошибка: %{error}"
+          program_type_error: Передан неверный тип программы. Эта функция работает только для mc
         program:
           decide_on_db_name_service:
             argument_error:
