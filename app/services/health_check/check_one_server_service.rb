@@ -16,7 +16,7 @@ module HealthCheck
     def initialize(program, hc_logger)
       @program = program
       @hc_logger = hc_logger
-      Raise ProgramTypeError, i18n.t('activerecord.errors.exceptions.health_check.program_type_error') unless program.program_type == 'mc'
+      Raise ProgramTypeError, I18n.t('activerecord.errors.exceptions.health_check.program_type_error') unless program.program_type == 'mc'
     end
 
     def call
