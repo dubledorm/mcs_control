@@ -1,3 +1,3 @@
 docker build . -t mcs_control
 docker tag mcs_control registry.infsphr.info/mcs_control:v2.0.4
-docker push registry.infsphr.info/mcs_control:v2.0.4
+docker push registry.infsphr.info/mcs_control:v2.0.10

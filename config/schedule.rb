@@ -19,12 +19,12 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :job_template, "sh ':job'"
+set :job_template, "sh -c ':job'"
 
 every 1.day, at: '7:00 am' do
   rake "health_request:do_request", :output => {:standard => "/dev/null 2>&1"}
 end
 
-every 1.hour, at: [8] do
+every 1.hour, at: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55] do
   rake "health_request:do_request", :output => {:standard => "/dev/null 2>&1"}
 end

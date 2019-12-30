@@ -8,7 +8,7 @@ RUN apk add --update tzdata && \
 
 
 # Установка в контейнер runtime-зависимостей приложения
-RUN apk add --update --virtual runtime-deps postgresql-client nodejs libffi-dev readline sqlite
+RUN apk add --update --virtual runtime-deps postgresql-client nodejs libffi-dev readline sqlite dcron
 
 # Соберем все во временной директории
 WORKDIR /tmp
@@ -36,4 +36,5 @@ ENV RAILS_ENV=production \
 EXPOSE 3000
 
 # Запуск по умолчанию сервера puma
-CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"] 
+#CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+ENTRYPOINT crond && bundle exec puma -C 'config/puma.rb'
