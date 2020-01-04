@@ -10,6 +10,24 @@ ActiveAdmin.register Retranslator do
     breadcrumbs
   end
 
+  show do
+    attributes_table do
+      row :port_from
+      row :port_to
+      row :replacement_port
+      row :active
+      row :admin_user
+      row :created_at
+      row :updated_at
+    end
+    if resource.active?
+      panel I18n.t('words.debug') do
+        render 'admin/shared/retranslator_trace', port: resource
+      end
+    end
+    active_admin_comments
+  end
+
 
   form title: Retranslator.model_name.human do |f|
     f.semantic_errors *f.object.errors.keys
