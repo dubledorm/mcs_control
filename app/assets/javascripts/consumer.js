@@ -12,5 +12,5 @@
 (function() {
     this.App || (this.App = {});
 
-    App.cable = ActionCable.createConsumer("ws://cable.example.com");
+    App.cable = ActionCable.createConsumer();
 }).call(this);

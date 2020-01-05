@@ -20,16 +20,19 @@
 
 
 $(function() {
+    alert('000000000000000');
     $('[data-channel-subscribe="Retranslator"]').each(function(index, element) {
         var $element = $(element),
             room_id = $element.data('room-id')
         messageTemplate = $('[data-role="message-template"]');
 
+        alert('11111111111');
+
         $element.animate({ scrollTop: $element.prop("scrollHeight")}, 1000)
 
         App.cable.subscriptions.create(
             {
-                channel: "Retranslator",
+                channel: "RetranslatorChannel",
                 room: "3001"
             },
             {
