@@ -28,4 +28,8 @@ module McsControl
       "#{datetime}, #{severity}: #{msg}\n"
     end
   end
+
+  config.after_initialize do
+    redis_init
+  end
 end
