@@ -247,6 +247,7 @@ ru:
   words:
     empty: ПУСТО
     back: Назад
+    debug: Трассировка
     delete: Удалить
     action: Действия
     admin: Административная панель

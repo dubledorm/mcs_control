@@ -21,3 +21,14 @@
 .gorizontal_field_group {
   display: inline-block;
 }
+
+.terminal_box {
+  background-color: black;
+  color: white;
+
+  width: 800px;
+  height: 600px;
+  border: 2px solid #E8C48F;
+  padding: 2px;
+  overflow: auto;
+}

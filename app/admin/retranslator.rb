@@ -22,7 +22,7 @@ ActiveAdmin.register Retranslator do
     end
     if resource.active?
       panel I18n.t('words.debug') do
-        render 'admin/shared/retranslator_trace', port: resource
+        render 'admin/shared/retranslator_trace', channel_name: resource.channel_name
       end
     end
     active_admin_comments

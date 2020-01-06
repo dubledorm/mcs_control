@@ -41,4 +41,14 @@ describe Retranslator do
       it { expect(Retranslator::has_free_port?).to eq(true) }
     end
   end
+
+  describe 'channel_name' do
+    let!(:retranslator) { FactoryGirl.create(:retranslator, port_from: 3001, port_to: 3002) }
+
+    it { expect(retranslator.channel_name).to eq('3001_3002') }
+
+    it { expect(Retranslator.channel_name_port_from('3001_3002')).to eq(3001) }
+    it { expect(Retranslator.channel_name_port_to('3001_3002')).to eq(3002) }
+    it { expect(Retranslator.all.by_channel('3001_3002').first).to eq(retranslator) }
+  end
 end

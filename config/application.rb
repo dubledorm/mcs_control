@@ -24,12 +24,12 @@ module McsControl
     config.active_record.observers = [ :program_observer, :port_observer ]
 
     config.logger = ActiveSupport::Logger.new("log/#{Rails.env}.log")
-     config.logger.formatter = proc do | severity, datetime, progname, msg |
+    config.logger.formatter = proc do | severity, datetime, progname, msg |
       "#{datetime}, #{severity}: #{msg}\n"
     end
-  end
 
-  config.after_initialize do
-    redis_init
+    config.after_initialize do
+      redis_init
+    end
   end
 end

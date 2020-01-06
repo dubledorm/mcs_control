@@ -43,5 +43,17 @@ module RetranslatorToolBox
     def user(replacement_port)
       Retranslator.all.active_by_replacement_port(replacement_port).first&.admin_user&.email
     end
+
+    def channel_name_port_from(channel_name)
+      channel_name.split('_')[0].to_i
+    end
+
+    def channel_name_port_to(channel_name)
+      channel_name.split('_')[1].to_i
+    end
+  end
+
+  def channel_name
+    "#{port_from}_#{port_to}"
   end
 end

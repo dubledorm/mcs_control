@@ -11,4 +11,7 @@ class Retranslator < ApplicationRecord
   scope :active_by_port_to, ->(port_to){ where(port_to: port_to, active: true) }
   scope :active_by_port_from, ->(port_from){ where(port_from: port_from, active: true) }
   scope :passive, ->{ where(active: [false, nil]) }
+
+  scope :by_channel, ->(channel_name){ where( port_from: channel_name_port_from(channel_name),
+                                              port_to: channel_name_port_to(channel_name)) }
 end
