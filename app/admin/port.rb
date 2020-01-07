@@ -17,6 +17,11 @@ ActiveAdmin.register Port do
       panel I18n.t('activerecord.models.retranslator.one') do
         render 'admin/shared/retranslator_warning', port: resource
       end
+
+      panel I18n.t('words.debug') do
+        render 'admin/shared/retranslator_trace',
+               channel_name: Retranslator::find_by_replacement_port(resource.number)&.channel_name
+      end
     end
     attributes_table do
       row :number
