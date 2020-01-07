@@ -51,6 +51,10 @@ module RetranslatorToolBox
     def channel_name_port_to(channel_name)
       channel_name.split('_')[1].to_i
     end
+
+    def channel_names
+      Retranslator.all.map{ |retranslator| "#{retranslator.port_from}_#{retranslator.port_to}" }
+    end
   end
 
   def channel_name

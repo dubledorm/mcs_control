@@ -51,4 +51,18 @@ describe Retranslator do
     it { expect(Retranslator.channel_name_port_to('3001_3002')).to eq(3002) }
     it { expect(Retranslator.all.by_channel('3001_3002').first).to eq(retranslator) }
   end
+
+  describe 'channel_names' do
+
+    context 'when retranslator does not exist' do
+      it { expect(Retranslator.channel_names).to eq([]) }
+    end
+
+    context 'when retranslators exist' do
+      let!(:retranslator1) { FactoryGirl.create(:retranslator, port_from: 3001, port_to: 3002) }
+      let!(:retranslator2) { FactoryGirl.create(:retranslator, port_from: 3003, port_to: 3004) }
+
+      it { expect(Retranslator.channel_names).to eq(%w(3001_3002 3003_3004)) }
+    end
+  end
 end
