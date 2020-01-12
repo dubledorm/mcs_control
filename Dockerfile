@@ -18,7 +18,7 @@ RUN apk add --virtual build-deps build-base openssl-dev postgresql-dev libc-dev 
     bundle install --jobs=2 && \
     apk del build-deps
 
-# RAILS_ENV=production bundle exec ./bin/rake assets:precompile && \
+#RUN RAILS_ENV=production bundle exec ./bin/rake assets:precompile
 
 # Копирование кода приложения в контейнер
 ENV APP_HOME /app
@@ -37,4 +37,4 @@ EXPOSE 3000
 
 # Запуск по умолчанию сервера puma
 #CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
-ENTRYPOINT crond && bundle exec puma -C 'config/puma.rb'
+ENTRYPOINT crond && bundle exec 'rake redis_subscribe:redis &' && bundle exec puma -C 'config/puma.rb'
