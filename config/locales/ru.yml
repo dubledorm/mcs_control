@@ -169,6 +169,9 @@ ru:
             argument_error:
               database_name: 'Не заполнено имя базы данных'
               database_user_name: 'Не заполнено имя пользователя базы данных (Instance.db_user_name)'
+          backup:
+            no_database_error: "Для программы %{program_name} не требуется базы данных. Бэкап сделать нельзя"
+            run_backup_error: "Ошибка при выполнении команды pg_dump. Команда %{cmd} не выполнена"
         instance:
           decide_on_db_user_service:
             argument_error:
