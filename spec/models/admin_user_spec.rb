@@ -12,6 +12,7 @@ describe AdminUser do
     it {should have_many(:instances)}
     it {should have_many(:programs)}
     it {should have_many(:retranslators)}
+    it {should have_many(:stored_files)}
   end
 
   describe '#instances' do

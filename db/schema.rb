@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_12_192656) do
+ActiveRecord::Schema.define(version: 2020_01_12_195657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,6 +147,22 @@ ActiveRecord::Schema.define(version: 2020_01_12_192656) do
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
   end
 
+  create_table "stored_files", force: :cascade do |t|
+    t.string "description"
+    t.string "filename", null: false
+    t.string "content_type", null: false
+    t.string "state", null: false
+    t.bigint "admin_user_id", null: false
+    t.bigint "program_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["admin_user_id"], name: "index_stored_files_on_admin_user_id"
+    t.index ["program_id"], name: "index_stored_files_on_program_id"
+    t.index ["state"], name: "index_stored_files_on_state"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "programs", "instances"
+  add_foreign_key "stored_files", "admin_users"
+  add_foreign_key "stored_files", "programs"
 end
