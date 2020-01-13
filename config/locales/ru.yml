@@ -184,7 +184,7 @@ ru:
               database_user_name: 'Не заполнено имя пользователя базы данных (Instance.db_user_name)'
           backup:
             no_database_error: "Для программы %{program_name} не требуется базы данных. Бэкап сделать нельзя"
-            run_backup_error: "Ошибка при выполнении команды pg_dump. Команда %{cmd} не выполнена"
+            run_backup_error: "Ошибка при выполнении команды pg_dump. Команда %{cmd} не выполнена. Ошибка: %{error}"
         instance:
           decide_on_db_user_service:
             argument_error:
@@ -272,6 +272,7 @@ ru:
   messages:
     retranslator_port: На этот порт надо настраивать MilurMeterTool и пр.
     backup_file_description: "Резервная копия базы данных для %{program_name} на время %{dt}"
+    run_backup: 'Создание backup запущено. Вы сможете найти результат работы в Сохранённых файлах'
   menu:
     retranslate: Ретранслятор
     resources: Ресурсы
@@ -300,3 +301,4 @@ ru:
       state:
         exists: Сохранён
         deleted: Удалён
+        fail: Ошибка

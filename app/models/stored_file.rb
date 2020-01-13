@@ -1,5 +1,5 @@
 class StoredFile < ApplicationRecord
-  STORED_FILE_STATES = %w(exists deleted).freeze
+  STORED_FILE_STATES = %w(exists deleted fail).freeze
   STORED_FILE_CONTENT_TYPE = %w(backup log).freeze
 
   belongs_to :program

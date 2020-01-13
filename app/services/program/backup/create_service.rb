@@ -13,9 +13,13 @@ class Program
       def call
         raise NotDatabaseError, I18n.t('activerecord.errors.exceptions.program.backup.no_database_error',
                                        program_name: program.identification_name) unless program.need_database?
-        tmp_file = create_backup
+        begin
+          tmp_file = create_backup
 
-        save_backup_to_store(tmp_file)
+          save_backup_to_store(tmp_file)
+        rescue RunBackupError => e
+          save_error_to_store(e.message + " Error code = #{$?}")
+        end
       end
 
       private
@@ -28,10 +32,10 @@ class Program
         host = config[Rails.env]['host']
         host = 'localhost' if host.blank?
         cmd = "pg_dump -F c -v -U #{program.instance.db_user_name.downcase} -h #{host} #{program.database_name} -f #{tmp_file.path}"
-        result = system(cmd)
+        stdout_result = `#{cmd} 2>&1`
 
         raise RunBackupError, I18n.t('activerecord.errors.exceptions.program.backup.run_backup_error',
-                                     cmd: cmd) if result.nil? || result == false
+                                     cmd: cmd, error: stdout_result) unless $?.success?
         tmp_file
       end
 
@@ -49,6 +53,22 @@ class Program
                                            content_type: :backup
           )
           stored_file.file.attach(io: File.open(tmp_file.path), filename: file_name)
+        end
+
+        stored_file
+      end
+
+      def save_error_to_store(message)
+        stored_file = nil
+        file_name = bkp_file_name
+        ActiveRecord::Base.transaction do
+          stored_file = StoredFile.create!(program: program,
+                                           admin_user: user,
+                                           filename: file_name,
+                                           description: message,
+                                           state: :fail,
+                                           content_type: :backup
+          )
         end
 
         stored_file

@@ -12,6 +12,6 @@ ActiveAdmin.register StoredFile do
   end
 
   action_item :download, only: :show  do
-    link_to I18n.t('actions.program.download'), rails_blob_path(resource.file, disposition: "attachment")
+    link_to I18n.t('actions.program.download'), rails_blob_path(resource.file, disposition: "attachment") if resource.file.attached?
   end
 end

@@ -96,8 +96,8 @@ ActiveAdmin.register Program do
   member_action :database_backup, method: :put do
     begin
       test_point_exception
-      Program::Backup::CreateService.new(resource, current_user).call
-      redirect_to admin_instance_program_path(id: resource.id, instance_id: resource.instance_id), notice: "Completed!"
+      DbBackupJob.perform_later(resource, current_user)
+      redirect_to admin_instance_program_path(id: resource.id, instance_id: resource.instance_id), notice: I18n.t('messages.run_backup')
     rescue StandardError => e
       flash[:error] = I18n.t('activerecord.errors.messages.unknown_resource_exception', errors: e.message)
       redirect_to admin_instance_program_path(id: resource.id, instance_id: resource.instance_id), error: e.message

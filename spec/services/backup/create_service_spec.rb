@@ -18,6 +18,7 @@ RSpec.describe Program::Backup::CreateService do
     end
 
     it { expect{ described_class.new(@program, admin_user).call }.to_not raise_exception }
+    it { expect( described_class.new(@program, admin_user).call.state ).to eq('exists') }
     it { expect( described_class.new(@program, admin_user).call.file.attached? ).to eq(true) }
   end
 
@@ -31,7 +32,7 @@ RSpec.describe Program::Backup::CreateService do
 
     it 'should generate exception' do
       allow_any_instance_of(Instance).to receive(:db_user_name).and_return('')
-      expect{ described_class.new(@program, admin_user).call }.to raise_exception(Program::Backup::CreateService::RunBackupError)
+      expect(described_class.new(@program, admin_user).call.state).to eq('fail')
     end
   end
 end
