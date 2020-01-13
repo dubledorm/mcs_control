@@ -37,17 +37,25 @@ class Program
 
       def save_backup_to_store(tmp_file)
         stored_file = nil
+        file_name = bkp_file_name
         ActiveRecord::Base.transaction do
           stored_file = StoredFile.create!(program: program,
                                            admin_user: user,
-                                           filename: "#{program.database_name}.sql",
+                                           filename: file_name,
+                                           description: I18n.t('messages.backup_file_description',
+                                                               program_name: program.identification_name,
+                                                               dt: Time.current),
                                            state: :exists,
                                            content_type: :backup
           )
-          stored_file.file.attach(io: File.open(tmp_file.path), filename: File.basename(tmp_file.path))
+          stored_file.file.attach(io: File.open(tmp_file.path), filename: file_name)
         end
 
         stored_file
+      end
+
+      def bkp_file_name
+        "#{program.database_name}_#{Time.current}.sql"
       end
     end
   end
