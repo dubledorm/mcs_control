@@ -30,7 +30,7 @@ class Instance
       end
 
       def create_base_user_name
-        instance.name.gsub('-', '_')
+        instance.name.gsub('-', '_').downcase
       end
     end
   end

@@ -25,7 +25,9 @@ class Program
       def create_backup
         tmp_file = FileTools::create_tmp_file
         config   = Rails.configuration.database_configuration
-        cmd = "pg_dump -F c -v -U #{program.instance.db_user_name} -h #{config[Rails.env]['host']} #{program.database_name} -f #{tmp_file.path}"
+        host = config[Rails.env]['host']
+        host = 'localhost' if host.blank?
+        cmd = "pg_dump -F c -v -U #{program.instance.db_user_name.downcase} -h #{host} #{program.database_name} -f #{tmp_file.path}"
         result = system(cmd)
 
         raise RunBackupError, I18n.t('activerecord.errors.exceptions.program.backup.run_backup_error',

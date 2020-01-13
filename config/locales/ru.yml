@@ -196,6 +196,7 @@ ru:
       update_nginx: Обновить Nginx
     program:
       add_port: Добавить порт
+      database_backup: Сделать backup базы
     port:
       retranslator: Ретранслятор
     admin_user:
