@@ -14,11 +14,12 @@ class Program
         raise NotDatabaseError, I18n.t('activerecord.errors.exceptions.program.backup.no_database_error',
                                        program_name: program.identification_name) unless program.need_database?
         begin
+          stored_file_record = create_stored_file_record
           tmp_file = create_backup
 
-          save_backup_to_store(tmp_file)
+          save_backup_to_store(tmp_file, stored_file_record)
         rescue RunBackupError => e
-          save_error_to_store(e.message + " Error code = #{$?}")
+          save_error_to_store(e.message + " Error code = #{$?}", stored_file_record)
         end
       end
 
@@ -39,39 +40,33 @@ class Program
         tmp_file
       end
 
-      def save_backup_to_store(tmp_file)
-        stored_file = nil
+      def create_stored_file_record
         file_name = bkp_file_name
-        ActiveRecord::Base.transaction do
-          stored_file = StoredFile.create!(program: program,
-                                           admin_user: user,
-                                           filename: file_name,
-                                           description: I18n.t('messages.backup_file_description',
-                                                               program_name: program.identification_name,
-                                                               dt: Time.current),
-                                           state: :exists,
-                                           content_type: :backup
-          )
-          stored_file.file.attach(io: File.open(tmp_file.path), filename: file_name)
-        end
-
-        stored_file
+        StoredFile.create!(program: program,
+                           admin_user: user,
+                           filename: file_name,
+                           description: I18n.t('messages.backup_file_description',
+                                               program_name: program.identification_name,
+                                               dt: Time.current),
+                           state: :creating,
+                           content_type: :backup
+        )
       end
 
-      def save_error_to_store(message)
-        stored_file = nil
-        file_name = bkp_file_name
+      def save_backup_to_store(tmp_file, stored_file_record)
         ActiveRecord::Base.transaction do
-          stored_file = StoredFile.create!(program: program,
-                                           admin_user: user,
-                                           filename: file_name,
-                                           description: message,
-                                           state: :fail,
-                                           content_type: :backup
-          )
+          stored_file_record.state = :exists
+          stored_file_record.file.attach(io: File.open(tmp_file.path), filename: stored_file_record.filename)
+          stored_file_record.save
         end
+        stored_file_record
+      end
 
-        stored_file
+      def save_error_to_store(message, stored_file_record)
+        stored_file_record.state = :fail
+        stored_file_record.description = message
+        stored_file_record.save
+        stored_file_record
       end
 
       def bkp_file_name

@@ -299,6 +299,7 @@ ru:
         backup: backup
         log: лог. файл
       state:
+        creating: Создаётся
         exists: Сохранён
         deleted: Удалён
         fail: Ошибка
