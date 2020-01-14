@@ -3,6 +3,8 @@ ActiveAdmin.register StoredFile do
   menu parent: :resources
   decorate_with StoredFileDecorator
   config.filters = false
+  actions :index, :show, :new, :create, :destroy, :download
+
 
   breadcrumb do
     breadcrumbs = [ link_to(I18n.t('words.admin'), admin_root_path()) ]

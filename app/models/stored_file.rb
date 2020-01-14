@@ -11,4 +11,6 @@ class StoredFile < ApplicationRecord
   validates :content_type, inclusion: { in: STORED_FILE_CONTENT_TYPE }
 
   has_one_attached :file
+
+  scope :old_files, ->{ where('created_at < ?', Date.current - 3.days) }
 end
