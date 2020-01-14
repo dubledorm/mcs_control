@@ -13,4 +13,5 @@ class AdminUser < ApplicationRecord
   has_many :admin_users, through: :roles, source: :resource, source_type: 'AdminUser'
 
   has_many :retranslators
+  has_many :stored_files
 end

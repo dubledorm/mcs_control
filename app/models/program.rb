@@ -15,6 +15,7 @@ class Program < ApplicationRecord
 
   belongs_to :instance
   has_many :ports, dependent: :destroy
+  has_many :stored_files, dependent: :destroy
 
   validates :database_name, uniqueness: true, allow_nil: true, format: { with: /\A[a-zA-Z][a-zA-Z_\d]+\z/}
   validates :identification_name, presence: true, uniqueness: true, format: { with: /\A[a-zA-Z\-\d]+\z/}

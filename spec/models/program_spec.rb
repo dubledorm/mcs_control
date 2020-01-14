@@ -43,6 +43,7 @@ describe Program do
     # Relationships
     it {should belong_to(:instance)}
     it {should have_many(:ports)}
+    it {should have_many(:stored_files)}
   end
 
   shared_examples 'identification_name right' do

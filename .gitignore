@@ -30,6 +30,9 @@
 yarn-debug.log*
 .yarn-integrity
 
+/file_storage/*
+
+
 
 /.idea
 /.idea/*

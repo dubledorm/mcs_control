@@ -22,6 +22,11 @@ ActiveAdmin.register Program do
             method: :put if program_can_collate_with_db?
   end
 
+  action_item :database_backup, only: :show do
+    link_to I18n.t('actions.program.database_backup'), database_backup_admin_instance_program_path(id: resource.id, instance_id: resource.instance_id),
+            method: :put if resource.need_database?
+  end
+
   show title: :identification_name do
     attributes_table do
       row :identification_name
@@ -82,6 +87,17 @@ ActiveAdmin.register Program do
       test_point_exception
       Program::DatabaseControl::CollateDcsDevWithDbService.new(resource).call
       redirect_to admin_instance_program_path(id: resource.id, instance_id: resource.instance_id), notice: "Checked!"
+    rescue StandardError => e
+      flash[:error] = I18n.t('activerecord.errors.messages.unknown_resource_exception', errors: e.message)
+      redirect_to admin_instance_program_path(id: resource.id, instance_id: resource.instance_id), error: e.message
+    end
+  end
+
+  member_action :database_backup, method: :put do
+    begin
+      test_point_exception
+      DbBackupJob.perform_later(resource, current_user)
+      redirect_to admin_instance_program_path(id: resource.id, instance_id: resource.instance_id), notice: I18n.t('messages.run_backup')
     rescue StandardError => e
       flash[:error] = I18n.t('activerecord.errors.messages.unknown_resource_exception', errors: e.message)
       redirect_to admin_instance_program_path(id: resource.id, instance_id: resource.instance_id), error: e.message
