@@ -29,10 +29,8 @@ class Program
 
       def create_backup
         tmp_file = FileTools::create_tmp_file
-        config   = Rails.configuration.database_configuration
-        host = config[Rails.env]['host']
-        host = 'localhost' if host.blank?
-        cmd = "pg_dump -F c -v -U #{program.instance.db_user_name.downcase} -h #{host} #{program.database_name} -f #{tmp_file.path}"
+        #cmd = "pg_dump -F c -v --dbname=#{pg_dump_dbname} -f #{tmp_file.path}"
+        cmd = pg_dump_cmd(tmp_file)
         stdout_result = `#{cmd} 2>&1`
 
         raise RunBackupError, I18n.t('activerecord.errors.exceptions.program.backup.run_backup_error',
@@ -71,6 +69,28 @@ class Program
 
       def bkp_file_name
         "#{program.database_name}_#{Time.current}.sql"
+      end
+
+      def pg_dump_dbname
+        user_name = program.instance.db_user_name.downcase
+        password = program.instance.db_user_password
+        host = get_database_host
+        port = get_database_port
+        db_name = program.database_name
+        "postgresql://#{user_name}:#{password}@#{host}:#{port}/#{db_name}"
+      end
+
+      def pg_dump_cmd(tmp_file)
+        user_name = program.instance.db_user_name.downcase
+        password = program.instance.db_user_password
+        host = get_database_host
+        db_name = program.database_name
+        cmd = "export PGPASSWORD='#{password}'"
+        cmd += ' && '
+        cmd += "pg_dump -F c -v -U #{user_name} -h #{host} #{db_name} -f #{tmp_file.path}"
+        cmd += ' && '
+        cmd += "export -n PGPASSWORD"
+        cmd
       end
     end
   end

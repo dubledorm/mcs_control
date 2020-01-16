@@ -37,4 +37,5 @@ EXPOSE 3000
 
 # Запуск по умолчанию сервера puma
 #CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
-ENTRYPOINT crond && bundle exec 'rake redis_subscribe:redis &' && bundle exec puma -C 'config/puma.rb'
+#ENTRYPOINT crond && bundle exec 'rake redis_subscribe:redis &' && bundle exec puma -C 'config/puma.rb'
+CMD crond && bundle exec 'rake redis_subscribe:redis &' && bundle exec puma -C 'config/puma.rb'
