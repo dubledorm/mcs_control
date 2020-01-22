@@ -14,11 +14,13 @@ class Role < ApplicationRecord
   # Все права от Instance, т.е. права раздаются на Instance и действуют на всё, что под ним.
   # manager - просматривать, включать ретранслятор
   # editor - просматривать, добавлять порты, добавлять mc
-  ROLE_NAMES = %w( manager editor )
+  # programmer - делать и скачивать бэкапы
+  ROLE_NAMES = %w( manager editor programmer)
   validates :name, presence: true, inclusion: { in: ROLE_NAMES }
 
   scopify
 
   scope :managers_only, ->{ where(name: 'manager') }
+  scope :programmer_only, ->{ where(name: 'programmer') }
   scope :instances_only, ->{ where(resource_type: 'Instance') }
 end

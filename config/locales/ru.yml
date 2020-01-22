@@ -284,6 +284,7 @@ ru:
     role:
       manager: Мэнеджер
       editor: Редактор
+      programmer: Программист
     program_type:
       'dcs-dev': 'Приборный модуль'
       'dcs-cli': 'Клиентский модуль'
