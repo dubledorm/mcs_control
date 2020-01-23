@@ -60,7 +60,6 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'rack_session_access'
   gem 'timecop'
-  gem 'awesome_print'
 end
 
 
@@ -93,6 +92,7 @@ gem 'net-scp'
 gem 'net-sftp'
 
 gem 'whenever', require: false
+gem 'awesome_print'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

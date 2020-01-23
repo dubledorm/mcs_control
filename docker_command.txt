@@ -1,6 +1,6 @@
 docker build . -t mcs_control
-docker tag mcs_control registry.infsphr.info/mcs_control:v2.0.4
-docker push registry.infsphr.info/mcs_control:v2.0.10
+docker tag mcs_control registry.infsphr.info/mcs_control:v2.2.4
+docker push registry.infsphr.info/mcs_control:v2.2.4
 
 --env DATABASE_URL='postgres://azirumga@10.50.0.84/mcs_control_development'
 
