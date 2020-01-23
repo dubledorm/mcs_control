@@ -1,6 +1,6 @@
 module ApplicationHelper
 
-  REGEXP_DATABASE_URL = /\@(?<host>[a-zA-Z_\d\.]+)\//
+  REGEXP_DATABASE_URL = /(?<protocol>[a-zA-Z_\d\.]+)\:\/\/(?<username>[a-zA-Z_\d]+)\:(?<password>[a-zA-Z_\d]+)\@(?<host>[a-zA-Z_\d\.]+)\//
 
   def str_to_sym(value_str)
     value_str.parameterize.underscore.to_sym
@@ -50,6 +50,22 @@ module ApplicationHelper
     host = REGEXP_DATABASE_URL.match(ENV['DATABASE_URL'])['host'] if host.blank?  && !ENV['DATABASE_URL'].blank?
     host = 'localhost' if host.blank?
     host
+  end
+
+  def get_database_user
+    config   = Rails.configuration.database_configuration
+    username = config[Rails.env]['admin_username']
+    username = REGEXP_DATABASE_URL.match(ENV['DATABASE_URL'])['username'] if username.blank?  && !ENV['DATABASE_URL'].blank?
+    raise StandardError, 'Could not find database username' if username.blank?
+    username
+  end
+
+  def get_database_password
+    config   = Rails.configuration.database_configuration
+    password = config[Rails.env]['admin_password']
+    password = REGEXP_DATABASE_URL.match(ENV['DATABASE_URL'])['password'] if password.nil?  && !ENV['DATABASE_URL'].blank?
+    raise StandardError, 'Could not find database password' if password.nil?
+    password
   end
 
   def get_database_port

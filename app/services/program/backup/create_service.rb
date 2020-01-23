@@ -81,8 +81,8 @@ class Program
       end
 
       def pg_dump_cmd(tmp_file)
-        user_name = 'mcs_prod_username' #program.instance.db_user_name.downcase
-        password = 'iselPodij' #program.instance.db_user_password
+        user_name = get_database_user #program.instance.db_user_name.downcase
+        password = get_database_password #program.instance.db_user_password
         host = get_database_host
         db_name = program.database_name
         cmd = "export PGPASSWORD='#{password}'"

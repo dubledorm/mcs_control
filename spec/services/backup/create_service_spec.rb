@@ -30,9 +30,10 @@ RSpec.describe Program::Backup::CreateService do
       @program = Program::Factory::build_and_create_db(@instance, 'mc', true, '')
     end
 
-    it 'should generate exception' do
-      allow_any_instance_of(Instance).to receive(:db_user_name).and_return('')
-      expect(described_class.new(@program, admin_user).call.state).to eq('fail')
-    end
+    # Эта проверка не нужна, т.к. теперь операция выполняется от имени общего пользователя, а не по каждой базе
+    # it 'should generate exception' do
+    #   allow_any_instance_of(Instance).to receive(:db_user_name).and_return('')
+    #   expect(described_class.new(@program, admin_user).call.state).to eq('fail')
+    # end
   end
 end
