@@ -1,13 +1,13 @@
 require 'net/http'
 require 'json'
+require 'nginx_config'
 
 module HealthCheck
   class CheckOneServerService
 
-    HEALTH_CHECK_PATH = '/mc/api/v1/health_check'
-    HOST_NAME = 'infsphr.info'
-    AUTORITHATION_PASSWORD = 'health_check'
-    AUTORITHATION_LOGIN = 'Monitoring@2019'
+    HEALTH_CHECK_PATH = '/mc/api/v1/health_check'.freeze
+    AUTORITHATION_PASSWORD = 'health_check'.freeze
+    AUTORITHATION_LOGIN = 'Monitoring@2019'.freeze
     NUMBER_OF_HOURS = 24
 
     class CommandPostError < StandardError; end
@@ -16,6 +16,7 @@ module HealthCheck
     def initialize(program, hc_logger)
       @program = program
       @hc_logger = hc_logger
+      @host_name = NginxConfig.config[:server_name]
       Raise ProgramTypeError, I18n.t('activerecord.errors.exceptions.health_check.program_type_error') unless program.program_type == 'mc'
     end
 
@@ -32,11 +33,11 @@ module HealthCheck
     end
 
     private
-    attr_accessor :program, :hc_logger
+    attr_accessor :program, :hc_logger, :host_name
 
 
     def get_program_host_port
-      { host: HOST_NAME,
+      { host: @host_name,
         port: program.ports.http.first&.number
       }
     end
