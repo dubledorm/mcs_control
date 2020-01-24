@@ -2,6 +2,12 @@ namespace :redis_subscribe do
   desc 'Читать trace канала от ретранслятора'
   task :redis => [:environment] do |t, args|
 
+    if $redis.nil?
+      Rails.logger.error('Could not subscribe on redis channel. The $redis was not defined')
+      ap('Could not subscribe on redis channel. The $redis was not defined')
+      return
+    end
+
     Rails.logger.debug("Subscribe on redis channels: #{ Retranslator.channel_names }")
     $redis.subscribe( Retranslator.channel_names ) do |on|
       on.message do |channel, message|

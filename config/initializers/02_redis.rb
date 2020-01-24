@@ -9,5 +9,10 @@ def redis_connection_options
 end
 
 def redis_init
+  if ENV['REDIS_CLOUD_URL'].blank?
+    Rails.logger.error('Could not find redis. You have to set enviroment variable REDIS_CLOUD_URL')
+    return
+  end
   $redis =  Redis.new(url: ENV['REDIS_CLOUD_URL'])
+  Rails.logger.error('Could not connect to redis by url ' + ENV['REDIS_CLOUD_URL']) if $redis.nil?
 end
