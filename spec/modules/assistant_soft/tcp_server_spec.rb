@@ -1,6 +1,7 @@
 require 'rails_helper'
 require 'socket'
 require 'support/tcp_server_support'
+require 'support/redis_support'
 
 describe AssistantSoft::TcpServer do
 
@@ -69,17 +70,20 @@ describe AssistantSoft::TcpServer do
 
     context 'when tcp_server started' do
       include TcpServerSupport
+      include RedisSupport
 
       let!(:retranslator) {FactoryGirl.create :retranslator, port_from: 31022, port_to: 31023}
       let!(:retranslator1) {FactoryGirl.create :retranslator, port_from: 31024, port_to: 31025}
 
 
       before :all do
+        redis_start
         tcp_server_start
       end
 
       after :all do
         tcp_server_stop
+        redis_stop
       end
 
       it { expect{ described_class.new.switch_retranslator_on(retranslator) }.to_not raise_error }
