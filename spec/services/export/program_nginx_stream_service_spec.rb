@@ -65,7 +65,8 @@ RSpec.describe Program::Export::NginxStreamService do
 
       before :each do
         allow(NginxConfig).to receive(:config).
-            and_return( { server_address: SERVER_ADDRESS, server_name: 'infspr.info' } )
+            and_return( { server_address: SERVER_ADDRESS, server_name: 'infspr.info',
+                          http_ports_range: [[30000, 31000]], stream_ports_range: [[31001, 64000]] } )
       end
 
 
@@ -116,7 +117,8 @@ RSpec.describe Program::Export::NginxStreamService do
 
       before :each do
         allow(NginxConfig).to receive(:config).
-            and_return( { server_address: SERVER_ADDRESS, server_name: 'infspr.info' } )
+            and_return( { server_address: SERVER_ADDRESS, server_name: 'infspr.info',
+                          http_ports_range: [[30000, 31000]], stream_ports_range: [[31001, 64000]] } )
       end
 
 
@@ -155,7 +157,8 @@ RSpec.describe Program::Export::NginxStreamService do
 
       before :each do
         allow(NginxConfig).to receive(:config).
-            and_return( { server_address: SERVER_ADDRESS, server_name: 'infspr.info' } )
+            and_return( { server_address: SERVER_ADDRESS, server_name: 'infspr.info',
+                          http_ports_range: [[30000, 31000]], stream_ports_range: [[31001, 64000]] } )
       end
 
 

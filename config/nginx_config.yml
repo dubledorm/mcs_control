@@ -1,11 +1,23 @@
 development:
-  server_address: ['192.168.100.11', '192.168.100.12', '192.168.100.14', '192.168.100.24']
-  server_name: infsphr.info
-  nginx_server_host: localhost
-  nginx_server_login: azirumga
-  nginx_server_password: iselPodij
-  nginx_tcp_config_path: /Users/azirumga/Dev/stream
-  nginx_http_config_path: /Users/azirumga/Dev/http
+  server_address: <%= ENV['NGCFG_server_address'] %>
+  server_name: <%= ENV['NGCFG_server_name'] %>
+  nginx_server_host: <%= ENV['NGCFG_nginx_server_host'] %>
+  nginx_server_login: <%= ENV['NGCFG_nginx_server_login'] %>
+  nginx_server_password: <%= ENV['NGCFG_nginx_server_password'] %>
+  nginx_tcp_config_path: <%= ENV['NGCFG_nginx_tcp_config_path'] %>
+  nginx_http_config_path: <%= ENV['NGCFG_nginx_http_config_path'] %>
+  http_ports_range: <%= ENV['NGCFG_http_ports_range'] %>
+  stream_ports_range: <%= ENV['NGCFG_stream_ports_range'] %>
+
+#  server_address: ['192.168.100.11', '192.168.100.12', '192.168.100.14', '192.168.100.24']
+#  server_name: infsphr.info
+#  nginx_server_host: localhost
+#  nginx_server_login: azirumga
+#  nginx_server_password: iselPodij
+#  nginx_tcp_config_path: /Users/azirumga/Dev/stream
+#  nginx_http_config_path: /Users/azirumga/Dev/http
+#  http_ports_range: [[30000, 31000]]
+#  stream_ports_range: [[31001, 64000]]
 
 test:
   server_address: ['192.168.100.11', '192.168.100.12', '192.168.100.14', '192.168.100.24']
@@ -15,6 +27,8 @@ test:
   nginx_server_password: iselPodij
   nginx_tcp_config_path: /Users/azirumga/Test/stream
   nginx_http_config_path: /Users/azirumga/Test/http
+  http_ports_range: [[30000, 31000]]
+  stream_ports_range: [[31001, 64000]]
 
 production:
   server_address: ['192.168.100.11', '192.168.100.12', '192.168.100.14', '192.168.100.24', '192.168.100.20', '192.168.100.23']

@@ -12,7 +12,8 @@ class Port
     end
 
     def call
-      return Port::RANGE_OF_NUMBER[@port_type][:left_range] if @ports.size == 0
+      #return Port::RANGE_OF_NUMBER[@port_type][:left_range] if @ports.size == 0
+      return NginxConfig::first_port(@port_type) if @ports.size == 0
 
       new_port = find_empty_place
 
@@ -25,8 +26,11 @@ class Port
 
 
     def find_empty_place # возвращает свободное место среди уже выделенных портов, или nil, если такого нет
-      empty_places = (Port::RANGE_OF_NUMBER[@port_type][:left_range]..Port::RANGE_OF_NUMBER[@port_type][:right_range]).to_a - ports
-      return empty_places[0] if empty_places.size > 0
+      #empty_places = (Port::RANGE_OF_NUMBER[@port_type][:left_range]..Port::RANGE_OF_NUMBER[@port_type][:right_range]).to_a - ports
+      NginxConfig::ranges(@port_type).each do |range|
+        empty_places = (range[0]..range[1]).to_a - ports
+        return empty_places[0] if empty_places.size > 0
+      end
       nil
     end
   end

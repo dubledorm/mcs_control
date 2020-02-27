@@ -5,6 +5,7 @@ module SshTools
 
   def self.scp_tmp_file(dest_host, dest_host_user, dest_host_password, dest_file_path, src_file_name)
     Rails.logger.info 'Before Sent file ' + src_file_name + ' to destination host ' + dest_host +
+    ' dest_host_user = ' + dest_host_user +
     ' dest_host_password = ' + dest_host_password + ' dest_file_path = ' + dest_file_path
 
     Net::SCP.start(dest_host, dest_host_user, { password: dest_host_password } ) do |scp|
@@ -23,8 +24,10 @@ module SshTools
   end
 
   def self.remote_exec(host, host_user, host_password, command)
-    Rails.logger.info 'SSH_TOOLS Remote_Exec' + ' host ' + host + ' host_password = ' +
-                          host_password + ' command = ' + command
+    Rails.logger.info 'SSH_TOOLS Remote_Exec' + ' host ' + host +
+                          ' host_user = ' + host_user +
+                          ' host_password = ' + host_password +
+                          ' command = ' + command
     result = nil
     Net::SSH.start( host, host_user, { password: host_password }  ) do| ssh |
       result = ssh.exec! command

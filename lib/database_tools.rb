@@ -15,6 +15,7 @@ module DatabaseTools
   end
 
   def drop_database( connection, database_name )
+    connection.execute("select pg_terminate_backend(pid) from pg_stat_activity where datname = '#{database_name}'")
     connection.execute("drop database #{database_name}")
     Rails.logger.info 'Deleted database ' + database_name
   end

@@ -45,25 +45,31 @@ module ApplicationHelper
   end
 
   def get_database_host
+    host = REGEXP_DATABASE_URL.match(ENV['DATABASE_URL'])['host'] unless ENV['DATABASE_URL'].blank?
+    return host unless host.nil?
+
     config   = Rails.configuration.database_configuration
     host = config[Rails.env]['host']
-    host = REGEXP_DATABASE_URL.match(ENV['DATABASE_URL'])['host'] if host.blank?  && !ENV['DATABASE_URL'].blank?
     host = 'localhost' if host.blank?
     host
   end
 
   def get_database_user
+    username = REGEXP_DATABASE_URL.match(ENV['DATABASE_URL'])['username'] unless ENV['DATABASE_URL'].blank?
+    return username unless username.nil?
+
     config   = Rails.configuration.database_configuration
     username = config[Rails.env]['admin_username']
-    username = REGEXP_DATABASE_URL.match(ENV['DATABASE_URL'])['username'] if username.blank?  && !ENV['DATABASE_URL'].blank?
     raise StandardError, 'Could not find database username' if username.blank?
     username
   end
 
   def get_database_password
+    password = REGEXP_DATABASE_URL.match(ENV['DATABASE_URL'])['password'] unless ENV['DATABASE_URL'].blank?
+    return password unless password.nil?
+
     config   = Rails.configuration.database_configuration
     password = config[Rails.env]['admin_password']
-    password = REGEXP_DATABASE_URL.match(ENV['DATABASE_URL'])['password'] if password.nil?  && !ENV['DATABASE_URL'].blank?
     raise StandardError, 'Could not find database password' if password.nil?
     password
   end

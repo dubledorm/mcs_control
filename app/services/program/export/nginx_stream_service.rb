@@ -4,8 +4,6 @@ class Program
 
       def initialize(program)
         @program = program
-      #  @retranslator_active = retranslator_active?
-      #  @retranslator_port = retranslator_port.to_i
       end
 
       def call
@@ -41,7 +39,8 @@ class Program
       private
 
         def port_in_range?(port)
-          Port::RANGE_OF_NUMBER[:tcp][:left_range] <= port.number && Port::RANGE_OF_NUMBER[:tcp][:right_range] >= port.number
+          #Port::RANGE_OF_NUMBER[:tcp][:left_range] <= port.number && Port::RANGE_OF_NUMBER[:tcp][:right_range] >= port.number
+          NginxConfig.config[:stream_ports_range].any?{ |range| range[0] <= port.number && range[1] >= port.number}
         end
 
         def select_template

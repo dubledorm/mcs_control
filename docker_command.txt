@@ -1,6 +1,6 @@
 docker build . -t mcs_control
-docker tag mcs_control registry.infsphr.info/mcs_control:v2.2.4
-docker push registry.infsphr.info/mcs_control:v2.2.4
+docker tag mcs_control registry.infsphr.info/mcs_control:v2.2.7RES
+docker push registry.infsphr.info/mcs_control:v2.2.7RES
 
 
 docker run --name redis -p 6379:6379 -d redis

@@ -18,16 +18,27 @@ class Program
                                      'collate_dcs_dev_with_db_service.not_found_op') if program_op.nil?
 
         # Получаем список портов в Инфосфера
-        config   = Rails.configuration.database_configuration
-        Rails.logger.debug "get_there_object_list host = #{config[Rails.env]['host']} port = #{config[Rails.env]['port']}" +
-                               " database_name = #{program_op.database_name}" +
-                               " user_name = #{config[Rails.env]["admin_username"]} password = #{config[Rails.env]["admin_password"]}"
+        user_name = get_database_user #program.instance.db_user_name.downcase
+        password = get_database_password #program.instance.db_user_password
+        port = get_database_port
+        host = get_database_host
+        db_name = program_op.database_name
+
+#        config   = Rails.configuration.database_configuration
+#         Rails.logger.debug "get_there_object_list host = #{config[Rails.env]['host']} port = #{config[Rails.env]['port']}" +
+#                                " database_name = #{program_op.database_name}" +
+#                                " user_name = #{config[Rails.env]["admin_username"]} password = #{config[Rails.env]["admin_password"]}"
+
+        Rails.logger.debug "get_there_object_list host = #{host} port = #{port}" +
+                               " database_name = #{db_name}" +
+                               " user_name = #{user_name} password = #{password}"
+
         connection = get_custom_connection('temporary',
-                                           config[Rails.env]['host'],
-                                           config[Rails.env]['port'],
-                                           program_op.database_name,
-                                           config[Rails.env]["admin_username"],
-                                           config[Rails.env]["admin_password"])
+                                           host,
+                                           port,
+                                           db_name,
+                                           user_name,
+                                           password)
         ports = get_all_ports_of_uspd(connection)
         close_custom_connection
         return ports

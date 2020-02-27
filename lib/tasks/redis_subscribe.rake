@@ -8,6 +8,12 @@ namespace :redis_subscribe do
       return
     end
 
+    if Retranslator.channel_names.count == 0
+      Rails.logger.error('Could not find any retranslator channel')
+      ap('Could not find any retranslator channel')
+      return
+    end
+
     Rails.logger.debug("Subscribe on redis channels: #{ Retranslator.channel_names }")
     $redis.subscribe( Retranslator.channel_names ) do |on|
       on.message do |channel, message|
