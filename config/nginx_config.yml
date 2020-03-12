@@ -31,10 +31,20 @@ test:
   stream_ports_range: [[31001, 64000]]
 
 production:
-  server_address: ['192.168.100.11', '192.168.100.12', '192.168.100.14', '192.168.100.24', '192.168.100.20', '192.168.100.23']
-  server_name: infsphr.info
-  nginx_server_host: 192.168.100.6
-  nginx_server_login: configurator
-  nginx_server_password: girl85%Red
-  nginx_tcp_config_path: /etc/nginx/conf.d/stream
-  nginx_http_config_path: /etc/nginx/conf.d/http
+  server_address: <%= ENV['NGCFG_server_address'] %>
+  server_name: <%= ENV['NGCFG_server_name'] %>
+  nginx_server_host: <%= ENV['NGCFG_nginx_server_host'] %>
+  nginx_server_login: <%= ENV['NGCFG_nginx_server_login'] %>
+  nginx_server_password: <%= ENV['NGCFG_nginx_server_password'] %>
+  nginx_tcp_config_path: <%= ENV['NGCFG_nginx_tcp_config_path'] %>
+  nginx_http_config_path: <%= ENV['NGCFG_nginx_http_config_path'] %>
+  http_ports_range: <%= ENV['NGCFG_http_ports_range'] %>
+  stream_ports_range: <%= ENV['NGCFG_stream_ports_range'] %>
+
+#  server_address: ['192.168.100.11', '192.168.100.12', '192.168.100.14', '192.168.100.24', '192.168.100.20', '192.168.100.23']
+#  server_name: infsphr.info
+#  nginx_server_host: 192.168.100.6
+#  nginx_server_login: configurator
+#  nginx_server_password: girl85%Red
+#  nginx_tcp_config_path: /etc/nginx/conf.d/stream
+#  nginx_http_config_path: /etc/nginx/conf.d/http
