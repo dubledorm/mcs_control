@@ -19,3 +19,22 @@
 * Предоставлять сервисные функции, такие как создание и выгрузка бэкапов, сохранение журналов, отслеживание состояния портов ...
 
 * Осуществлять первоначальную настройку при разворачивании на новых площадках, на основе парсинга конфигурационных файлов nginx и баз данных приложений.
+
+## Настройка и запуск
+Переменные окружения, которые необходимо выставить перед запуском программы:
+Для работы с сервисом ретрансляции:
+* RETRANSLATOR_PROGRAM = 'tcp_server'
+* RETRANSLATOR_HOST = '127.0.0.1'
+* RETRANSLATOR_PORT = '3008'
+* REDIS_CLOUD_URL = 'redis://redis:6379'
+
+Для настройки конфигурационных файлов nginx
+*  NGCFG_server_address = ['192.168.100.11', '192.168.100.12', '192.168.100.14', '192.168.100.24'] - сервера из которых состоит кластер
+*  NGCFG_server_name: = infsphr.info -внешний url облака
+*  NGCFG_nginx_server_host = сервер nginx
+*  NGCFG_nginx_server_login =  логин с доступом по ssh и запуском sudo без пароля
+*  NGCFG_nginx_server_password = пароль
+*  NGCFG_nginx_tcp_config_path = /Users/azirumga/Dev/stream - Где лежат настроечные файлы для stream
+*  NGCFG_nginx_http_config_path = /Users/azirumga/Dev/http - Где лежат настроечные файлы для tcp
+*  NGCFG_http_ports_range = [[30000, 31000]] - диапазон портов для http
+*  NGCFG_stream_ports_range = [[31001, 64000]] - диапазон портов для stream 
